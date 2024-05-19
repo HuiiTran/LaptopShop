@@ -27,10 +27,12 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 
+import ProductListScreen from './Screens/ProductListScreen';
+
 export default function App(){
   return (
     <View>
-      <Text>Hello</Text>
+      <ProductListScreen/>
     </View>
   );
 }

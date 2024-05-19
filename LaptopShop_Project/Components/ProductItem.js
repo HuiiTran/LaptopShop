@@ -31,7 +31,7 @@ const ProductItem = props => {
 
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
-              <Text style={styles.price}>{props.price.toFixed(2)}€</Text>
+              <Text style={styles.price}>{props.price.toLocaleString()}vnđ</Text>
             </View>
             <View style={styles.actions}>{props.children}</View>
           </View>
@@ -44,7 +44,8 @@ const ProductItem = props => {
 const styles = StyleSheet.create({
   product: {
     height: 300,
-    margin: 20,
+    margin: 10,
+    width: 185,
   },
   touchable: {
     borderRadius: 10,
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '23%',
-    paddingHorizontal: 20,
+
+    paddingHorizontal: 60,
   },
 });
 
