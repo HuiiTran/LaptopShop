@@ -13,6 +13,9 @@ import {
 
 import Card from '../UI/Card';
 
+
+
+
 const ProductItem = props => {
   let TouchableCmp = TouchableOpacity;
 
