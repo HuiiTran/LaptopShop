@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-
+import { useState } from 'react';
 import {
   Keyboard,
   StyleSheet,
@@ -11,13 +11,25 @@ import {
   View,
 } from 'react-native';
 import { Button } from 'react-native-elements';
-
+import { emailValidator } from '../Validation/emailValidator';
+import { passwordValidator } from '../Validation/passwordValidator';
 
 
 export default function LoginScreen() {
+    const [email, setEmail] = useState({ value: '', error: '' });
+    const [password, setPassword] = useState({ value: '', error: '' });
+    const [loading, setLoading] = useState();
+    const [error, setError] = useState();
 
-    
-  const onLoginPress = () => {};
+  const onLoginPress = async () => {
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+    if (emailError || passwordError) {
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+  };
 
 
 
@@ -28,16 +40,34 @@ export default function LoginScreen() {
           <View style={styles.loginFormView}>
             <Text style={styles.logoText}>Login</Text>
             <TextInput
-              placeholder="Username"
-              placeholderColor="#c4c3cb"
-              style={styles.loginFormTextInput}
+                placeholder="Username"
+                placeholderColor="#c4c3cb"
+                style={styles.loginFormTextInput}
+                label="Email"
+                returnKeyType="next"
+                value={email.value}
+                onChangeText={(text) => setEmail({ value: text, error: '' })}
+                error={!!email.error}
+                errorText={email.error}
+                autoCapitalize="none"
+                autoCompleteType="email"
+                textContentType="emailAddress"
+                keyboardType="email-address"
             />
+            <Text style={ styles.warning}>{(email.error === '') ? '' : email.error}</Text>
             <TextInput
-              placeholder="Password"
-              placeholderColor="#c4c3cb"
-              style={styles.loginFormTextInput}
-              secureTextEntry={true}
+                placeholder="Password"
+                placeholderColor="#c4c3cb"
+                style={styles.loginFormTextInput}
+                secureTextEntry={true}
+                label="Password"
+                returnKeyType="done"
+                value={password.value}
+                onChangeText={(text) => setPassword({ value: text, error: '' })}
+                error={!!password.error}
+                errorText={password.error}
             />
+            <Text style={ styles.warning}>{(password.error === '') ? '' : password.error}</Text>
             <Button
               buttonStyle={styles.loginButton}
               onPress={() => onLoginPress()}
@@ -87,6 +117,9 @@ const styles = StyleSheet.create({
       marginTop: 10,
       width: 350,
       alignItems: 'center',
+    },
+    warning: {
+        color: 'red',
     },
 
   });
