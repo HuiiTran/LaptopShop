@@ -72,9 +72,9 @@ export default function LoginScreen({navigation}) {
         AsyncStorage.setItem('ID', result.data.id);
         AsyncStorage.setItem('userName', result.data.userName);
         AsyncStorage.setItem('role', result.data.role);
-        // if(result.data.role === 'Admin' || result.data.role === 'Staff'){
-        //   navigation.replace('Home');
-        // }
+        if(result.data.role === 'Admin' || result.data.role === 'Staff'){
+          navigation.replace('Home');
+        }
 
         AsyncStorage.getItem('AccessToken').then(token => console.log(token));
       }

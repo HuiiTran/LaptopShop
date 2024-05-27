@@ -20,13 +20,20 @@ import {
 
 
 import LoginScreen from './screens/LoginScreen.js';
+import Home from './screens/Home.js';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+const Stack = createNativeStackNavigator();
 const App = () => {
   return (
-    
-      <LoginScreen/>
-
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+      <Stack.Screen name="Home" component={Home}/>
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 };
 
