@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   View,
+  ActivityIndicator
 } from 'react-native';
 import { Button } from 'react-native-elements';
 
@@ -22,11 +23,15 @@ import { passwordValidator } from '../Validation/passwordValidator';
 
 import { user_login } from '../Api_Management/loginAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export default function LoginScreen({navigation}) {
+ 
+
+
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-    const [loading, setLoading] = useState();
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
     const [data_, setData] = useState({});
 
@@ -38,24 +43,45 @@ export default function LoginScreen({navigation}) {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    user_login({
+    setLoading(true);
+
+    
+
+
+
+      // try {
+      //   const response = await fetch(
+      //     'https://10.0.2.2:7169/inventory-gateway/cart?userId=3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      //     //'http://universities.hipolabs.com/search?country=VietNam'
+      //   );
+      //   const json = await response.json();
+      //   setData(json);
+      //   console.log(data_);
+      // } catch (error) {
+      //   console.error(error);
+      // } finally {
+      //   setLoading(false);
+      // }
+    await user_login({
       userName: email.value,
       password: password.value,
     }).then((result) => {
       console.log(result);
       if(result.status === 200 ){
-        console.log("hello");
-        // AsyncStorage.setItem("AccessToken", result.data.jwtToken);
-        // AsyncStorage.setItem("ID", result.data.id);
-        // AsyncStorage.setItem("userName", result.data.userName);
-        // AsyncStorage.setItem("role", result.data.role);
+        AsyncStorage.setItem('AccessToken', result.data.jwtToken);
+        AsyncStorage.setItem('ID', result.data.id);
+        AsyncStorage.setItem('userName', result.data.userName);
+        AsyncStorage.setItem('role', result.data.role);
         // if(result.data.role === 'Admin' || result.data.role === 'Staff'){
-        //   navigation.replace("Home");
+        //   navigation.replace('Home');
         // }
+
+        AsyncStorage.getItem('AccessToken').then(token => console.log(token));
       }
     }).catch(err =>{
       console.error(err);}
     );
+    setLoading(false);
   };
 
 
@@ -95,11 +121,14 @@ export default function LoginScreen({navigation}) {
                 errorText={password.error}
             />
             <Text style={ styles.warning}>{(password.error === '') ? '' : password.error}</Text>
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
             <Button
               buttonStyle={styles.loginButton}
               onPress={() => onLoginPress()}
               title="Login"
-            />
+            />)}
           </View>
         </View>
       </TouchableWithoutFeedback>

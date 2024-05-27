@@ -6,14 +6,13 @@ export const user_login = async data => {
         const result = await ApiManager('/authen',{
             method: 'POST',
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'content-type': 'application/json',
             },
             data: data,
         });
         return result;
     }
     catch(error) {
-        return error.response;
+        return error.response.data;
     }
 }
