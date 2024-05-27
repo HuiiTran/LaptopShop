@@ -44,24 +44,6 @@ export default function LoginScreen({navigation}) {
       return;
     }
     setLoading(true);
-
-    
-
-
-
-      // try {
-      //   const response = await fetch(
-      //     'https://10.0.2.2:7169/inventory-gateway/cart?userId=3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      //     //'http://universities.hipolabs.com/search?country=VietNam'
-      //   );
-      //   const json = await response.json();
-      //   setData(json);
-      //   console.log(data_);
-      // } catch (error) {
-      //   console.error(error);
-      // } finally {
-      //   setLoading(false);
-      // }
     await user_login({
       userName: email.value,
       password: password.value,
@@ -78,6 +60,9 @@ export default function LoginScreen({navigation}) {
 
         AsyncStorage.getItem('AccessToken').then(token => console.log(token));
       }
+      else{
+        setPassword({ ...password, error: 'Kiểm tra lại thông tin đăng nhập'  });
+      }
     }).catch(err =>{
       console.error(err);}
     );
@@ -90,6 +75,9 @@ export default function LoginScreen({navigation}) {
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.loginScreenContainer}>
+        {loading ? (
+              <ActivityIndicator />
+            ) : (
           <View style={styles.loginFormView}>
             <Text style={styles.logoText}>Login</Text>
             <TextInput
@@ -121,15 +109,12 @@ export default function LoginScreen({navigation}) {
                 errorText={password.error}
             />
             <Text style={ styles.warning}>{(password.error === '') ? '' : password.error}</Text>
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
             <Button
               buttonStyle={styles.loginButton}
               onPress={() => onLoginPress()}
               title="Login"
-            />)}
-          </View>
+            />
+          </View> )}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
