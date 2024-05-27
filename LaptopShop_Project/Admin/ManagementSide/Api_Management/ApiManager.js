@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import axios from "axios";
+import axios from 'axios';
 
 const ApiManager = axios.create({
     baseURL: 'https://localhost:7169',

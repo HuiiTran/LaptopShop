@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { useState } from 'react';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import {
   Keyboard,
   StyleSheet,
@@ -11,15 +15,20 @@ import {
   View,
 } from 'react-native';
 import { Button } from 'react-native-elements';
+
 import { emailValidator } from '../Validation/emailValidator';
 import { passwordValidator } from '../Validation/passwordValidator';
 
 
-export default function LoginScreen() {
+import { user_login } from '../Api_Management/loginAPI';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
     const [loading, setLoading] = useState();
     const [error, setError] = useState();
+    const [data_, setData] = useState({});
 
   const onLoginPress = async () => {
     const emailError = emailValidator(email.value);
@@ -29,6 +38,24 @@ export default function LoginScreen() {
       setPassword({ ...password, error: passwordError });
       return;
     }
+    user_login({
+      userName: email.value,
+      password: password.value,
+    }).then((result) => {
+      console.log(result);
+      if(result.status === 200 ){
+        console.log("hello");
+        // AsyncStorage.setItem("AccessToken", result.data.jwtToken);
+        // AsyncStorage.setItem("ID", result.data.id);
+        // AsyncStorage.setItem("userName", result.data.userName);
+        // AsyncStorage.setItem("role", result.data.role);
+        // if(result.data.role === 'Admin' || result.data.role === 'Staff'){
+        //   navigation.replace("Home");
+        // }
+      }
+    }).catch(err =>{
+      console.error(err);}
+    );
   };
 
 
