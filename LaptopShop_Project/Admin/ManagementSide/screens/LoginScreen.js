@@ -48,7 +48,7 @@ export default function LoginScreen({navigation}) {
       userName: email.value,
       password: password.value,
     }).then((result) => {
-      console.log(result);
+      //console.log(result);
       if(result.status === 200 ){
         AsyncStorage.setItem('AccessToken', result.data.jwtToken);
         AsyncStorage.setItem('ID', result.data.id);
