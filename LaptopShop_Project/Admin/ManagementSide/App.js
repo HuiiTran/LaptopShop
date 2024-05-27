@@ -21,6 +21,10 @@ import {
 
 import LoginScreen from './screens/LoginScreen.js';
 import Home from './screens/Home.js';
+import StaffList from './screens/StaffList.js';
+import Management from './screens/Management.js';
+import ItemList from './screens/ItemList.js';
+import OrderList from './screens/OrderList.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -32,6 +36,10 @@ const App = () => {
     <Stack.Navigator>
       <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
       <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
+      <Stack.Screen options={{headerShown: false}} name="Management" component={Management}/>
+      <Stack.Screen options={{headerTitle: ''}} name="StaffList" component={StaffList}/>
+      <Stack.Screen options={{headerTitle: ''}} name="ItemList" component={ItemList}/>
+      <Stack.Screen options={{headerTitle: ''}} name="OrderList" component={OrderList}/>
     </Stack.Navigator>
   </NavigationContainer>
   );

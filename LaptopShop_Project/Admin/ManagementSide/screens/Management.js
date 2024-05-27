@@ -16,18 +16,37 @@ import {
   Text,
   useColorScheme,
   View,
+  Button
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Management = () => {
+const Management = ({navigation}) => {
+
   return (
-    <View>
-        <Text>Management</Text>
+    <View style={styles.container}>
+        <Button
+              onPress={() => {navigation.navigate('StaffList');}}
+              title="Staff Management"
+            />
+         <Button
+              onPress={() =>{navigation.navigate('ItemList');}}
+              title="Product Management"
+            />
+        <Button
+              onPress={() =>{navigation.navigate('OrderList');}}
+              title="Order Management"
+            />
     </View>
 
   );
 };
 
 export default Management;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+  }
+});

@@ -23,7 +23,7 @@ import { passwordValidator } from '../Validation/passwordValidator';
 
 import { user_login } from '../Api_Management/loginAPI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+
 
 export default function LoginScreen({navigation}) {
  
