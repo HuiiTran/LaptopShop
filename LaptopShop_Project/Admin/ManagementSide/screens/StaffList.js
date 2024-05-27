@@ -21,13 +21,13 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Profile = () => {
+const StaffList = () => {
   return (
     <View>
-        <Text>Profile</Text>
+        <Text>StaffList</Text>
     </View>
 
   );
 };
 
-export default Profile;
+export default StaffList;
