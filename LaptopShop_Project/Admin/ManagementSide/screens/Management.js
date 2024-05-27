@@ -6,8 +6,8 @@
  * @format
  */
 
-import React from 'react';
-
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -23,21 +23,44 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Management = ({navigation}) => {
+  const [isAdmin, setIsAdmin] = useState(String);
+
+  useEffect(() => {
+    AsyncStorage.getItem('role').then(role => setIsAdmin(role));
+  }, []);
+
 
   return (
     <View style={styles.container}>
-        <Button
-              onPress={() => {navigation.navigate('StaffList');}}
-              title="Staff Management"
-            />
-         <Button
-              onPress={() =>{navigation.navigate('ItemList');}}
-              title="Product Management"
-            />
-        <Button
-              onPress={() =>{navigation.navigate('OrderList');}}
-              title="Order Management"
-            />
+        {isAdmin === 'Admin' ? (
+          <View style={styles.container}>
+          <Button
+                onPress={() => {navigation.navigate('StaffList');}}
+                title="Staff Management"
+              />
+          <Button
+                onPress={() =>{navigation.navigate('ItemList');}}
+                title="Product Management"
+              />
+          <Button
+                onPress={() =>{navigation.navigate('OrderList');}}
+                title="Order Management"
+              />
+        </View>
+        ) :
+        (
+        <View>
+          <Button
+                  onPress={() =>{navigation.navigate('ItemList');}}
+                  title="Product Management"
+                />
+          <Button
+                  onPress={() =>{navigation.navigate('OrderList');}}
+                  title="Order Management"
+                />
+        </View>
+        )}
+      
     </View>
 
   );

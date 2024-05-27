@@ -59,6 +59,7 @@ export default function LoginScreen({navigation}) {
         }
 
         AsyncStorage.getItem('AccessToken').then(token => console.log(token));
+        AsyncStorage.getItem('role').then(role => console.log(role));
       }
       else{
         setPassword({ ...password, error: 'Kiểm tra lại thông tin đăng nhập'  });

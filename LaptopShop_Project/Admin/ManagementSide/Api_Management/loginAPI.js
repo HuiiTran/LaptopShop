@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
-import ApiManager from './ApiManager';
+import ApiManager,{AthenUrl} from './ApiManager';
+
 
 export const user_login = async data => {
     try{
-        const result = await ApiManager('/authen',{
+        const result = await ApiManager(AthenUrl,{
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

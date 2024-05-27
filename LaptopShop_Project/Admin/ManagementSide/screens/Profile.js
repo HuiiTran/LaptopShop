@@ -9,6 +9,7 @@
 import React from 'react';
 
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -21,10 +22,20 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+  const logout = () =>{
+    AsyncStorage.removeItem('AccessToken');
+    AsyncStorage.removeItem('ID');
+    AsyncStorage.removeItem('userName');
+    AsyncStorage.removeItem('role');
+  }
   return (
     <View>
         <Text>Profile</Text>
+        <Button
+                  onPress={() =>{navigation.replace('Login');}}
+                  title="Logout"
+                />
     </View>
 
   );
