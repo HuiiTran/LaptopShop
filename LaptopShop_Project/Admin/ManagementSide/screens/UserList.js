@@ -17,6 +17,7 @@ import {
   ActivityIndicator,
   View,
   RefreshControl,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
@@ -35,7 +36,7 @@ const UserList = ({navigation}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setData(responseJson);
-        console.log(responseJson);
+        //console.log(responseJson);
       });
     } catch (error) {
       console.error(error);
@@ -58,23 +59,29 @@ const UserList = ({navigation}) => {
           initialNumToRender={20}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <View
-              style={styles.ItemContainer}
-              >
+            <TouchableWithoutFeedback
+              onPress={() =>
+                {
+                  navigation.navigate('UserDetails', {itemId: item.id});
+                }
+              }>
+              <View
+                style={styles.ItemContainer}
+                >
+                  <View>
+                    <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image}`}} />
+                  </View>
                 <View>
-                  <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image}`}} />
+                  <Text>{item.name}</Text>
+                  <Text>{item.phoneNumber}</Text>
+                  <Text>{item.email}</Text>
                 </View>
-              <View>
-                <Text>{item.name}</Text>
-                <Text>{item.phoneNumber}</Text>
-                <Text>{item.email}</Text>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           )}
           refreshing ={ Refreshing}
           onRefresh={()=> {
             setRefreshing(true);
-
           }}
         />
     </View>

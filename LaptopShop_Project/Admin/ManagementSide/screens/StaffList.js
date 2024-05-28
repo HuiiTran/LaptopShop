@@ -15,6 +15,7 @@ import {
   StyleSheet,
   Text,
   ActivityIndicator,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
@@ -33,7 +34,7 @@ const StaffList = ({navigation}) => {
       .then((response) => response.json())
       .then((responseJson) => {
         setData(responseJson);
-        console.log(responseJson);
+        //console.log(responseJson);
       });
     } catch (error) {
       console.error(error);
@@ -55,18 +56,25 @@ const StaffList = ({navigation}) => {
           initialNumToRender={20}
           keyExtractor={({id}) => id}
           renderItem={({item}) => (
-            <View
-              style={styles.ItemContainer}
-              >
+            <TouchableWithoutFeedback 
+            onPress={() =>
+              {
+                navigation.navigate('StaffDetails', {userId: item.id});
+              }
+            }>
+              <View
+                style={styles.ItemContainer}
+                >
+                  <View>
+                    <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image}`}} />
+                  </View>
                 <View>
-                  <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image}`}} />
+                  <Text>{item.name}</Text>
+                  <Text>{item.phoneNumber}</Text>
+                  <Text>{item.email}</Text>
                 </View>
-              <View>
-                <Text>{item.name}</Text>
-                <Text>{item.phoneNumber}</Text>
-                <Text>{item.email}</Text>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           )}
           refreshing ={ Refreshing}
           onRefresh={()=> {
@@ -74,6 +82,7 @@ const StaffList = ({navigation}) => {
           }}
         />
     </View>
+   
 
   );
 };
