@@ -30,14 +30,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ProductListScreen from './Screens/ProductListScreen';
-import ProductDetailScreen from './Screens/ProductDetailScreen';
+import ProductDetail from './Screens/ProductDetailScreen';
 const Stack = createNativeStackNavigator();
 export default function App(){
   return (
     <NavigationContainer>
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
       <Stack.Screen options={{headerShown: false}} name="ProductListScreen" component={ProductListScreen} />
-      <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen}/>
+      <Stack.Screen options={{title: 'L & C'}}name="ProductDetailScreen" component={ProductDetail}/>
     </Stack.Navigator>
   </NavigationContainer>
   );

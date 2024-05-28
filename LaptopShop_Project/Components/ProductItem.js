@@ -14,8 +14,6 @@ import {
 import Card from '../UI/Card';
 
 
-
-
 const ProductItem = props => {
   let TouchableCmp = TouchableOpacity;
 
@@ -34,6 +32,7 @@ const ProductItem = props => {
 
             <View style={styles.details}>
               <Text style={styles.title}>{props.title}</Text>
+              <Text style={styles.preprice}>{props.preprice.toLocaleString()}vnđ</Text>
               <Text style={styles.price}>{props.price.toLocaleString()}vnđ</Text>
             </View>
             <View style={styles.actions}>{props.children}</View>
@@ -67,18 +66,29 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '17%',
-    padding: 10,
+    height: '20%',
+    width:'100%',
+    fontFamily: 'Cuprum-Bold',
   },
   title: {
-    fontSize: 18,
-    fontFamily: 'open-sans-bold',
+    fontSize: 22,
+    fontFamily: 'Cuprum-Bold',
     marginVertical: 2,
+    color:'#000000',
   },
   price: {
-    fontSize: 14,
-    fontFamily: 'open-sans',
-    color: '#888',
+    fontSize: 22,
+    fontFamily: 'Cuprum-Bold',
+    color: '#F18825',
+  },
+  preprice:{
+    marginTop:10,
+    fontSize: 16,
+    fontFamily: 'Cuprum-Regular',
+    color: '#000000',
+    opacity: 0.5,
+    textDecorationLine: 'line-through',
+
   },
   actions: {
     flexDirection: 'row',

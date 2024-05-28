@@ -1,0 +1,45 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Cuprum-Italic-VariableFont_wght.ttf",
+      "sha1": "0e899d5e80d3c8532780aa8d7c519b480afb9f59"
+    },
+    {
+      "path": "assets/fonts/Cuprum-VariableFont_wght.ttf",
+      "sha1": "770c9064311f47eba6acc6fbbe40230bead018b7"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-Bold.ttf",
+      "sha1": "252988c77e50a85939aa8ae18896dc595112e741"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-BoldItalic.ttf",
+      "sha1": "416e5705de178f91abb04182ae0615f41ba005b0"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-Italic.ttf",
+      "sha1": "a832a544515de13e7c2ee90ae21b2d829283a718"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-Medium.ttf",
+      "sha1": "dbea35a5f08e60b1cc45b3b2d173fe041846335a"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-MediumItalic.ttf",
+      "sha1": "2072a0559beb58d58e71622c272cf7b2f7b99458"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-Regular.ttf",
+      "sha1": "f4b0ba82de87a099b95486c3435a0115ebdf1023"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-SemiBold.ttf",
+      "sha1": "5350c60cad82fa0726c09a7347ca448f9fda7439"
+    },
+    {
+      "path": "assets/fonts/static/Cuprum-SemiBoldItalic.ttf",
+      "sha1": "b484946f977ec3faa227c936f72c35f7ac03816a"
+    }
+  ]
+}
