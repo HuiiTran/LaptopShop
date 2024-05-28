@@ -16,6 +16,7 @@ import {
   Text,
   ActivityIndicator,
   View,
+  RefreshControl,
 } from 'react-native';
 
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
@@ -26,38 +27,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const UserList = ({navigation}) => {
   const[data, setData] = useState(null);
 
-  const[loading, setLoading] = useState(true);
+
+  const [Refreshing, setRefreshing] = useState(false);
+  const getList = async () => {
+    try {
+      fetch(ProjectBaseUrl + '/users')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setData(responseJson);
+        console.log(responseJson);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const getInfor = async () => {
-      try {
-        fetch(ProjectBaseUrl + '/users')
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setData(responseJson);
-          console.log(responseJson);
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getInfor();
-    setLoading(false);
-  },[]);
+    getList();
+    if(Refreshing === true)
+    {
+      getList();
+      setRefreshing(false);
+    }
+  },[Refreshing]);
 
   return (
     <View>
-      {loading ?
-      (
-        <ActivityIndicator />
-      ) :
-      (
         <FlatList
           data={data}
           initialNumToRender={20}
-          keyExtractor={({id}) => id}
+          keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View
               style={styles.ItemContainer}
@@ -72,8 +71,12 @@ const UserList = ({navigation}) => {
               </View>
             </View>
           )}
+          refreshing ={ Refreshing}
+          onRefresh={()=> {
+            setRefreshing(true);
+
+          }}
         />
-      )}
     </View>
 
   );

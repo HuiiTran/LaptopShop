@@ -25,35 +25,31 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const StaffList = ({navigation}) => {
   const[data, setData] = useState(null);
+  const [Refreshing, setRefreshing] = useState(false);
 
-  const[loading, setLoading] = useState(true);
-
+  const getList = async () => {
+    try {
+      fetch(ProjectBaseUrl + '/staff')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setData(responseJson);
+        console.log(responseJson);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const getInfor = async () => {
-      try {
-        fetch(ProjectBaseUrl + '/staff')
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setData(responseJson);
-          console.log(responseJson);
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+    getList();
+  if(Refreshing === true)
+      {
+        getList();
+        setRefreshing(false);
       }
-    };
-    getInfor();
-    setLoading(false);
-  },[]);
+  },[Refreshing]);
 
   return (
     <View>
-      {loading ?
-      (
-        <ActivityIndicator />
-      ) :
-      (
         <FlatList
           data={data}
           initialNumToRender={20}
@@ -72,8 +68,11 @@ const StaffList = ({navigation}) => {
               </View>
             </View>
           )}
+          refreshing ={ Refreshing}
+          onRefresh={()=> {
+            setRefreshing(true);
+          }}
         />
-      )}
     </View>
 
   );
