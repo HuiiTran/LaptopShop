@@ -34,7 +34,7 @@ const Tab = createBottomTabNavigator();
 const Home = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ 
+      screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
       }}

@@ -82,8 +82,6 @@ const StaffList = ({navigation}) => {
           }}
         />
     </View>
-   
-
   );
 };
 
