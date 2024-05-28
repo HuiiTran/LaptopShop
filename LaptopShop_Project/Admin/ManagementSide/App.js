@@ -25,6 +25,7 @@ import StaffList from './screens/StaffList.js';
 import Management from './screens/Management.js';
 import ItemList from './screens/ItemList.js';
 import OrderList from './screens/OrderList.js';
+import UserList from './screens/UserList.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -40,6 +41,7 @@ const App = () => {
       <Stack.Screen options={{headerTitle: ''}} name="StaffList" component={StaffList}/>
       <Stack.Screen options={{headerTitle: ''}} name="ItemList" component={ItemList}/>
       <Stack.Screen options={{headerTitle: ''}} name="OrderList" component={OrderList}/>
+      <Stack.Screen options={{headerTitle: ''}} name="UserList" component={UserList}/>
     </Stack.Navigator>
   </NavigationContainer>
   );

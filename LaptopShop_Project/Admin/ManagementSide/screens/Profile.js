@@ -31,7 +31,6 @@ import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 const Profile = ({navigation}) => {
   const[userId, setUserId] = useState();
   const[userData, setUserData] = useState(null);
-  
   const[name, setName] = useState();
   const[phone, setPhone] = useState();
 

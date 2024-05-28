@@ -39,6 +39,10 @@ const Management = ({navigation}) => {
                 title="Staff Management"
               />
           <Button
+                onPress={() =>{navigation.navigate('UserList');}}
+                title="User Management"
+              />
+          <Button
                 onPress={() =>{navigation.navigate('ItemList');}}
                 title="Product Management"
               />

@@ -23,7 +23,7 @@ import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const StaffList = ({navigation}) => {
+const UserList = ({navigation}) => {
   const[data, setData] = useState(null);
 
   const[loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ const StaffList = ({navigation}) => {
   useEffect(() => {
     const getInfor = async () => {
       try {
-        fetch(ProjectBaseUrl + '/staff')
+        fetch(ProjectBaseUrl + '/users')
         .then((response) => response.json())
         .then((responseJson) => {
           setData(responseJson);
@@ -79,7 +79,7 @@ const StaffList = ({navigation}) => {
   );
 };
 
-export default StaffList;
+export default UserList;
 
 
 const styles = StyleSheet.create({
