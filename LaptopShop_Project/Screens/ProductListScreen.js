@@ -116,7 +116,7 @@ const PRODUCTS = [
 
 
 
-const ProductListScreen = props => {
+const ProductListScreen = (props) => {
   const [error, setError] = useState();
 
 
@@ -148,18 +148,18 @@ const ProductListScreen = props => {
           numColumns={2}
           keyExtractor={item=> item.id}
           renderItem={itemData => (
-            <ProductItem 
+            <ProductItem
                 image={itemData.item.imageUrl}
                 title={itemData.item.title}
                 price={itemData.item.price}
                 onSelect={() => {
-            //selectItemHandler(itemData.item.id, itemData.item.title);
+                  props.navigation.navigate('ProductDetailScreen');
           }}>
           <Button
             color={'#02538C'}
             title="Add to Cart"
             onPress={() => {
-             //dispatch(cartActions.addToCart(itemData.item));
+              //props.navigation.navigate('ProductDetailScreen');
             }}
           />
             </ProductItem>
