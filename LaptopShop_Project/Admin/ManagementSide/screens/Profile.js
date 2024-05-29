@@ -124,9 +124,9 @@ const Profile = ({navigation}) => {
                   />
           <Button
                     onPress={() =>{
-                      //navigation.replace('Login');
-                      console.log(userData);
-                      console.log(userData.id);
+                      navigation.replace('Login');
+                      // console.log(userData);
+                      // console.log(userData.id);
                     }}
                     title="Logout"
                   />

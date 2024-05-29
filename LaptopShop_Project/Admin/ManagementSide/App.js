@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-
+import { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -30,11 +30,24 @@ import ItemDetails from './screens/ItemDetails.js';
 import UserDetails from './screens/UserDetails.js';
 import StaffDetails from './screens/StaffDetails.js';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry.js';
 
 const Stack = createNativeStackNavigator();
 const App = () => {
+  const[token, setToken] = useState();
+
+  useEffect(()=>{
+    const getToken = async() => {
+      var token1 = await AsyncStorage.getItem('AccessToken');//.then(AccessToken => setToken(AccessToken));
+      console.log(token1);
+    };
+    getToken();
+
+  },[]);
   return (
     <NavigationContainer>
     <Stack.Navigator>

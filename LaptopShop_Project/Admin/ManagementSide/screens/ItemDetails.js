@@ -7,24 +7,27 @@
  */
 
 import React from 'react';
-import { useState, useEffect } from 'react';
+import {useMemo, useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
   TextInput,
+  Button,
 } from 'react-native';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
-
+import RadioGroup from 'react-native-radio-buttons-group';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 
 const ItemDetails = ({navigation, route}) => {
   const {itemId} = route.params;
+
 
   const[data, setData] = useState(null);
   const[name, setName] = useState();
@@ -33,6 +36,7 @@ const ItemDetails = ({navigation, route}) => {
   const[description, setDescription] = useState();
   const[price, setPrice] = useState();
   const[quantity, setQuantity] = useState();
+  const[isAvailable, setIsAvailable] = useState();
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -46,6 +50,8 @@ const ItemDetails = ({navigation, route}) => {
         setDescription(responseJson.description);
         setPrice(responseJson.price);
         setQuantity(responseJson.quantity);
+        setIsAvailable(responseJson.isAvailable);
+        setClassify(responseJson.classify);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -60,6 +66,45 @@ const ItemDetails = ({navigation, route}) => {
   //       setRefreshing(false);
   //     }
   },[]);
+
+
+  var form = new FormData();
+  form.append('Name', name );
+  form.append('StoreID', storeId);
+  form.append('Classify', classify);
+  form.append('Description', description);
+  form.append('Price', price);
+  form.append('Quantity', quantity);
+  form.append('isAvailable', isAvailable);
+  //form.append('Image')
+
+
+  const radioButtons_isAvailable = useMemo(() => ([
+    {
+        id: true, // acts as primary key, should be unique and non-empty string
+        label: 'Available',
+        value: true,
+    },
+    {
+        id: false,
+        label: 'Unavailable',
+        value: false,
+    },
+]), []);
+
+const radioButtons_Classify = useMemo(() => ([
+  {
+      id: 'Laptop', // acts as primary key, should be unique and non-empty string
+      label: 'Laptop',
+      value: 'Laptop',
+  },
+  {
+      id: 'Accessory',
+      label: 'Accessory',
+      value: 'Accessory',
+  },
+]), []);
+
   return (
     <View>
       <Text>Name</Text>
@@ -84,6 +129,17 @@ const ItemDetails = ({navigation, route}) => {
                   onChangeText={(text) => setStoreId(text)}
                   autoCapitalize="none"
               />
+      <Text>Quantity</Text>
+      <View>
+        <RadioGroup
+              radioButtons={radioButtons_Classify}
+              onPress={setClassify}
+              selectedId={classify}
+              layout="row"
+              //value={isAvailable}
+
+          />
+      </View>
       <Text>Description</Text>
           <TextInput
                   placeholder="Description"
@@ -116,6 +172,20 @@ const ItemDetails = ({navigation, route}) => {
                   onChangeText={(text) => setQuantity(parseInt(text))}
                   keyboardType="numeric"
               />
+      <Text>Quantity</Text>
+      <View>
+        <RadioGroup
+              radioButtons={radioButtons_isAvailable}
+              onPress={setIsAvailable}
+              selectedId={isAvailable}
+              layout="row"
+              //value={isAvailable}
+
+          />
+      </View>
+              <Button title="Update" onPress={()=> {
+                console.log(form);
+              }}/>
     </View>
 
   );
