@@ -15,10 +15,12 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TouchableWithoutFeedback,
   ActivityIndicator,
   TextInput,
   View,
+  Button,
+  Keyboard,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,7 +32,8 @@ const StaffDetails = ({navigation, route}) => {
     const[data, setData] = useState(null);
     const[newPassword, setNewPassword] = useState();
     const[oldPassword, setOldPassword] = useState();
-
+    
+    const[userName, setUserName] = useState();
     const[email, setEmail] = useState();
     const[address, setAddress] = useState();
     const[name, setName] = useState();
@@ -50,6 +53,7 @@ const StaffDetails = ({navigation, route}) => {
         setName(responseJson.name);
         setPhoneNumber(responseJson.phoneNumber);
         setSalary(responseJson.salary);
+        setUserName(responseJson.userName);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -67,12 +71,24 @@ const StaffDetails = ({navigation, route}) => {
   //       setRefreshing(false);
   //     }
   },[]);
+
+
+
+  var form = new FormData();
+  form.append('UserName', userName );
+  form.append('PassWord', newPassword);
+  form.append('Email', email);
+  form.append('Address', address);
+  form.append('Name', name);
+  form.append('PhoneNumber', phoneNumber);
+  form.append('Salary', salary);
   return (
     <View>
       {isLoading ? (
               <ActivityIndicator />
             ) : (
-      <View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View >
       <Text>E-mail</Text>
           <TextInput
                   placeholder="E-mail"
@@ -82,6 +98,19 @@ const StaffDetails = ({navigation, route}) => {
                   returnKeyType="next"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
+                  autoCapitalize="none"
+              />
+      <Text>UserName</Text>
+          <TextInput
+                  placeholder="UserName"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="UserName"
+                  returnKeyType="next"
+                  value={userName}
+                  //onChangeText={(text) => setUserName(text)}
+                  editable={false}
+                  //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
       <Text>Address</Text>
@@ -127,7 +156,10 @@ const StaffDetails = ({navigation, route}) => {
                   onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
                   keyboardType="numeric"
               />
-              </View>)}
+              <Button title="Update" onPress={() => console.log(form)}/>
+              </View>
+              </TouchableWithoutFeedback>
+            )}
     </View>
 
   );

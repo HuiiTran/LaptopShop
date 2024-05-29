@@ -17,6 +17,8 @@ import {
   View,
   TextInput,
   Button,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -106,6 +108,7 @@ const radioButtons_Classify = useMemo(() => ([
 ]), []);
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View>
       <Text>Name</Text>
         <TextInput
@@ -187,7 +190,7 @@ const radioButtons_Classify = useMemo(() => ([
                 console.log(form);
               }}/>
     </View>
-
+    </TouchableWithoutFeedback>
   );
 };
 
