@@ -100,7 +100,7 @@ const StaffDetails = ({navigation, route}) => {
       maxHeight: 2000,
       maxWidth: 2000,
     };
-    console.log('hello')
+
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');

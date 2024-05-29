@@ -18,11 +18,14 @@ import {
   TextInput,
   Button,
   TouchableWithoutFeedback,
+  TouchableOpacity,
+  Image,
   Keyboard,
 } from 'react-native';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 import RadioGroup from 'react-native-radio-buttons-group';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 
 
@@ -39,6 +42,10 @@ const ItemDetails = ({navigation, route}) => {
   const[price, setPrice] = useState();
   const[quantity, setQuantity] = useState();
   const[isAvailable, setIsAvailable] = useState();
+
+  const[image, setImage] = useState();
+
+    const[selectedImage, setSelectedImage] = useState();
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -54,6 +61,7 @@ const ItemDetails = ({navigation, route}) => {
         setQuantity(responseJson.quantity);
         setIsAvailable(responseJson.isAvailable);
         setClassify(responseJson.classify);
+        setImage(responseJson.image[0]);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -107,9 +115,36 @@ const radioButtons_Classify = useMemo(() => ([
   },
 ]), []);
 
+
+
+
+const OpenLibrary = () => {
+  const options = {
+    mediaType: 'photo',
+    includeBase64: false,
+    maxHeight: 2000,
+    maxWidth: 2000,
+  };
+  console.log('hello')
+  launchImageLibrary(options, (response) => {
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.error) {
+      console.log('Image picker error: ', response.error);
+    } else {
+      let imageUri = response.uri || response.assets?.[0]?.uri;
+      setSelectedImage(imageUri);
+    }
+  });
+}
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View>
+      <View style={styles.image_container}>
+          <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
+            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          </TouchableOpacity>
+      </View>
       <Text>Name</Text>
         <TextInput
                   placeholder="Name"
@@ -234,6 +269,16 @@ const styles = StyleSheet.create({
   },
   warning: {
       color: 'red',
+  },
+  image_container: {
+    width: 200,
+    height: 200,
+    //backgroundColor: 'green',
+    marginLeft: '25%',
+  },
+  image_picker: {
+    width: 200,
+    height: 200,
   },
 
 });

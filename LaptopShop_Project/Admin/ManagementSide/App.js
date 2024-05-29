@@ -52,17 +52,18 @@ const App = (navigation) => {
 
       let currentDate = new Date();
       let decodedToken = jwtDecode(token1);
-      if (decodedToken.exp < currentDate.getTime()){
+      if (decodedToken.exp * 1000 < currentDate.getTime()){
         setIsExpire(false);
-        console.log('false');
+        console.log(currentDate.getTime());
+        console.log(decodedToken.exp * 1000);
       }
       else {
         setIsExpire(true);
       }
+      console.log(isExpire);
     };
     getToken();
-
-  },[]);
+  },[isExpire]);
   return (
     <NavigationContainer>
       {isExpire ? (
@@ -81,7 +82,6 @@ const App = (navigation) => {
       ) :
       (
         <Stack.Navigator>
-          {/* <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} /> */}
           <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
           <Stack.Screen options={{headerShown: false}} name="Management" component={Management}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffList" component={StaffList}/>
@@ -91,6 +91,7 @@ const App = (navigation) => {
           <Stack.Screen options={{headerTitle: ''}} name="ItemDetails" component={ItemDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="UserDetails" component={UserDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffDetails" component={StaffDetails}/>
+          <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
         </Stack.Navigator>
       )}
   </NavigationContainer>

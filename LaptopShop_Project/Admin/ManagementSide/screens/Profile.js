@@ -9,19 +9,21 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import {
-  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
-  View,
-  TextInput,
-  Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
+  TextInput,
+  View,
+  Button,
+  Keyboard,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
-
+import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
@@ -39,6 +41,10 @@ const Profile = ({navigation}) => {
 
   const[loading, setLoading] = useState();
 
+  const[image, setImage] = useState();
+
+  const[selectedImage, setSelectedImage] = useState();
+
   useEffect(() => {
     const getInfor = async () => {
       AsyncStorage.getItem('ID').then(ID => setUserId(ID));
@@ -46,9 +52,10 @@ const Profile = ({navigation}) => {
         fetch(ProjectBaseUrl + '/admin/' + userId)
         .then((response) => response.json())
         .then((responseJson) => {
-          setUserData(responseJson[0]);
-          setName(responseJson[0].name);
-          setPhone(responseJson[0].phoneNumber);
+          setUserData(responseJson);
+          setName(responseJson.name);
+          setPhone(responseJson.phoneNumber);
+          setImage(responseJson.image);
         });
       } catch (error) {
         console.error(error);
@@ -64,10 +71,35 @@ const Profile = ({navigation}) => {
     AsyncStorage.removeItem('userName');
     AsyncStorage.removeItem('role');
   };
+  const OpenLibrary = () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setSelectedImage(imageUri);
+      }
+    });
+  }
+
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View>
-          <Text>Profile</Text>
+        <View style={styles.image_container}>
+          <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
+            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          </TouchableOpacity>
+        </View>
+          {/* <Text>Profile</Text> */}
           <TextInput
                   placeholder="Name"
                   placeholderColor="#c4c3cb"
@@ -175,6 +207,16 @@ const styles = StyleSheet.create({
   },
   warning: {
       color: 'red',
+  },
+  image_container: {
+    width: 200,
+    height: 200,
+    //backgroundColor: 'green',
+    marginLeft: '25%',
+  },
+  image_picker: {
+    width: 200,
+    height: 200,
   },
 
 });
