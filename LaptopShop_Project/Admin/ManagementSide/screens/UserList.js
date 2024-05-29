@@ -62,7 +62,7 @@ const UserList = ({navigation}) => {
             <TouchableWithoutFeedback
               onPress={() =>
                 {
-                  navigation.navigate('UserDetails', {itemId: item.id});
+                  navigation.navigate('UserDetails', {userId: item.id});
                 }
               }>
               <View

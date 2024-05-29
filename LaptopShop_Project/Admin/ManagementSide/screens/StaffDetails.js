@@ -21,7 +21,10 @@ import {
   View,
   Button,
   Keyboard,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -39,6 +42,9 @@ const StaffDetails = ({navigation, route}) => {
     const[name, setName] = useState();
     const[phoneNumber, setPhoneNumber] = useState();
     const[salary, setSalary] = useState();
+    const[image, setImage] = useState();
+
+    const[selectedImage, setSelectedImage] = useState();
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -54,6 +60,7 @@ const StaffDetails = ({navigation, route}) => {
         setPhoneNumber(responseJson.phoneNumber);
         setSalary(responseJson.salary);
         setUserName(responseJson.userName);
+        setImage(responseJson.image);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -82,6 +89,29 @@ const StaffDetails = ({navigation, route}) => {
   form.append('Name', name);
   form.append('PhoneNumber', phoneNumber);
   form.append('Salary', salary);
+
+
+
+
+  const OpenLibrary = () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+    console.log('hello')
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setSelectedImage(imageUri);
+      }
+    });
+  }
   return (
     <View>
       {isLoading ? (
@@ -89,6 +119,11 @@ const StaffDetails = ({navigation, route}) => {
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View >
+      <View style={styles.image_container}>
+          <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
+            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          </TouchableOpacity>
+        </View>
       <Text>E-mail</Text>
           <TextInput
                   placeholder="E-mail"
@@ -206,5 +241,16 @@ const styles = StyleSheet.create({
   warning: {
       color: 'red',
   },
+  image_container: {
+    width: 200,
+    height: 200,
+    //backgroundColor: 'green',
+    marginLeft: '25%',
+  },
+  image_picker: {
+    width: 200,
+    height: 200,
+  },
+
 
 });

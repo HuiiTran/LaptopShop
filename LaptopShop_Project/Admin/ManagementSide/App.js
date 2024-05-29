@@ -39,19 +39,25 @@ import { jwtDecode } from 'jwt-decode';
 
 const Stack = createNativeStackNavigator();
 const App = (navigation) => {
-  const[isExpire, setIsExpire] = useState(false);
+  const[isExpire, setIsExpire] = useState();
 
   useEffect(()=>{
     const getToken = async() => {
       var token1 = await AsyncStorage.getItem('AccessToken');//.then(AccessToken => setToken(AccessToken));
-      //console.log(token1);
+      console.log(token1);
+      if(token1 === null)
+      {
+          return;
+      }
+
       let currentDate = new Date();
       let decodedToken = jwtDecode(token1);
-      if (decodedToken.exp < currentDate){
-        setIsExpire(true);
+      if (decodedToken.exp < currentDate.getTime()){
+        setIsExpire(false);
+        console.log('false');
       }
       else {
-        setIsExpire(false);
+        setIsExpire(true);
       }
     };
     getToken();
@@ -61,7 +67,7 @@ const App = (navigation) => {
     <NavigationContainer>
       {isExpire ? (
       <Stack.Navigator>
-        <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+          <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
           <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
           <Stack.Screen options={{headerShown: false}} name="Management" component={Management}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffList" component={StaffList}/>
