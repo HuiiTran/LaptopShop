@@ -62,6 +62,7 @@ const ItemDetails = ({navigation, route}) => {
   },[]);
   return (
     <View>
+      <Text>Name</Text>
         <TextInput
                   placeholder="Name"
                   placeholderColor="#c4c3cb"
@@ -72,6 +73,7 @@ const ItemDetails = ({navigation, route}) => {
                   onChangeText={(text) => setName(text)}
                   autoCapitalize="none"
               />
+      <Text>Store's ID</Text>
           <TextInput
                   placeholder="Store ID"
                   placeholderColor="#c4c3cb"
@@ -82,6 +84,7 @@ const ItemDetails = ({navigation, route}) => {
                   onChangeText={(text) => setStoreId(text)}
                   autoCapitalize="none"
               />
+      <Text>Description</Text>
           <TextInput
                   placeholder="Description"
                   placeholderColor="#c4c3cb"
@@ -91,6 +94,7 @@ const ItemDetails = ({navigation, route}) => {
                   returnKeyType="next"
                   onChangeText={(text) => setDescription(text)}
               />
+      <Text>Price</Text>
           <TextInput
                   placeholder="Price"
                   placeholderColor="#c4c3cb"
@@ -101,6 +105,7 @@ const ItemDetails = ({navigation, route}) => {
                   onChangeText={(text) => setPrice(parseInt(parseFloat(text.replace(/,/g, ''))))}
                   keyboardType="numeric"
               />
+      <Text>Quantity</Text>
           <TextInput
                   placeholder="Quantity"
                   placeholderColor="#c4c3cb"
