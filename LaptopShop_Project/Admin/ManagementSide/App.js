@@ -21,14 +21,23 @@ import {
 
 import LoginScreen from './screens/LoginScreen.js';
 import Home from './screens/Home.js';
-import StaffList from './screens/StaffList.js';
+
 import Management from './screens/Management.js';
+
 import ItemList from './screens/ItemList.js';
-import OrderList from './screens/OrderList.js';
-import UserList from './screens/UserList.js';
 import ItemDetails from './screens/ItemDetails.js';
+import ItemCreate from './screens/ItemCreate.js';
+
+import UserList from './screens/UserList.js';
 import UserDetails from './screens/UserDetails.js';
+import UserCreate from './screens/UserCreate.js';
+
+import StaffList from './screens/StaffList.js';
 import StaffDetails from './screens/StaffDetails.js';
+import StaffCreate from './screens/StaffCreate.js';
+
+import OrderList from './screens/OrderList.js';
+ 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -78,6 +87,9 @@ const App = (navigation) => {
           <Stack.Screen options={{headerTitle: ''}} name="ItemDetails" component={ItemDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="UserDetails" component={UserDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffDetails" component={StaffDetails}/>
+          <Stack.Screen options={{headerTitle: ''}} name="StaffCreate" component={StaffCreate}/>
+          <Stack.Screen options={{headerTitle: ''}} name="UserCreate" component={UserCreate}/>
+          <Stack.Screen options={{headerTitle: ''}} name="ItemCreate" component={ItemCreate}/>
         </Stack.Navigator>
       ) :
       (
@@ -92,6 +104,9 @@ const App = (navigation) => {
           <Stack.Screen options={{headerTitle: ''}} name="UserDetails" component={UserDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffDetails" component={StaffDetails}/>
           <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+          <Stack.Screen options={{headerTitle: ''}} name="StaffCreate" component={StaffCreate}/>
+          <Stack.Screen options={{headerTitle: ''}} name="UserCreate" component={UserCreate}/>
+          <Stack.Screen options={{headerTitle: ''}} name="ItemCreate" component={ItemCreate}/>
         </Stack.Navigator>
       )}
   </NavigationContainer>

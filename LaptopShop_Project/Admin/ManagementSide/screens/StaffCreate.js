@@ -15,32 +15,33 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
-  ActivityIndicator,
-  View,
-  TextInput,
   TouchableWithoutFeedback,
-  Keyboard,
+  ActivityIndicator,
+  TextInput,
+  View,
   Button,
+  Keyboard,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const UserDetails = ({navigation, route}) => {
+const StaffCreate = ({navigation, route}) => {
     const {userId} = route.params;
     const[isLoading, setIsLoading] = useState(true);
     const[data, setData] = useState(null);
     const[newPassword, setNewPassword] = useState();
     const[oldPassword, setOldPassword] = useState();
-
+    
     const[userName, setUserName] = useState();
     const[email, setEmail] = useState();
     const[address, setAddress] = useState();
     const[name, setName] = useState();
     const[phoneNumber, setPhoneNumber] = useState();
+    const[salary, setSalary] = useState();
     const[image, setImage] = useState();
 
     const[selectedImage, setSelectedImage] = useState();
@@ -48,7 +49,7 @@ const UserDetails = ({navigation, route}) => {
 
   const getList = async () => {
     try {
-      fetch(ProjectBaseUrl + '/users/' + userId)
+      fetch(ProjectBaseUrl + '/staff/' + userId)
       .then((response) => response.json())
       .then((responseJson) => {
         setData(responseJson);
@@ -57,6 +58,7 @@ const UserDetails = ({navigation, route}) => {
         setAddress(responseJson.address);
         setName(responseJson.name);
         setPhoneNumber(responseJson.phoneNumber);
+        setSalary(responseJson.salary);
         setUserName(responseJson.userName);
         setImage(responseJson.image);
         //console.log(responseJson);
@@ -86,7 +88,7 @@ const UserDetails = ({navigation, route}) => {
   form.append('Address', address);
   form.append('Name', name);
   form.append('PhoneNumber', phoneNumber);
-
+  form.append('Salary', salary);
 
 
 
@@ -98,7 +100,7 @@ const UserDetails = ({navigation, route}) => {
       maxHeight: 2000,
       maxWidth: 2000,
     };
-    console.log('hello')
+
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -116,13 +118,12 @@ const UserDetails = ({navigation, route}) => {
               <ActivityIndicator />
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView >
+      <View >
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
             <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
           </TouchableOpacity>
         </View>
-
       <Text>E-mail</Text>
           <TextInput
                   placeholder="E-mail"
@@ -147,7 +148,7 @@ const UserDetails = ({navigation, route}) => {
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
-      <Text>User's address</Text>
+      <Text>Address</Text>
           <TextInput
                   placeholder="Address"
                   placeholderColor="#c4c3cb"
@@ -157,7 +158,7 @@ const UserDetails = ({navigation, route}) => {
                   returnKeyType="next"
                   onChangeText={(text) => setAddress(text)}
               />
-        <Text>User's name</Text>
+        <Text>Staff's name</Text>
           <TextInput
                   placeholder="Name"
                   placeholderColor="#c4c3cb"
@@ -168,7 +169,7 @@ const UserDetails = ({navigation, route}) => {
                   onChangeText={(text) => setName(text)}
                   autoCapitalize="none"
               />
-        <Text>User's phone number</Text>
+        <Text>Staff's phone number</Text>
           <TextInput
                   placeholder="Phone number"
                   placeholderColor="#c4c3cb"
@@ -179,8 +180,19 @@ const UserDetails = ({navigation, route}) => {
                   onChangeText={(text) => setPhoneNumber(text)}
                   keyboardType="phone-pad"
               />
+        <Text>Staff's salary</Text>
+          <TextInput
+                  placeholder="Salary"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  value={(isNaN(salary) ? ('') : salary.toLocaleString('en-US'))}
+                  label="Salary"
+                  returnKeyType="done"
+                  onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
+                  keyboardType="numeric"
+              />
               <Button title="Update" onPress={() => console.log(form)}/>
-              </ScrollView>
+              </View>
               </TouchableWithoutFeedback>
             )}
     </View>
@@ -188,7 +200,7 @@ const UserDetails = ({navigation, route}) => {
   );
 };
 
-export default UserDetails;
+export default StaffCreate;
 const styles = StyleSheet.create({
   containerView: {
     flex: 1,
@@ -239,5 +251,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+
 
 });

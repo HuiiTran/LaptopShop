@@ -30,7 +30,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 
 
-const ItemDetails = ({navigation, route}) => {
+const ItemCreate = ({navigation, route}) => {
   const {itemId} = route.params;
 
 
@@ -232,7 +232,7 @@ const OpenLibrary = () => {
   );
 };
 
-export default ItemDetails;
+export default ItemCreate;
 const styles = StyleSheet.create({
   containerView: {
     flex: 1,

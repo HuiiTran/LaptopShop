@@ -118,7 +118,7 @@ const StaffDetails = ({navigation, route}) => {
               <ActivityIndicator />
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View >
+      <ScrollView >
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
             <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
@@ -192,7 +192,8 @@ const StaffDetails = ({navigation, route}) => {
                   keyboardType="numeric"
               />
               <Button title="Update" onPress={() => console.log(form)}/>
-              </View>
+              <Button title="Delete" onPress={() => console.log(form)}/>
+              </ScrollView>
               </TouchableWithoutFeedback>
             )}
     </View>
