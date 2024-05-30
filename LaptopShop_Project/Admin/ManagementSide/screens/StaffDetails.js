@@ -27,7 +27,7 @@ import {
 import {launchImageLibrary} from 'react-native-image-picker';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import UploadImage from '../assets/icons/Image';
 
 const StaffDetails = ({navigation, route}) => {
     const {userId} = route.params;
@@ -107,9 +107,11 @@ const StaffDetails = ({navigation, route}) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
         setIsImageSelected(false);
+        setImage(UploadImage);
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
         setIsImageSelected(false);
+        setImage(UploadImage);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);

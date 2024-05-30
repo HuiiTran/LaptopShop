@@ -28,9 +28,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 
-
+import UploadImage from '../assets/icons/Image';
 
 const Profile = ({navigation}) => {
+
   const[userId, setUserId] = useState();
   const[userData, setUserData] = useState(null);
   const[name, setName] = useState();
@@ -84,9 +85,11 @@ const Profile = ({navigation}) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
         setIsImageSelected(false);
+        setImage(UploadImage);
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
         setIsImageSelected(false);
+        setImage(UploadImage);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);

@@ -26,7 +26,7 @@ import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 import RadioGroup from 'react-native-radio-buttons-group';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import UploadImage from '../assets/icons/Image';
 
 
 
@@ -130,9 +130,11 @@ const OpenLibrary = () => {
     if (response.didCancel) {
       console.log('User cancelled image picker');
       setIsImageSelected(false);
+      setImage(UploadImage);
     } else if (response.error) {
       console.log('Image picker error: ', response.error);
       setIsImageSelected(false);
+      setImage(UploadImage);
     } else {
       let imageUri = response.uri || response.assets?.[0]?.uri;
       setSelectedImage(imageUri);
@@ -145,7 +147,7 @@ const OpenLibrary = () => {
     <ScrollView>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-          {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
+            {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
       </View>
       <Text>Name</Text>

@@ -126,7 +126,7 @@ const UserCreate = ({navigation}) => {
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
             {
             isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) :
-            (<View />)
+            (<Image style={styles.image_picker} source={require('../assets/icons/Upload.png')} />)
             }
           </TouchableOpacity>
         </View>

@@ -144,7 +144,9 @@ const OpenLibrary = () => {
     <ScrollView>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<View />) }
+            {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />)
+             :
+             (<Image style={styles.image_picker} source={require('../assets/icons/Upload.png')} />) }
           </TouchableOpacity>
       </View>
       <Text>Name</Text>
