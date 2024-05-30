@@ -172,7 +172,7 @@ const OpenLibrary = () => {
                   onChangeText={(text) => setStoreId(text)}
                   autoCapitalize="none"
               />
-      <Text>Quantity</Text>
+      <Text>Classify</Text>
       <View>
         <RadioGroup
               radioButtons={radioButtons_Classify}
@@ -215,7 +215,7 @@ const OpenLibrary = () => {
                   onChangeText={(text) => setQuantity(parseInt(text))}
                   keyboardType="numeric"
               />
-      <Text>Quantity</Text>
+      <Text>Available</Text>
       <View>
         <RadioGroup
               radioButtons={radioButtons_isAvailable}

@@ -37,7 +37,7 @@ import StaffDetails from './screens/StaffDetails.js';
 import StaffCreate from './screens/StaffCreate.js';
 
 import OrderList from './screens/OrderList.js';
- 
+import OrderDetails from './screens/OrderDetails.js';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -87,6 +87,7 @@ const App = () => {
           <Stack.Screen options={{headerTitle: ''}} name="ItemDetails" component={ItemDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="UserDetails" component={UserDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffDetails" component={StaffDetails}/>
+          <Stack.Screen options={{headerTitle: ''}} name="OrderDetails" component={OrderDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffCreate" component={StaffCreate}/>
           <Stack.Screen options={{headerTitle: ''}} name="UserCreate" component={UserCreate}/>
           <Stack.Screen options={{headerTitle: ''}} name="ItemCreate" component={ItemCreate}/>
@@ -103,6 +104,7 @@ const App = () => {
           <Stack.Screen options={{headerTitle: ''}} name="ItemDetails" component={ItemDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="UserDetails" component={UserDetails}/>
           <Stack.Screen options={{headerTitle: ''}} name="StaffDetails" component={StaffDetails}/>
+          <Stack.Screen options={{headerTitle: ''}} name="OrderDetails" component={OrderDetails}/>
           <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
           <Stack.Screen options={{headerTitle: ''}} name="StaffCreate" component={StaffCreate}/>
           <Stack.Screen options={{headerTitle: ''}} name="UserCreate" component={UserCreate}/>
