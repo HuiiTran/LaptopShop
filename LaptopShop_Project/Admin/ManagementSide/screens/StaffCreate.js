@@ -32,18 +32,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const StaffCreate = ({navigation}) => {
     const[isLoading, setIsLoading] = useState(false);
     const[data, setData] = useState(null);
-    const[newPassword, setNewPassword] = useState();
-    const[oldPassword, setOldPassword] = useState();
-    
+
+    const[password, setPassword] = useState();
     const[userName, setUserName] = useState();
     const[email, setEmail] = useState();
     const[address, setAddress] = useState();
     const[name, setName] = useState();
     const[phoneNumber, setPhoneNumber] = useState();
     const[salary, setSalary] = useState();
-    const[image, setImage] = useState();
+
 
     const[selectedImage, setSelectedImage] = useState();
+    const[isImageSelected, setIsImageSelected] = useState(false);
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -82,14 +82,13 @@ const StaffCreate = ({navigation}) => {
 
   var form = new FormData();
   form.append('UserName', userName );
-  form.append('PassWord', newPassword);
+  form.append('PassWord', password);
   form.append('Email', email);
   form.append('Address', address);
   form.append('Name', name);
   form.append('PhoneNumber', phoneNumber);
+  form.append('Image', selectedImage);
   form.append('Salary', salary);
-
-
 
 
   const OpenLibrary = () => {
@@ -99,15 +98,18 @@ const StaffCreate = ({navigation}) => {
       maxHeight: 2000,
       maxWidth: 2000,
     };
-
+    setIsImageSelected(false);
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
+        setIsImageSelected(false);
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
+        setIsImageSelected(false);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
+        setIsImageSelected(true);
       }
     });
   }
@@ -117,12 +119,36 @@ const StaffCreate = ({navigation}) => {
               <ActivityIndicator />
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View >
+      <ScrollView >
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+            {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<View/>)}
           </TouchableOpacity>
         </View>
+      <Text>UserName</Text>
+          <TextInput
+                  placeholder="UserName"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="UserName"
+                  returnKeyType="next"
+                  value={userName}
+                  onChangeText={(text) => setUserName(text)}
+                  //selectTextOnFocus={false}
+                  autoCapitalize="none"
+              />
+      <Text>Password</Text>
+          <TextInput
+                  placeholder="Password"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="Password"
+                  returnKeyType="next"
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
+                  //selectTextOnFocus={false}
+                  autoCapitalize="none"
+              />
       <Text>E-mail</Text>
           <TextInput
                   placeholder="E-mail"
@@ -132,18 +158,6 @@ const StaffCreate = ({navigation}) => {
                   returnKeyType="next"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
-                  autoCapitalize="none"
-              />
-      <Text>UserName</Text>
-          <TextInput
-                  placeholder="UserName"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="UserName"
-                  returnKeyType="next"
-                  value={userName}
-                  //onChangeText={(text) => setUserName(text)}
-                  //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
       <Text>Address</Text>
@@ -190,7 +204,7 @@ const StaffCreate = ({navigation}) => {
                   keyboardType="numeric"
               />
               <Button title="Create" onPress={() => console.log(form)}/>
-              </View>
+              </ScrollView>
               </TouchableWithoutFeedback>
             )}
     </View>
