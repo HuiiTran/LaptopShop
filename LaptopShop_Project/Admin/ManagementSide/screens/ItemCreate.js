@@ -34,6 +34,7 @@ const ItemCreate = ({navigation}) => {
 
 
   const[data, setData] = useState(null);
+
   const[name, setName] = useState();
   const[storeId, setStoreId] = useState();
   const[classify, setClassify] = useState();
@@ -41,10 +42,8 @@ const ItemCreate = ({navigation}) => {
   const[price, setPrice] = useState();
   const[quantity, setQuantity] = useState();
   const[isAvailable, setIsAvailable] = useState();
-
-  const[image, setImage] = useState();
-
-    const[selectedImage, setSelectedImage] = useState();
+  const[selectedImage, setSelectedImage] = useState();
+  const[isImageSelected, setIsImageSelected] = useState(false);
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -85,6 +84,7 @@ const ItemCreate = ({navigation}) => {
   form.append('Price', price);
   form.append('Quantity', quantity);
   form.append('isAvailable', isAvailable);
+  form.append('Image', selectedImage);
   //form.append('Image')
 
 
@@ -124,15 +124,18 @@ const OpenLibrary = () => {
     maxHeight: 2000,
     maxWidth: 2000,
   };
-  console.log('hello')
+  setIsImageSelected(false);
   launchImageLibrary(options, (response) => {
     if (response.didCancel) {
       console.log('User cancelled image picker');
+      setIsImageSelected(false);
     } else if (response.error) {
       console.log('Image picker error: ', response.error);
+      setIsImageSelected(false);
     } else {
       let imageUri = response.uri || response.assets?.[0]?.uri;
       setSelectedImage(imageUri);
+      setIsImageSelected(true);
     }
   });
 }
@@ -141,7 +144,7 @@ const OpenLibrary = () => {
     <ScrollView>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+            {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<View />) }
           </TouchableOpacity>
       </View>
       <Text>Name</Text>

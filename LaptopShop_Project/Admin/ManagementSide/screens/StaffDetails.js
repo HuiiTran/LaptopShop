@@ -45,6 +45,8 @@ const StaffDetails = ({navigation, route}) => {
     const[image, setImage] = useState();
 
     const[selectedImage, setSelectedImage] = useState();
+    const[isImageSelected, setIsImageSelected] = useState(false);
+
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -89,7 +91,7 @@ const StaffDetails = ({navigation, route}) => {
   form.append('Name', name);
   form.append('PhoneNumber', phoneNumber);
   form.append('Salary', salary);
-
+  form.append('Image', selectedImage);
 
 
 
@@ -104,11 +106,14 @@ const StaffDetails = ({navigation, route}) => {
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
+        setIsImageSelected(false);
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
+        setIsImageSelected(false);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
+        setIsImageSelected(true);
       }
     });
   }
@@ -121,7 +126,7 @@ const StaffDetails = ({navigation, route}) => {
       <ScrollView >
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
         </View>
       <Text>E-mail</Text>
@@ -192,7 +197,7 @@ const StaffDetails = ({navigation, route}) => {
                   keyboardType="numeric"
               />
               <Button title="Update" onPress={() => console.log(form)}/>
-              <Button title="Delete" onPress={() => console.log(form)}/>
+              <Button title="Delete" onPress={() => navigation.goBack()}/>
               </ScrollView>
               </TouchableWithoutFeedback>
             )}

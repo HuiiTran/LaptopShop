@@ -44,6 +44,8 @@ const UserDetails = ({navigation, route}) => {
     const[image, setImage] = useState();
 
     const[selectedImage, setSelectedImage] = useState();
+    const[isImageSelected, setIsImageSelected] = useState(false);
+
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -102,11 +104,14 @@ const UserDetails = ({navigation, route}) => {
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
+        setIsImageSelected(false);
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
+        setIsImageSelected(false);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
+        setIsImageSelected(true);
       }
     });
   }
@@ -119,7 +124,7 @@ const UserDetails = ({navigation, route}) => {
       <ScrollView >
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
         </View>
 
@@ -180,6 +185,7 @@ const UserDetails = ({navigation, route}) => {
                   keyboardType="phone-pad"
               />
               <Button title="Update" onPress={() => console.log(form)}/>
+              <Button title="Delete" onPress={() => navigation.goBack()}/>
               </ScrollView>
               </TouchableWithoutFeedback>
             )}

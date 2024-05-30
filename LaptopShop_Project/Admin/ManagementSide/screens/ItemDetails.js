@@ -45,7 +45,8 @@ const ItemDetails = ({navigation, route}) => {
 
   const[image, setImage] = useState();
 
-    const[selectedImage, setSelectedImage] = useState();
+  const[selectedImage, setSelectedImage] = useState();
+  const[isImageSelected, setIsImageSelected] = useState(false);
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
@@ -86,8 +87,7 @@ const ItemDetails = ({navigation, route}) => {
   form.append('Price', price);
   form.append('Quantity', quantity);
   form.append('isAvailable', isAvailable);
-  //form.append('Image')
-
+  form.append('Image', selectedImage);
 
   const radioButtons_isAvailable = useMemo(() => ([
     {
@@ -125,15 +125,18 @@ const OpenLibrary = () => {
     maxHeight: 2000,
     maxWidth: 2000,
   };
-  console.log('hello')
+
   launchImageLibrary(options, (response) => {
     if (response.didCancel) {
       console.log('User cancelled image picker');
+      setIsImageSelected(false);
     } else if (response.error) {
       console.log('Image picker error: ', response.error);
+      setIsImageSelected(false);
     } else {
       let imageUri = response.uri || response.assets?.[0]?.uri;
       setSelectedImage(imageUri);
+      setIsImageSelected(true);
     }
   });
 }
@@ -142,7 +145,7 @@ const OpenLibrary = () => {
     <ScrollView>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
       </View>
       <Text>Name</Text>
@@ -223,10 +226,9 @@ const OpenLibrary = () => {
       </View>
               <Button title="Update" onPress={()=> {
                 console.log(form);
+                console.log(`data:image/jpeg;base64,${image}`);
               }}/>
-              <Button title="Delete" onPress={()=> {
-                console.log(form);
-              }}/>
+              <Button title="Delete" onPress={() => navigation.goBack()}/>
     </ScrollView>
     </TouchableWithoutFeedback>
   );

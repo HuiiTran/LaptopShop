@@ -44,6 +44,7 @@ const Profile = ({navigation}) => {
   const[image, setImage] = useState();
 
   const[selectedImage, setSelectedImage] = useState();
+  const[isImageSelected, setIsImageSelected] = useState(false);
 
   useEffect(() => {
     const getInfor = async () => {
@@ -78,14 +79,18 @@ const Profile = ({navigation}) => {
       maxHeight: 2000,
       maxWidth: 2000,
     };
+    //setIsImageSelected(false);
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
+        setIsImageSelected(false);
       } else if (response.error) {
         console.log('Image picker error: ', response.error);
+        setIsImageSelected(false);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
         setSelectedImage(imageUri);
+        setIsImageSelected(true);
       }
     });
   }
@@ -96,7 +101,7 @@ const Profile = ({navigation}) => {
       <View>
         <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            <Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />
+          {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
         </View>
           {/* <Text>Profile</Text> */}
