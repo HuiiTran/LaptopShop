@@ -19,6 +19,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 
@@ -50,7 +51,7 @@ const ItemList = ({navigation}) => {
       }
   },[Refreshing]);
   return (
-    <View>
+    <View style={{flex: 1}}>
         <FlatList
           data={data}
           initialNumToRender={20}
@@ -81,6 +82,9 @@ const ItemList = ({navigation}) => {
             setRefreshing(true);
           }}
         />
+        <TouchableOpacity style={styles.button_style} onPress={() => navigation.navigate('ItemCreate')}>
+          <Text style={styles.button_text}>+</Text>
+        </TouchableOpacity>
     </View>
 
   );
@@ -101,4 +105,17 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
   },
+  button_style : {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#ee6e73',
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+  },
+  button_text: {
+    alignSelf: 'center',
+    fontSize: 40,
+  }
 });

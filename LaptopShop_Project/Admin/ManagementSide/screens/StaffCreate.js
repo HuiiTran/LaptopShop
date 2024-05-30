@@ -29,9 +29,8 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const StaffCreate = ({navigation, route}) => {
-    const {userId} = route.params;
-    const[isLoading, setIsLoading] = useState(true);
+const StaffCreate = ({navigation}) => {
+    const[isLoading, setIsLoading] = useState(false);
     const[data, setData] = useState(null);
     const[newPassword, setNewPassword] = useState();
     const[oldPassword, setOldPassword] = useState();
@@ -48,29 +47,29 @@ const StaffCreate = ({navigation, route}) => {
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
-    try {
-      fetch(ProjectBaseUrl + '/staff/' + userId)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setData(responseJson);
-        setOldPassword(responseJson.passWord);
-        setEmail(responseJson.email);
-        setAddress(responseJson.address);
-        setName(responseJson.name);
-        setPhoneNumber(responseJson.phoneNumber);
-        setSalary(responseJson.salary);
-        setUserName(responseJson.userName);
-        setImage(responseJson.image);
-        //console.log(responseJson);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally{
-      setIsLoading(false);
-    }
+    // try {
+    //   fetch(ProjectBaseUrl + '/staff/' + userId)
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     setData(responseJson);
+    //     setOldPassword(responseJson.passWord);
+    //     setEmail(responseJson.email);
+    //     setAddress(responseJson.address);
+    //     setName(responseJson.name);
+    //     setPhoneNumber(responseJson.phoneNumber);
+    //     setSalary(responseJson.salary);
+    //     setUserName(responseJson.userName);
+    //     setImage(responseJson.image);
+    //     //console.log(responseJson);
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // } finally{
+    //   setIsLoading(false);
+    // }
   };
   useEffect(() => {
-    setIsLoading(true);
+    //setIsLoading(true);
     getList();
   // if(Refreshing === true)
   //     {
@@ -144,7 +143,6 @@ const StaffCreate = ({navigation, route}) => {
                   returnKeyType="next"
                   value={userName}
                   //onChangeText={(text) => setUserName(text)}
-                  editable={false}
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
@@ -191,7 +189,7 @@ const StaffCreate = ({navigation, route}) => {
                   onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
                   keyboardType="numeric"
               />
-              <Button title="Update" onPress={() => console.log(form)}/>
+              <Button title="Create" onPress={() => console.log(form)}/>
               </View>
               </TouchableWithoutFeedback>
             )}

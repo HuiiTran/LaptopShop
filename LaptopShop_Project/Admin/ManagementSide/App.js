@@ -47,7 +47,7 @@ import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry.js';
 import { jwtDecode } from 'jwt-decode';
 
 const Stack = createNativeStackNavigator();
-const App = (navigation) => {
+const App = () => {
   const[isExpire, setIsExpire] = useState();
 
   useEffect(()=>{

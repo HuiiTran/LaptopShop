@@ -29,9 +29,9 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const UserCreate = ({navigation, route}) => {
-    const {userId} = route.params;
-    const[isLoading, setIsLoading] = useState(true);
+const UserCreate = ({navigation}) => {
+
+    const[isLoading, setIsLoading] = useState(false);
     const[data, setData] = useState(null);
     const[newPassword, setNewPassword] = useState();
     const[oldPassword, setOldPassword] = useState();
@@ -41,36 +41,35 @@ const UserCreate = ({navigation, route}) => {
     const[address, setAddress] = useState();
     const[name, setName] = useState();
     const[phoneNumber, setPhoneNumber] = useState();
-    const[salary, setSalary] = useState();
     const[image, setImage] = useState();
 
     const[selectedImage, setSelectedImage] = useState();
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
-    try {
-      fetch(ProjectBaseUrl + '/staff/' + userId)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setData(responseJson);
-        setOldPassword(responseJson.passWord);
-        setEmail(responseJson.email);
-        setAddress(responseJson.address);
-        setName(responseJson.name);
-        setPhoneNumber(responseJson.phoneNumber);
-        setSalary(responseJson.salary);
-        setUserName(responseJson.userName);
-        setImage(responseJson.image);
-        //console.log(responseJson);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally{
-      setIsLoading(false);
-    }
+    // try {
+    //   fetch(ProjectBaseUrl + '/staff/' + userId)
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     setData(responseJson);
+    //     setOldPassword(responseJson.passWord);
+    //     setEmail(responseJson.email);
+    //     setAddress(responseJson.address);
+    //     setName(responseJson.name);
+    //     setPhoneNumber(responseJson.phoneNumber);
+    //     setSalary(responseJson.salary);
+    //     setUserName(responseJson.userName);
+    //     setImage(responseJson.image);
+    //     //console.log(responseJson);
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // } finally{
+    //   setIsLoading(false);
+    // }
   };
   useEffect(() => {
-    setIsLoading(true);
+    //setIsLoading(true);
     getList();
   // if(Refreshing === true)
   //     {
@@ -88,7 +87,7 @@ const UserCreate = ({navigation, route}) => {
   form.append('Address', address);
   form.append('Name', name);
   form.append('PhoneNumber', phoneNumber);
-  form.append('Salary', salary);
+
 
 
 
@@ -143,8 +142,7 @@ const UserCreate = ({navigation, route}) => {
                   label="UserName"
                   returnKeyType="next"
                   value={userName}
-                  //onChangeText={(text) => setUserName(text)}
-                  editable={false}
+                  onChangeText={(text) => setUserName(text)}
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
@@ -158,7 +156,7 @@ const UserCreate = ({navigation, route}) => {
                   returnKeyType="next"
                   onChangeText={(text) => setAddress(text)}
               />
-        <Text>Staff's name</Text>
+        <Text>User's name</Text>
           <TextInput
                   placeholder="Name"
                   placeholderColor="#c4c3cb"
@@ -169,7 +167,7 @@ const UserCreate = ({navigation, route}) => {
                   onChangeText={(text) => setName(text)}
                   autoCapitalize="none"
               />
-        <Text>Staff's phone number</Text>
+        <Text>User's phone number</Text>
           <TextInput
                   placeholder="Phone number"
                   placeholderColor="#c4c3cb"
@@ -180,18 +178,8 @@ const UserCreate = ({navigation, route}) => {
                   onChangeText={(text) => setPhoneNumber(text)}
                   keyboardType="phone-pad"
               />
-        <Text>Staff's salary</Text>
-          <TextInput
-                  placeholder="Salary"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  value={(isNaN(salary) ? ('') : salary.toLocaleString('en-US'))}
-                  label="Salary"
-                  returnKeyType="done"
-                  onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
-                  keyboardType="numeric"
-              />
-              <Button title="Update" onPress={() => console.log(form)}/>
+
+              <Button title="Create" onPress={() => console.log(form)}/>
               </View>
               </TouchableWithoutFeedback>
             )}

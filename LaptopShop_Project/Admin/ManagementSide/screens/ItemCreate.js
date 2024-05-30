@@ -30,8 +30,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 
 
-const ItemCreate = ({navigation, route}) => {
-  const {itemId} = route.params;
+const ItemCreate = ({navigation}) => {
 
 
   const[data, setData] = useState(null);
@@ -49,24 +48,24 @@ const ItemCreate = ({navigation, route}) => {
   //const [Refreshing, setRefreshing] = useState(false);
 
   const getList = async () => {
-    try {
-      fetch(ProjectBaseUrl + '/catalog-gateway/items/' + itemId)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setData(responseJson);
-        setName(responseJson.name);
-        setStoreId(responseJson.storeID);
-        setDescription(responseJson.description);
-        setPrice(responseJson.price);
-        setQuantity(responseJson.quantity);
-        setIsAvailable(responseJson.isAvailable);
-        setClassify(responseJson.classify);
-        setImage(responseJson.image[0]);
-        //console.log(responseJson);
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   fetch(ProjectBaseUrl + '/catalog-gateway/items/')
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     setData(responseJson);
+    //     setName(responseJson.name);
+    //     setStoreId(responseJson.storeID);
+    //     setDescription(responseJson.description);
+    //     setPrice(responseJson.price);
+    //     setQuantity(responseJson.quantity);
+    //     setIsAvailable(responseJson.isAvailable);
+    //     setClassify(responseJson.classify);
+    //     setImage(responseJson.image[0]);
+    //     //console.log(responseJson);
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   useEffect(() => {
     getList();
@@ -221,10 +220,7 @@ const OpenLibrary = () => {
 
           />
       </View>
-              <Button title="Update" onPress={()=> {
-                console.log(form);
-              }}/>
-              <Button title="Delete" onPress={()=> {
+              <Button title="Create" onPress={()=> {
                 console.log(form);
               }}/>
     </ScrollView>
