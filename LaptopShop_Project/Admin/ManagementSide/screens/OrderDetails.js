@@ -40,7 +40,8 @@ const OrderDetails = ({navigation, route}) => {
     const[itemList, setItemList] = useState([]);
     const[totalPrice, setTotalPrice] = useState();
     const[quantity, setQuantity] = useState([]);
-
+    const[userId, setUserId] = useState();
+    const[userAddress, setUserAddress] = useState();
 
   const putData = {
     state: state,
@@ -65,6 +66,20 @@ const OrderDetails = ({navigation, route}) => {
         setItemList(responseJson[0].result.catalogItems);
         setTotalPrice(responseJson[0].result.totalPrice);
         setQuantity(responseJson[0].result.quantity);
+        setUserId(responseJson[0].result.userId);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+    }
+  };
+  const getUser = async () => {
+    try {
+      fetch(ProjectBaseUrl + '/users/' + userId)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setUserAddress(responseJson.address);
+        console.log(responseJson.address);
       });
     } catch (error) {
       console.error(error);
@@ -78,6 +93,8 @@ const OrderDetails = ({navigation, route}) => {
   //       getList();
   //       setRefreshing(false);
   //     }
+    getUser();
+    getUser();
   },[]);
   const radioButtons_isAvailable = useMemo(() => ([
     {

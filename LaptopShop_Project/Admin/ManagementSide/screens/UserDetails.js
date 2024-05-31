@@ -47,7 +47,33 @@ const UserDetails = ({navigation, route}) => {
     const[isImageSelected, setIsImageSelected] = useState(false);
 
   //const [Refreshing, setRefreshing] = useState(false);
-
+  const Update = async () => {
+    var form = new FormData();
+    form.append('UserName', userName );
+    form.append('PassWord', newPassword);
+    form.append('Email', email);
+    form.append('Address', address);
+    form.append('Name', name);
+    form.append('PhoneNumber', phoneNumber);
+    if(isImageSelected === true)
+    {
+      form.append('Image', {
+      uri: selectedImage,
+      name: 'test.jpg',
+      type: 'image/jpeg',
+    });
+  }
+    console.log(form._parts);
+    const requestOptions = {
+      method: 'PUT', // Specify the request method
+      headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
+      body: form, // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/users/' + userId,requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/users/' + userId)
@@ -55,6 +81,7 @@ const UserDetails = ({navigation, route}) => {
       .then((responseJson) => {
         setData(responseJson);
         setOldPassword(responseJson.passWord);
+        setNewPassword(responseJson.passWord);
         setEmail(responseJson.email);
         setAddress(responseJson.address);
         setName(responseJson.name);
@@ -81,13 +108,13 @@ const UserDetails = ({navigation, route}) => {
 
 
 
-  var form = new FormData();
-  form.append('UserName', userName );
-  form.append('PassWord', newPassword);
-  form.append('Email', email);
-  form.append('Address', address);
-  form.append('Name', name);
-  form.append('PhoneNumber', phoneNumber);
+  // var form = new FormData();
+  // form.append('UserName', userName );
+  // form.append('PassWord', newPassword);
+  // form.append('Email', email);
+  // form.append('Address', address);
+  // form.append('Name', name);
+  // form.append('PhoneNumber', phoneNumber);
 
 
 
@@ -154,6 +181,19 @@ const UserDetails = ({navigation, route}) => {
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
+      <Text>Password</Text>
+          <TextInput
+                  placeholder="Password"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="Password"
+                  returnKeyType="next"
+                  value={newPassword}
+                  onChangeText={(text) => setNewPassword(text)}
+                  //editable={false}
+                  //selectTextOnFocus={false}
+                  autoCapitalize="none"
+              />
       <Text>User's address</Text>
           <TextInput
                   placeholder="Address"
@@ -186,7 +226,7 @@ const UserDetails = ({navigation, route}) => {
                   onChangeText={(text) => setPhoneNumber(text)}
                   keyboardType="phone-pad"
               />
-              <Button title="Update" onPress={() => console.log(form)}/>
+              <Button title="Update" onPress={() => {Update(); navigation.goBack()}}/>
               <Button title="Delete" onPress={() => navigation.goBack()}/>
               </ScrollView>
               </TouchableWithoutFeedback>

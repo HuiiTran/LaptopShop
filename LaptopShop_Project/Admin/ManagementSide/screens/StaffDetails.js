@@ -44,10 +44,38 @@ const StaffDetails = ({navigation, route}) => {
     const[salary, setSalary] = useState();
     const[image, setImage] = useState();
 
+    const[putImage, setPutImage] = useState();
     const[selectedImage, setSelectedImage] = useState();
     const[isImageSelected, setIsImageSelected] = useState(false);
 
   //const [Refreshing, setRefreshing] = useState(false);
+  
+  const Update = async () => {
+    var form = new FormData();
+    form.append('UserName', userName );
+    form.append('PassWord', oldPassword);
+    form.append('Email', email);
+    form.append('Address', address);
+    form.append('Name', name);
+    form.append('PhoneNumber', phoneNumber);
+    form.append('Salary', salary);
+    form.append('Image', {
+      uri: selectedImage,
+      name: 'test.jpg',
+      type: 'image/jpeg',
+    });
+    console.log(form._parts);
+    const requestOptions = {
+      method: 'PUT', // Specify the request method
+      headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
+      body: form, // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/staff/' + userId,requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
+
 
   const getList = async () => {
     try {
@@ -83,15 +111,15 @@ const StaffDetails = ({navigation, route}) => {
 
 
 
-  var form = new FormData();
-  form.append('UserName', userName );
-  form.append('PassWord', newPassword);
-  form.append('Email', email);
-  form.append('Address', address);
-  form.append('Name', name);
-  form.append('PhoneNumber', phoneNumber);
-  form.append('Salary', salary);
-  form.append('Image', selectedImage);
+  // var form = new FormData();
+  // form.append('UserName', userName );
+  // form.append('PassWord', oldPassword);
+  // form.append('Email', email);
+  // form.append('Address', address);
+  // form.append('Name', name);
+  // form.append('PhoneNumber', phoneNumber);
+  // form.append('Salary', salary);
+  // form.append('Image', []);
 
 
 
@@ -114,6 +142,9 @@ const StaffDetails = ({navigation, route}) => {
         setImage(UploadImage);
       } else {
         let imageUri = response.uri || response.assets?.[0]?.uri;
+        // let imageorginalPath = response.originalPath || response.assets?.[0]?.originalPath;
+        // console.log(imageorginalPath);
+        // setPutImage(imageorginalPath);
         setSelectedImage(imageUri);
         setIsImageSelected(true);
       }
@@ -152,6 +183,19 @@ const StaffDetails = ({navigation, route}) => {
                   value={userName}
                   //onChangeText={(text) => setUserName(text)}
                   editable={false}
+                  //selectTextOnFocus={false}
+                  autoCapitalize="none"
+              />
+      <Text>Password</Text>
+          <TextInput
+                  placeholder="Password"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="Password"
+                  returnKeyType="next"
+                  value={oldPassword}
+                  onChangeText={(text) => setOldPassword(text)}
+                  //editable={false}
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
@@ -198,7 +242,7 @@ const StaffDetails = ({navigation, route}) => {
                   onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
                   keyboardType="numeric"
               />
-              <Button title="Update" onPress={() => console.log(form)}/>
+              <Button title="Update" onPress={() => {Update();}}/>
               <Button title="Delete" onPress={() => navigation.goBack()}/>
               </ScrollView>
               </TouchableWithoutFeedback>
