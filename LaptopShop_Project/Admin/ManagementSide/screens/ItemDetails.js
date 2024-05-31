@@ -49,6 +49,34 @@ const ItemDetails = ({navigation, route}) => {
   const[isImageSelected, setIsImageSelected] = useState(false);
   //const [Refreshing, setRefreshing] = useState(false);
 
+  const Update = async () => {
+    var form = new FormData();
+    form.append('Name', name );
+    form.append('StoreID', storeId);
+    form.append('Classify', classify);
+    form.append('Description', description);
+    form.append('Price', price);
+    form.append('Quantity', quantity);
+    form.append('isAvailable', isAvailable);
+    if(isImageSelected === true)
+    {
+      form.append('Image',{
+        uri: selectedImage,
+        name: 'test.jpg',
+        type: 'image/jpeg',
+    });
+  }
+    console.log(form._parts);
+    const requestOptions = {
+      method: 'PUT', // Specify the request method
+      headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
+      body: form, // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/catalog-gateway/items/' + itemId,requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/catalog-gateway/items/' + itemId)
@@ -79,15 +107,15 @@ const ItemDetails = ({navigation, route}) => {
   },[]);
 
 
-  var form = new FormData();
-  form.append('Name', name );
-  form.append('StoreID', storeId);
-  form.append('Classify', classify);
-  form.append('Description', description);
-  form.append('Price', price);
-  form.append('Quantity', quantity);
-  form.append('isAvailable', isAvailable);
-  form.append('Image', selectedImage);
+  // var form = new FormData();
+  // form.append('Name', name );
+  // form.append('StoreID', storeId);
+  // form.append('Classify', classify);
+  // form.append('Description', description);
+  // form.append('Price', price);
+  // form.append('Quantity', quantity);
+  // form.append('isAvailable', isAvailable);
+  // form.append('Image', selectedImage);
 
   const radioButtons_isAvailable = useMemo(() => ([
     {
@@ -227,8 +255,8 @@ const OpenLibrary = () => {
           />
       </View>
               <Button title="Update" onPress={()=> {
-                console.log(form);
-                console.log(`data:image/jpeg;base64,${image}`);
+                Update();
+                navigation.goBack();
               }}/>
               <Button title="Delete" onPress={() => navigation.goBack()}/>
     </ScrollView>

@@ -226,7 +226,7 @@ const UserDetails = ({navigation, route}) => {
                   onChangeText={(text) => setPhoneNumber(text)}
                   keyboardType="phone-pad"
               />
-              <Button title="Update" onPress={() => {Update(); navigation.goBack()}}/>
+              <Button title="Update" onPress={() => {Update(); navigation.goBack();}}/>
               <Button title="Delete" onPress={() => navigation.goBack()}/>
               </ScrollView>
               </TouchableWithoutFeedback>

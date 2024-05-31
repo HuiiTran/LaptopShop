@@ -46,46 +46,45 @@ const ItemCreate = ({navigation}) => {
   const[isImageSelected, setIsImageSelected] = useState(false);
   //const [Refreshing, setRefreshing] = useState(false);
 
-  const getList = async () => {
-    // try {
-    //   fetch(ProjectBaseUrl + '/catalog-gateway/items/')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     setData(responseJson);
-    //     setName(responseJson.name);
-    //     setStoreId(responseJson.storeID);
-    //     setDescription(responseJson.description);
-    //     setPrice(responseJson.price);
-    //     setQuantity(responseJson.quantity);
-    //     setIsAvailable(responseJson.isAvailable);
-    //     setClassify(responseJson.classify);
-    //     setImage(responseJson.image[0]);
-    //     //console.log(responseJson);
-    //   });
-    // } catch (error) {
-    //   console.error(error);
-    // }
+  const Create = async () => {
+    var form = new FormData();
+    form.append('Name', name );
+    form.append('StoreID', storeId);
+    form.append('Classify', classify);
+    form.append('Description', description);
+    form.append('Price', price);
+    form.append('Quantity', quantity);
+    form.append('isAvailable', isAvailable);
+    form.append('Image',{
+        uri: selectedImage,
+        name: 'test.jpg',
+        type: 'image/jpeg',
+    });
+    console.log(form._parts);
+    const requestOptions = {
+      method: 'POST', // Specify the request method
+      headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
+      body: form, // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/catalog-gateway/items/',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
   };
   useEffect(() => {
-    getList();
-  // if(Refreshing === true)
-  //     {
-  //       getList();
-  //       setRefreshing(false);
-  //     }
   },[]);
 
 
-  var form = new FormData();
-  form.append('Name', name );
-  form.append('StoreID', storeId);
-  form.append('Classify', classify);
-  form.append('Description', description);
-  form.append('Price', price);
-  form.append('Quantity', quantity);
-  form.append('isAvailable', isAvailable);
-  form.append('Image', selectedImage);
-  //form.append('Image')
+  // var form = new FormData();
+  // form.append('Name', name );
+  // form.append('StoreID', storeId);
+  // form.append('Classify', classify);
+  // form.append('Description', description);
+  // form.append('Price', price);
+  // form.append('Quantity', quantity);
+  // form.append('isAvailable', isAvailable);
+  // form.append('Image', selectedImage);
+  // //form.append('Image')
 
 
   const radioButtons_isAvailable = useMemo(() => ([
@@ -226,7 +225,8 @@ const OpenLibrary = () => {
           />
       </View>
               <Button title="Create" onPress={()=> {
-                console.log(form);
+                Create();
+                navigation.goBack();
               }}/>
     </ScrollView>
     </TouchableWithoutFeedback>

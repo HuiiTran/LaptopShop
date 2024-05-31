@@ -49,7 +49,7 @@ const StaffDetails = ({navigation, route}) => {
     const[isImageSelected, setIsImageSelected] = useState(false);
 
   //const [Refreshing, setRefreshing] = useState(false);
-  
+
   const Update = async () => {
     var form = new FormData();
     form.append('UserName', userName );
@@ -242,7 +242,7 @@ const StaffDetails = ({navigation, route}) => {
                   onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
                   keyboardType="numeric"
               />
-              <Button title="Update" onPress={() => {Update();}}/>
+              <Button title="Update" onPress={() =>  {Update(); navigation.goBack();}}/>
               <Button title="Delete" onPress={() => navigation.goBack()}/>
               </ScrollView>
               </TouchableWithoutFeedback>
