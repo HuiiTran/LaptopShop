@@ -30,11 +30,20 @@ const Management = ({navigation}) => {
   const[user, setUser] = useState('Unhealthy');
   const[bill, setBill] = useState('Unhealthy');
   const[item, setItem] = useState('Unhealthy');
+
+  const[authenTime, setAuthenTime] = useState();
+  const[adminTime, setAdminTime] = useState();
+  const[staffTime, setStaffTime] = useState();
+  const[userTime, setUserTime] = useState();
+  const[billTime, setBillTime] = useState();
+  const[itemTime, setItemTime] = useState();
+
   const getAuthenHealthDetails = async () => {
     let controller = new AbortController();
       setTimeout( () => {
           controller.abort();
       }, MINUTE_MS);
+    const start = new Date();
     fetch(ProjectBaseUrl + '/authenhealth', {signal: controller.signal})
       .then((result) => result.text())
       .then((resultText) => setAuthen(resultText))
@@ -44,12 +53,14 @@ const Management = ({navigation}) => {
           setAuthen('Unhealthy');
         }
       });
+    setAuthenTime((new Date() - start));
   };
   const getAdminHealthDetails = async () => {
     let controller = new AbortController();
       setTimeout( () => {
           controller.abort();
       }, MINUTE_MS);
+      const start = new Date();
     fetch(ProjectBaseUrl + '/adminhealth', {signal: controller.signal})
       .then((result) => result.text())
       .then((resultText) => setAdmin(resultText))
@@ -59,6 +70,7 @@ const Management = ({navigation}) => {
           setAdmin('Unhealthy');
         }
       });
+      setAdminTime((new Date() - start));
   };
 
   const getStaffHealthDetails = async () => {
@@ -66,6 +78,7 @@ const Management = ({navigation}) => {
       setTimeout( () => {
           controller.abort();
       }, MINUTE_MS);
+      const start = new Date();
     fetch(ProjectBaseUrl + '/staffhealth', {signal: controller.signal})
       .then((result) => result.text())
       .then((resultText) => setStaff(resultText))
@@ -75,12 +88,14 @@ const Management = ({navigation}) => {
           setStaff('Unhealthy');
         }
       });
+      setStaffTime((new Date() - start));
   };
   const getUserHealthDetails = async () => {
     let controller = new AbortController();
       setTimeout( () => {
           controller.abort();
       }, MINUTE_MS);
+      const start = new Date();
     fetch(ProjectBaseUrl + '/usershealth', {signal: controller.signal})
       .then((result) => result.text())
       .then((resultText) => setUser(resultText))
@@ -90,12 +105,14 @@ const Management = ({navigation}) => {
           setUser('Unhealthy');
         }
       });
+      setUserTime((new Date() - start));
   };
   const getBillHealthDetails = async () => {
     let controller = new AbortController();
       setTimeout( () => {
           controller.abort();
       }, MINUTE_MS);
+      const start = new Date();
     fetch(ProjectBaseUrl + '/billhealth', {signal: controller.signal})
       .then((result) => result.text())
       .then((resultText) => setBill(resultText))
@@ -105,12 +122,14 @@ const Management = ({navigation}) => {
           setBill('Unhealthy');
         }
       });
+      setBillTime((new Date() - start));
   };
   const getItemHealthDetails = async () => {
     let controller = new AbortController();
       setTimeout( () => {
           controller.abort();
       }, MINUTE_MS);
+      const start = new Date();
     fetch(ProjectBaseUrl + '/catalog-gatewayhealth', {signal: controller.signal})
       .then((result) => result.text())
       .then((resultText) => setItem(resultText))
@@ -120,6 +139,7 @@ const Management = ({navigation}) => {
           setItem('Unhealthy');
         }
       });
+      setItemTime((new Date() - start));
   };
   const Refresh = () =>{
     getAuthenHealthDetails();
@@ -142,12 +162,12 @@ const Management = ({navigation}) => {
       return () => clearInterval(interval);
 
   }, []);
-  const RenderCheckHealth = (input, text) =>{
+  const RenderCheckHealth = (input, text, time) =>{
       return (
             <View style={styles.item_container}>
               <Text>
                 <Text>{text}</Text>
-                
+                <Text>{time} ms</Text>
               </Text>
               <Text style={styles.health_text}>{input}</Text>
               {input != "Healthy" ? (
@@ -189,22 +209,22 @@ const Management = ({navigation}) => {
 
           <View style={styles.list_health}>
             <View >
-              {RenderCheckHealth(authen, 'Authentication Service: ')}
+              {RenderCheckHealth(authen, 'Authentication Service: ', authenTime)}
             </View>
             <View>
-              {RenderCheckHealth(admin, 'Admin Service: ')}
+              {RenderCheckHealth(admin, 'Admin Service: ', adminTime)}
             </View>
             <View>
-              {RenderCheckHealth(staff, 'Staff Service: ')}
+              {RenderCheckHealth(staff, 'Staff Service: ', staffTime)}
             </View>
             <View>
-              {RenderCheckHealth(user, 'User Service: ')}
+              {RenderCheckHealth(user, 'User Service: ', userTime)}
             </View>
             <View>
-              {RenderCheckHealth(bill, 'Bill Service: ')}
+              {RenderCheckHealth(bill, 'Bill Service: ', billTime)}
             </View>
             <View>
-              {RenderCheckHealth(item, 'Product Service: ')}
+              {RenderCheckHealth(item, 'Product Service: ', itemTime)}
             </View>
             {/* <Button title="Refresh" onPress={() => Refresh()}/> */}
           </View>
