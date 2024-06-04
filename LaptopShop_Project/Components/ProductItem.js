@@ -31,7 +31,7 @@ const ProductItem = props => {
             </View>
 
             <View style={styles.details}>
-              <Text style={styles.title}>{props.title}</Text>
+              <Text numberOfLines={1} style={styles.title}>{props.title}</Text>
               <Text style={styles.preprice}>{props.preprice.toLocaleString()}vnđ</Text>
               <Text style={styles.price}>{props.price.toLocaleString()}vnđ</Text>
             </View>
