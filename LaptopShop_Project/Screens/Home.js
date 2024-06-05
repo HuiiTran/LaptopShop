@@ -1,25 +1,23 @@
 import React from 'react'
 import {
-    SafeAreaView,
     ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
-    useColorScheme,
     View,
     Image,
-    FlatList
+    FlatList,
   } from 'react-native';
 import userProfile from '../assets/icons/UserProfile.png'
 import searchButton from '../assets/icons/SearchButton.png'
 import bulletin from '../assets/icons/Bulletin.png'
-import laptop from '../assets/icons/Laptop.png'
 import keyboard from '../assets/icons/Keyboard.png'
 import headphones from '../assets/icons/Headphones.png'
 import mouse from '../assets/icons/Mouse.png'
 import ram from '../assets/icons/Ram.png'
 import controller from '../assets/icons/Controller.png'
 import ProductItem from '../Components/ProductItem'
+import laptop from '../assets/icons/laptop.png'
+
 class Product {
     constructor(id, ownerId, title, imageUrl, description, preprice, price) {
       this.id = id;
@@ -140,57 +138,62 @@ class Product {
 
 const Home = (props) => {
   return (
-    <View style={{ flexDirection: 'column', gap:20, backgroundColor:'#FFF' }}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
       
         <View style={styles.container}>
             <Image source={userProfile} style={styles.image} />
             <Text style={styles.logo}>L & C</Text>
-            <Image source={searchButton} style={styles.image} />
+            <Image source={searchButton} style={{marginLeft: 10,
+        marginTop:10,
+        marginRight:15,
+        resizeMode: 'contain',
+          height: 35,
+          width: 35,}} />
         </View>
 
-        <View style={{ flexDirection: 'row', marginLeft:15 }}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginLeft:20}}>
             <Image style={styles.bulletin} source={bulletin} />
             <Image style = {styles.bulletin} source={bulletin} />
-        </View>
+        </ScrollView>
 
         <View style = {styles.line}></View>
       
-        <View style={{flexDirection: 'row', marginLeft:15, gap:20}}>
-            <View style={{flexDirection:'column', gap:2, alignItems:'center'}}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginLeft:20, marginTop:20}}>
+            <View style={styles.productType}>
                 <Image style={styles.productTypeImage}source={laptop}></Image>
                 <Text style={styles.productTypeText}>Laptop</Text>
             </View>
-            <View style={{flexDirection:'column', gap:2, alignItems:'center'}}>
+            <View style={styles.productType}>
                 <Image style={styles.productTypeImage}source={headphones}></Image>
-                <Text style={styles.productTypeText}>Laptop</Text>
+                <Text style={styles.productTypeText}>Headphones</Text>
             </View>
-            <View style={{flexDirection:'column', gap:2, alignItems:'center'}}>
+            <View style={styles.productType}>
                 <Image style={styles.productTypeImage}source={mouse}></Image>
-                <Text style={styles.productTypeText}>Laptop</Text>
+                <Text style={styles.productTypeText}>Mouse</Text>
             </View>
-            <View style={{flexDirection:'column', gap:2, alignItems:'center'}}>
+            <View style={styles.productType}>
                 <Image style={styles.productTypeImage}source={keyboard}></Image>
-                <Text style={styles.productTypeText}>Laptop</Text>
+                <Text style={styles.productTypeText}>Keyboard</Text>
             </View>
-            <View style={{flexDirection:'column', gap:2, alignItems:'center'}}>
+            <View style={styles.productType}>
                 <Image style={styles.productTypeImage}source={ram}></Image>
-                <Text style={styles.productTypeText}>Laptop</Text>
+                <Text style={styles.productTypeText}>Ram</Text>
             </View>
-            <View style={{flexDirection:'column', gap:2, alignItems:'center'}}>
+            <View style={styles.productType}>
                 <Image style={styles.productTypeImage}source={controller}></Image>
-                <Text style={styles.productTypeText}>Laptop</Text>
+                <Text style={styles.productTypeText}>Controller</Text>
             </View>
-        </View>
+        </ScrollView>
 
         <View style = {styles.line}></View>
 
-        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end'}}>
-            <Text style={{marginLeft:15, fontFamily:'Cuprum-Bold', fontSize:26, color:'#000'}}>New Arrivals</Text>
-            <Text style = {{fontFamily:'Cuprum-SemiBold', fontSize:22, color:'#2E67FF', marginRight:15}}>View All</Text>
+        <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end', marginTop:20}}>
+            <Text style={{marginLeft:20, fontFamily:'Cuprum-Bold', fontSize:26, color:'#000'}}>New Arrivals</Text>
+            <Text style = {{fontFamily:'Cuprum-SemiBold', fontSize:22, color:'#2E67FF', marginRight:20}}>View All</Text>
         </View>
         
         <FlatList
-            style={{marginLeft:10}}
+            style={{marginLeft:10, marginTop:10}}
             data={PRODUCTS}
             horizontal={false}
             numColumns={2}
@@ -208,38 +211,53 @@ const Home = (props) => {
             </ProductItem>
           )}/>
 
-    </View>
+    </ScrollView>
     
   )
 }
 
 const styles = StyleSheet.create({
+    scrollview:{
+      backgroundColor:'#FFF'
+    },
     image: {
-        marginLeft: 10,
-        marginTop:10,
-        marginRight:10,
-
+      marginLeft: 10,
+      marginTop:10,
+      marginRight:15,
+      resizeMode: 'contain',
+        height: 42,
+        width: 42,
     },
     container: {
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
+        padding:10
     },
     logo:{
-        paddingTop:15,
-        fontSize: 30,
+        paddingTop:7,
+        fontSize: 25,
         fontFamily: 'Cuprum-Bold',
         color:'#000000',
     },
     bulletin:{
-        marginRight:10
+      marginRight:10,
     },
     line:{
-        width:'100%',
+        width:'91%',
         height:2,
         backgroundColor:'#382F29',
         opacity: 0.2,
-        marginLeft:15
+        marginLeft:20,
+        marginTop:20,
+        marginRight:20
+
+    },
+    productType:{
+      flexDirection:'column', 
+      gap:2, 
+      alignItems:'center',
+      marginRight:20
     },
     productTypeText:{
         fontFamily:'Cuprum-Regular',
@@ -249,7 +267,6 @@ const styles = StyleSheet.create({
         width:50,
         height:50,
     }
-    
 })
 
 export default Home
