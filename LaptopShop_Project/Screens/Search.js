@@ -159,7 +159,7 @@ const Search = (props) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
       
-        <View style={styles.container}>
+      <View style={styles.container}>
             <Image source={userProfile} style={styles.image} />
             <Text style={styles.logo}>L & C</Text>
             <Image source={searchButton} style={{marginLeft: 10,
@@ -175,7 +175,7 @@ const Search = (props) => {
             placeholderImage={searchIcon}
             value={searchText}
             onChangeText={handleSearch}
-            placeholder="Search"
+            placeholderText="Search"
           ></CustomInput>
 
           <TouchableOpacity onPress={handleSortPress}>
@@ -185,9 +185,6 @@ const Search = (props) => {
             />
           </TouchableOpacity>
         </View>
-        
-        
-      
         <FlatList
             style={{marginLeft:10}}
             data={products}
@@ -206,8 +203,8 @@ const Search = (props) => {
               />
             )}
           />
-
     </ScrollView>
+    
   )
 }
 

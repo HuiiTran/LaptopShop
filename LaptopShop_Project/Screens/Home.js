@@ -6,6 +6,7 @@ import {
     View,
     Image,
     FlatList,
+    TouchableOpacity,
   } from 'react-native';
 import userProfile from '../assets/icons/UserProfile.png'
 import searchButton from '../assets/icons/SearchButton.png'
@@ -15,10 +16,11 @@ import headphones from '../assets/icons/Headphones.png'
 import mouse from '../assets/icons/Mouse.png'
 import ram from '../assets/icons/Ram.png'
 import controller from '../assets/icons/Controller.png'
-import ProductItem from '../Components/ProductItem'
 import laptop from '../assets/icons/laptop.png'
+import ProductItem from '../Components/ProductItem'
+import ProductType from '../Components/ProductType';
 
-class Product {
+export class Product {
     constructor(id, ownerId, title, imageUrl, description, preprice, price) {
       this.id = id;
       this.ownerId = ownerId;
@@ -30,7 +32,7 @@ class Product {
     }
   }
 
-  const PRODUCTS = [
+export  const PRODUCTS = [
     new Product(
       'p1',
       'u1',
@@ -139,14 +141,13 @@ class Product {
 const Home = (props) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
-      
-        <View style={styles.container}>
-            <Image source={userProfile} style={styles.image} />
-            <Text style={styles.logo}>L & C</Text>
-            <Image source={searchButton} style={{marginLeft: 10,
-        marginTop:10,
-        marginRight:15,
-        resizeMode: 'contain',
+      <View style={styles.container}>
+        <Image source={userProfile} style={styles.image} />
+        <Text style={styles.logo}>L & C</Text>
+        <Image source={searchButton} style={{marginLeft: 10,
+          marginTop:10,
+          marginRight:15,
+          resizeMode: 'contain',
           height: 35,
           width: 35,}} />
         </View>
@@ -158,31 +159,43 @@ const Home = (props) => {
 
         <View style = {styles.line}></View>
       
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{ marginLeft:20, marginTop:20}}>
-            <View style={styles.productType}>
-                <Image style={styles.productTypeImage}source={laptop}></Image>
-                <Text style={styles.productTypeText}>Laptop</Text>
-            </View>
-            <View style={styles.productType}>
-                <Image style={styles.productTypeImage}source={headphones}></Image>
-                <Text style={styles.productTypeText}>Headphones</Text>
-            </View>
-            <View style={styles.productType}>
-                <Image style={styles.productTypeImage}source={mouse}></Image>
-                <Text style={styles.productTypeText}>Mouse</Text>
-            </View>
-            <View style={styles.productType}>
-                <Image style={styles.productTypeImage}source={keyboard}></Image>
-                <Text style={styles.productTypeText}>Keyboard</Text>
-            </View>
-            <View style={styles.productType}>
-                <Image style={styles.productTypeImage}source={ram}></Image>
-                <Text style={styles.productTypeText}>Ram</Text>
-            </View>
-            <View style={styles.productType}>
-                <Image style={styles.productTypeImage}source={controller}></Image>
-                <Text style={styles.productTypeText}>Controller</Text>
-            </View>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{marginTop:15}}>
+            <TouchableOpacity style={{marginLeft:15, marginRight:15,height:95,}}>
+              <ProductType
+                placeholderImage={laptop}
+                placeholderText="Laptop">
+              </ProductType>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight:15,height:95,}}>
+              <ProductType
+                placeholderImage={headphones}
+                placeholderText="Headphone">
+              </ProductType>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight:15,height:95, }}>
+              <ProductType
+                placeholderImage={mouse}
+                placeholderText="Mouse">
+              </ProductType>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight:15,height:95, }}>
+              <ProductType
+                placeholderImage={keyboard}
+                placeholderText="Keyboard">
+              </ProductType>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight:15,height:95, }}>
+              <ProductType
+                placeholderImage={ram}
+                placeholderText="Ram">
+              </ProductType>
+            </TouchableOpacity>
+            <TouchableOpacity style={{marginRight:15,height:95, }}>
+              <ProductType
+                placeholderImage={controller}
+                placeholderText="Controller">
+              </ProductType>
+            </TouchableOpacity>
         </ScrollView>
 
         <View style = {styles.line}></View>
@@ -242,6 +255,7 @@ const styles = StyleSheet.create({
     },
     bulletin:{
       marginRight:10,
+      marginBottom:15
     },
     line:{
         width:'91%',
@@ -249,24 +263,9 @@ const styles = StyleSheet.create({
         backgroundColor:'#382F29',
         opacity: 0.2,
         marginLeft:20,
-        marginTop:20,
         marginRight:20
 
     },
-    productType:{
-      flexDirection:'column', 
-      gap:2, 
-      alignItems:'center',
-      marginRight:20
-    },
-    productTypeText:{
-        fontFamily:'Cuprum-Regular',
-        fontSize:16,
-    },
-    productTypeImage: {
-        width:50,
-        height:50,
-    }
 })
 
 export default Home
