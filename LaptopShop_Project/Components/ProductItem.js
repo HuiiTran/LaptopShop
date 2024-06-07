@@ -27,13 +27,13 @@ const ProductItem = props => {
         <TouchableCmp onPress={props.onSelect}>
           <View>
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{uri: props.image}} />
+              <Image style={styles.image} source={{uri: `data:image/jpeg;base64,${props.image}`}} />
             </View>
 
             <View style={styles.details}>
               <Text numberOfLines={1} style={styles.title}>{props.title}</Text>
-              <Text style={styles.preprice}>{props.preprice.toLocaleString()}vnđ</Text>
-              <Text style={styles.price}>{props.price.toLocaleString()}vnđ</Text>
+              {/* <Text style={styles.preprice}>{props.preprice.toLocaleString()}vnđ</Text> */}
+              <Text style={styles.price}>{parseFloat(props.price).toLocaleString()}vnđ</Text>
             </View>
             <View style={styles.actions}>{props.children}</View>
           </View>

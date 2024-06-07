@@ -46,14 +46,14 @@ const Management = ({navigation}) => {
     const start = new Date();
     fetch(ProjectBaseUrl + '/authenhealth', {signal: controller.signal})
       .then((result) => result.text())
-      .then((resultText) => setAuthen(resultText))
+      .then((resultText) => {setAuthen(resultText); setAuthenTime(parseFloat((new Date() - start)).toFixed(2));})
       .catch((e) => {
         console.log(e);
         if(e?.name === 'AbortError'){
           setAuthen('Unhealthy');
+          setAuthenTime(parseFloat((new Date() - start)).toFixed(2));
         }
       });
-    setAuthenTime((new Date() - start));
   };
   const getAdminHealthDetails = async () => {
     let controller = new AbortController();
@@ -63,14 +63,15 @@ const Management = ({navigation}) => {
       const start = new Date();
     fetch(ProjectBaseUrl + '/adminhealth', {signal: controller.signal})
       .then((result) => result.text())
-      .then((resultText) => setAdmin(resultText))
+      .then((resultText) => {setAdmin(resultText); setAdminTime(parseFloat((new Date() - start)).toFixed(2));})
       .catch((e) => {
         console.log(e);
         if(e?.name === 'AbortError'){
           setAdmin('Unhealthy');
+          setAdminTime(parseFloat((new Date() - start)).toFixed(2));
         }
       });
-      setAdminTime((new Date() - start));
+      
   };
 
   const getStaffHealthDetails = async () => {
@@ -81,14 +82,15 @@ const Management = ({navigation}) => {
       const start = new Date();
     fetch(ProjectBaseUrl + '/staffhealth', {signal: controller.signal})
       .then((result) => result.text())
-      .then((resultText) => setStaff(resultText))
+      .then((resultText) => {setStaff(resultText); setStaffTime(parseFloat((new Date() - start)).toFixed(2));})
       .catch((e) => {
         console.log(e);
         if(e?.name === 'AbortError'){
           setStaff('Unhealthy');
+          setStaffTime(parseFloat((new Date() - start)).toFixed(2));
         }
       });
-      setStaffTime((new Date() - start));
+      
   };
   const getUserHealthDetails = async () => {
     let controller = new AbortController();
@@ -98,14 +100,14 @@ const Management = ({navigation}) => {
       const start = new Date();
     fetch(ProjectBaseUrl + '/usershealth', {signal: controller.signal})
       .then((result) => result.text())
-      .then((resultText) => setUser(resultText))
+      .then((resultText) => {setUser(resultText); setUserTime(parseFloat((new Date() - start)).toFixed(2));})
       .catch((e) => {
         console.log(e);
         if(e?.name === 'AbortError'){
           setUser('Unhealthy');
+          setUserTime(parseFloat((new Date() - start)).toFixed(2));
         }
       });
-      setUserTime((new Date() - start));
   };
   const getBillHealthDetails = async () => {
     let controller = new AbortController();
@@ -115,14 +117,14 @@ const Management = ({navigation}) => {
       const start = new Date();
     fetch(ProjectBaseUrl + '/billhealth', {signal: controller.signal})
       .then((result) => result.text())
-      .then((resultText) => setBill(resultText))
+      .then((resultText) =>{ setBill(resultText); setBillTime(parseFloat((new Date() - start)).toFixed(2));})
       .catch((e) => {
         console.log(e);
         if(e?.name === 'AbortError'){
           setBill('Unhealthy');
+          setBillTime(parseFloat((new Date() - start)).toFixed(2));
         }
       });
-      setBillTime((new Date() - start));
   };
   const getItemHealthDetails = async () => {
     let controller = new AbortController();
@@ -132,14 +134,14 @@ const Management = ({navigation}) => {
       const start = new Date();
     fetch(ProjectBaseUrl + '/catalog-gatewayhealth', {signal: controller.signal})
       .then((result) => result.text())
-      .then((resultText) => setItem(resultText))
+      .then((resultText) =>{ setItem(resultText); setItemTime(parseFloat((new Date() - start)).toFixed(2));})
       .catch((e) => {
         console.log(e);
         if(e?.name === 'AbortError'){
           setItem('Unhealthy');
+          setItemTime(parseFloat((new Date() - start)).toFixed(2));
         }
       });
-      setItemTime((new Date() - start));
   };
   const Refresh = () =>{
     getAuthenHealthDetails();
@@ -147,7 +149,7 @@ const Management = ({navigation}) => {
     getStaffHealthDetails();
     getUserHealthDetails();
   };
-  const MINUTE_MS = 5000;
+  const MINUTE_MS = 10000;
   useEffect(() => {
     AsyncStorage.getItem('role').then(role => setIsAdmin(role));
       const interval = setInterval(() => {
@@ -253,6 +255,7 @@ export default Management;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
+    gap: 10,
   },
   item_container: {
     flexDirection: 'row',

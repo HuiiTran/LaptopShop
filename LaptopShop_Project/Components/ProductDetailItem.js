@@ -10,6 +10,7 @@ import {
   TouchableNativeFeedback,
   Platform,
   ScrollView,
+  FlatList,
 } from 'react-native';
 
 import customText from '../Components/CustomText'
@@ -25,32 +26,30 @@ const ProductItem = props => {
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+  const images = props.image;
+
 
   return (
     <View>
       <ScrollView horizontal={true}style={styles.ScrollView}>
-        <Image style={styles.Productsimage} source={legion}></Image>
-        <Image style={styles.Productsimage} source={legion}></Image>
-        <Image style={styles.Productsimage} source={legion}></Image>
-        {/* truyền props vô đây */}
-
+        
       </ScrollView>
-
-      <Image style={{alignSelf:'center', marginTop:20}} source={ChangeStyleButton}></Image>
-      {/* navigate hình */}
+      <Image style={styles.Productsimage} source={{uri: `data:image/jpeg;base64,${images}`}}></Image>
+      
 
       <View style={styles.descriptionContainer}>
-        <Text style={styles.productName}>Legion9i</Text>
-        <Text style={styles.productPrice}>$123123123</Text>
-        <Text style={styles.productDescription}>Key specifications:{"\n"}
-        Display:  16-inch 3.2K Mini LED with 165Hz refresh rateCPU: 13th Generation Intel Core i9-13980HX (E-Core Max 4.00 GHz, P-Core Max 5.60 GHz with Turbo Boost, 24 Cores)GPU: NVIDIA GeForce RTX 4090 Laptop GPU, 16GB GDDR6 (150W TGP +25W Boost)Storage: Up to 2TB SSD and 64GB (2x32GB) 5600Mhz DDR5 RAM</Text>
+        <Text style={styles.productName}>{props.name}</Text>
+        <Text style={styles.productPrice}>{parseFloat(props.price).toLocaleString()} vnđ</Text>
+        <Text style={styles.productDescription}>Product description:{"\n"}
+        {props.description}
+        </Text>
 
         <View style={styles.style}>
           <TouchableOpacity style={styles.touchableOpacity}>
             <Image style={{marginLeft:1, borderRadius:7}}source={favorite}></Image>
           </TouchableOpacity>
           <View style={{width:'9%'}}></View>
-          <TouchableOpacity style={{flexDirection:'row'}}>
+          <TouchableOpacity style={{flexDirection:'row'}} onPress={() => console.log(images)}>
             <Image style={{width:'80%', borderRadius:10}} source={addToCartButton}></Image>
           </TouchableOpacity>
         </View>

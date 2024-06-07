@@ -34,6 +34,7 @@ import ProductDetail from './Screens/ProductDetailScreen';
 import HomeScreen from './Screens/Home';
 import SearchScreen from './Screens/Search'
 
+
 const Stack = createNativeStackNavigator();
 export default function App(){
   return (
@@ -43,6 +44,7 @@ export default function App(){
       <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
       <Stack.Screen options={{headerShown: false}} name="ProductListScreen" component={ProductListScreen} />
       <Stack.Screen options={{headerShown:false}}name="ProductDetailScreen" component={ProductDetail}/>
+      <Stack.Screen options={{headerShown:false}}name="SearchScreen" component={SearchScreen}/>
     </Stack.Navigator>
   </NavigationContainer>
   );
