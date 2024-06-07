@@ -27,13 +27,26 @@ export const ProjectBaseUrl = 'http://10.0.2.2:5156';
   
   
 const Home = (props) => {
-  const [data, setData] = useState()
+  const [searchText,setSearchText] = useState('');
+    const [data, setData] = useState([{
+      id: String,
+      storeID: String,
+      classify: String,
+      name: String,
+      description: String,
+      price: Number,
+      quantity: Number,
+      isAvailable: Boolean,
+      image: [String],
+    }]);
+    const [filterData, setFilterData] = useState();
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/catalog-gateway/items')
       .then((response) => response.json())
       .then((responseJson) => {
         setData(responseJson);
+        setFilterData(responseJson);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -42,8 +55,17 @@ const Home = (props) => {
   };
   useEffect(() => {
     getList();
-
   },[]);
+
+  useEffect(() => {
+    const filtered = data.filter(item =>
+      item.classify.toString().toLowerCase().includes(searchText.toLowerCase()),
+    );
+    if (searchText === '') {
+      return setFilterData(data);
+    }
+    setFilterData(filtered);
+  },[searchText]);
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
       <View style={styles.container}>
@@ -68,37 +90,37 @@ const Home = (props) => {
         <View style = {styles.line}></View>
       
         <ScrollView showsHorizontalScrollIndicator={false} horizontal={true} style={{marginTop:15}}>
-            <TouchableOpacity style={{marginLeft:15, marginRight:15,height:95,}}>
+            <TouchableOpacity style={{marginLeft:15, marginRight:15,height:95,}} onPress={() => {setSearchText('Laptop'); }}>
               <ProductType
                 placeholderImage={laptop}
                 placeholderText="Laptop">
               </ProductType>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginRight:15,height:95,}}>
+            <TouchableOpacity style={{marginRight:15,height:95,}} onPress={() => {setSearchText('Headphone'); }}>
               <ProductType
                 placeholderImage={headphones}
                 placeholderText="Headphone">
               </ProductType>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginRight:15,height:95, }}>
+            <TouchableOpacity style={{marginRight:15,height:95, }} onPress={() => {setSearchText('Mouse'); }}>
               <ProductType
                 placeholderImage={mouse}
                 placeholderText="Mouse">
               </ProductType>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginRight:15,height:95, }}>
+            <TouchableOpacity style={{marginRight:15,height:95, }} onPress={() => {setSearchText('Keyboard');}}>
               <ProductType
                 placeholderImage={keyboard}
                 placeholderText="Keyboard">
               </ProductType>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginRight:15,height:95, }}>
+            <TouchableOpacity style={{marginRight:15,height:95, }} onPress={() => {setSearchText('Ram');}}>
               <ProductType
                 placeholderImage={ram}
                 placeholderText="Ram">
               </ProductType>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginRight:15,height:95, }}>
+            <TouchableOpacity style={{marginRight:15,height:95, }} onPress={() => {setSearchText('Controller');}}>
               <ProductType
                 placeholderImage={controller}
                 placeholderText="Controller">
@@ -110,12 +132,14 @@ const Home = (props) => {
 
         <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-end', marginTop:20}}>
             <Text style={{marginLeft:20, fontFamily:'Cuprum-Bold', fontSize:26, color:'#000'}}>New Arrivals</Text>
+            <TouchableOpacity onPress={() => {setSearchText('');}}>
             <Text style = {{fontFamily:'Cuprum-SemiBold', fontSize:22, color:'#2E67FF', marginRight:20}}>View All</Text>
+            </TouchableOpacity>
         </View>
         
         <FlatList
             style={{marginLeft:10, marginTop:10}}
-            data={data}
+            data={filterData}
             horizontal={false}
             numColumns={2}
             keyExtractor={({id}) => id}

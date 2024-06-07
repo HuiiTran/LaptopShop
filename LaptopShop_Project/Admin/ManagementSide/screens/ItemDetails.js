@@ -137,10 +137,30 @@ const radioButtons_Classify = useMemo(() => ([
       value: 'Laptop',
   },
   {
-      id: 'Accessory',
-      label: 'Accessory',
-      value: 'Accessory',
+      id: 'Headphone',
+      label: 'Headphone',
+      value: 'Headphone',
   },
+  {
+    id: 'Mouse', // acts as primary key, should be unique and non-empty string
+    label: 'Mouse',
+    value: 'Mouse',
+},
+{
+    id: 'Keyboard',
+    label: 'Keyboard',
+    value: 'Keyboard',
+},
+{
+  id: 'Ram',
+  label: 'Ram',
+  value: 'Ram',
+},
+{
+  id: 'Controller',
+  label: 'Controller',
+  value: 'Controller',
+},
 ]), []);
 
 
@@ -206,7 +226,7 @@ const OpenLibrary = () => {
               radioButtons={radioButtons_Classify}
               onPress={setClassify}
               selectedId={classify}
-              layout="row"
+              //layout="row"
               //value={isAvailable}
 
           />

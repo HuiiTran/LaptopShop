@@ -122,8 +122,8 @@ const Search = (props) => {
           )}/>
           :
           (
-            <View>
-              <Text>No result</Text>
+            <View style={{alignSelf: 'center'}}>
+              <Text style={{fontSize: 40}}>No result</Text>
             </View>
           )
         }
