@@ -31,12 +31,17 @@ const ProductItem = props => {
 
   return (
     <View>
-      <ScrollView horizontal={true}style={styles.ScrollView}>
-        
-      </ScrollView>
-      <Image style={styles.Productsimage} source={{uri: `data:image/jpeg;base64,${images}`}}></Image>
-      
-
+      <FlatList
+          horizontal
+          data={images}
+          initialNumToRender={20}
+          keyExtractor={({id}) => id}
+          renderItem={({item}) => (
+            <View style={styles.ScrollView}>
+              <Image style={styles.Productsimage} source={{uri: `data:image/jpeg;base64,${item}`}}></Image>
+            </View>
+          )}
+        />
       <View style={styles.descriptionContainer}>
         <Text style={styles.productName}>{props.name}</Text>
         <Text style={styles.productPrice}>{parseFloat(props.price).toLocaleString()} vnđ</Text>
@@ -68,10 +73,12 @@ const styles = StyleSheet.create({
     marginTop:5,
     width:'200%',
     height:'auto',
-    marginLeft:-170,
+    marginLeft: 70,
   },
   Productsimage:{
-    marginHorizontal:25
+    marginHorizontal:25,
+    width: 200,
+    height: 200,
   },
   descriptionContainer:{
     marginTop:20,
