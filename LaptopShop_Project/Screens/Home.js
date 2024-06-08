@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
         opacity: 0.2,
         marginLeft:20,
         marginRight:20
-
     },
 })
 

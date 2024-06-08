@@ -33,6 +33,7 @@ import ProductListScreen from './Screens/ProductListScreen';
 import ProductDetail from './Screens/ProductDetailScreen';
 import HomeScreen from './Screens/Home';
 import SearchScreen from './Screens/Search'
+import OrderDetail from './Screens/OrderDetailScreen'
 
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +41,7 @@ export default function App(){
   return (
     <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
+      <Stack.Screen options={{headerShown: false}} name="OrderDetail" component={OrderDetail} />
       {/* <Stack.Screen options={{headerShown: false}} name="Search" component={SearchScreen} /> */}
       <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
       <Stack.Screen options={{headerShown: false}} name="ProductListScreen" component={ProductListScreen} />
