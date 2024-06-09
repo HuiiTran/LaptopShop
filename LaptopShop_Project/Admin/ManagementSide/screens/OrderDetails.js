@@ -43,7 +43,7 @@ const OrderDetails = ({navigation, route}) => {
     const[userId, setUserId] = useState();
     const[userAddress, setUserAddress] = useState();
     const[userPhoneNumber, setUserPhoneNumber] = useState();
-
+    const[name, setName] = useState();
   const putData = {
     state: state,
   };
@@ -56,7 +56,18 @@ const OrderDetails = ({navigation, route}) => {
     fetch(ProjectBaseUrl + '/bill/' + billId, requestOptions);
     navigation.goBack();
   };
-
+  const getUser = async (id) => {
+    try {
+      fetch(ProjectBaseUrl + '/users/' + id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setName(responseJson.name);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+    }
+  };
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/bill/' + billId)
@@ -70,19 +81,17 @@ const OrderDetails = ({navigation, route}) => {
         setQuantity(responseJson[0].result.quantity);
         setUserId(responseJson[0].result.userId);
         setUserAddress(responseJson[0].result.address);
+        setUserPhoneNumber(responseJson[0].result.phone);
+        getUser(responseJson[0].result.userId);
       });
     } catch (error) {
       console.error(error);
     } finally{
     }
   };
+
   useEffect(() => {
     getList();
-  // if(Refreshing === true)
-  //     {
-  //       getList();
-  //       setRefreshing(false);
-  //     }
   },[]);
   const radioButtons_isAvailable = useMemo(() => ([
     {
@@ -158,8 +167,16 @@ const OrderDetails = ({navigation, route}) => {
           <Text style={styles.font_size}>{parseInt(totalPrice).toLocaleString()} vnđ</Text>
         </Text>
         <Text>
+          <Text style={styles.text_title}>User's name: </Text>
+          <Text style={styles.font_size}>{name}</Text>
+        </Text>
+        <Text>
           <Text style={styles.text_title}>Address: </Text>
           <Text style={styles.font_size}>{userAddress}</Text>
+        </Text>
+        <Text>
+          <Text style={styles.text_title}>Phone number: </Text>
+          <Text style={styles.font_size}>{userPhoneNumber}</Text>
         </Text>
         <Text style={styles.text_title}>Status:</Text>
         <ScrollView horizontal={true}>

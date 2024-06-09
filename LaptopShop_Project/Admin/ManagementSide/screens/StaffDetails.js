@@ -244,7 +244,7 @@ const StaffDetails = ({navigation, route}) => {
                   keyboardType="numeric"
               />
               <Button title="Update" onPress={() =>  {Update(); navigation.goBack();}}/>
-              <Button title="Delete" onPress={() => navigation.goBack()}/>
+              {/* <Button title="Delete" onPress={() => navigation.goBack()}/> */}
       </View>
               </ScrollView>
               </TouchableWithoutFeedback>
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     marginLeft: '25%',
   },
   image_picker: {
-    borderRadius: 70,
+    borderRadius: 100,
     width: 200,
     height: 200,
   },

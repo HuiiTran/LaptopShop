@@ -80,35 +80,35 @@ const App = () => {
           <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
           <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
           <Stack.Screen options={{headerShown: false}} name="Management" component={Management}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffList" component={StaffList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemList" component={ItemList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderList" component={OrderList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserList" component={UserList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemDetails" component={ItemDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserDetails" component={UserDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffDetails" component={StaffDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderDetails" component={OrderDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffCreate" component={StaffCreate}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserCreate" component={UserCreate}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemCreate" component={ItemCreate}/>
+          <Stack.Screen options={{headerTitle: 'STAFF',headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffList" component={StaffList}/>
+          <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemList" component={ItemList}/>
+          <Stack.Screen options={{headerTitle: 'ORDER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderList" component={OrderList}/>
+          <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserList" component={UserList}/>
+          <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemDetails" component={ItemDetails}/>
+          <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserDetails" component={UserDetails}/>
+          <Stack.Screen options={{headerTitle: 'STAFF',headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffDetails" component={StaffDetails}/>
+          <Stack.Screen options={{headerTitle: 'ORDER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderDetails" component={OrderDetails}/>
+          <Stack.Screen options={{headerTitle: 'STAFF', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffCreate" component={StaffCreate}/>
+          <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserCreate" component={UserCreate}/>
+          <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemCreate" component={ItemCreate}/>
         </Stack.Navigator>
       ) :
       (
         <Stack.Navigator>
           <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
           <Stack.Screen options={{headerShown: false}} name="Management" component={Management}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffList" component={StaffList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemList" component={ItemList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderList" component={OrderList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserList" component={UserList}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemDetails" component={ItemDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserDetails" component={UserDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffDetails" component={StaffDetails}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderDetails" component={OrderDetails}/>
+          <Stack.Screen options={{headerTitle: 'STAFF', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffList" component={StaffList}/>
+          <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemList" component={ItemList}/>
+          <Stack.Screen options={{headerTitle: 'ORDER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderList" component={OrderList}/>
+          <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserList" component={UserList}/>
+          <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemDetails" component={ItemDetails}/>
+          <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserDetails" component={UserDetails}/>
+          <Stack.Screen options={{headerTitle: 'STAFF',headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffDetails" component={StaffDetails}/>
+          <Stack.Screen options={{headerTitle: 'ORDER',headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="OrderDetails" component={OrderDetails}/>
           <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffCreate" component={StaffCreate}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserCreate" component={UserCreate}/>
-          <Stack.Screen options={{headerTitle: '', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemCreate" component={ItemCreate}/>
+          <Stack.Screen options={{headerTitle: 'STAFF',headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffCreate" component={StaffCreate}/>
+          <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserCreate" component={UserCreate}/>
+          <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemCreate" component={ItemCreate}/>
         </Stack.Navigator>
       )}
   </NavigationContainer>

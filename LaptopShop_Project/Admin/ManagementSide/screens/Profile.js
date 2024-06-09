@@ -48,25 +48,49 @@ const Profile = ({navigation}) => {
   const[selectedImage, setSelectedImage] = useState();
   const[isImageSelected, setIsImageSelected] = useState(false);
 
+
+  const [isAdmin, setIsAdmin] = useState(String);
   useEffect(() => {
     const getInfor = async () => {
       AsyncStorage.getItem('ID').then(ID => setUserId(ID));
-      try {
-        fetch(ProjectBaseUrl + '/admin/' + userId)
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setUserData(responseJson);
-          setName(responseJson.name);
-          setPhone(responseJson.phoneNumber);
-          setImage(responseJson.image);
-          setOldPassword(responseJson.passWord);
-          setEmail(responseJson.email);
-          setUserName(responseJson.userName);
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+      AsyncStorage.getItem('role').then(role => setIsAdmin(role));
+      if(isAdmin === 'Admin'){
+        try {
+          fetch(ProjectBaseUrl + '/admin/' + userId)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            setUserData(responseJson);
+            setName(responseJson.name);
+            setPhone(responseJson.phoneNumber);
+            setImage(responseJson.image);
+            setOldPassword(responseJson.passWord);
+            setEmail(responseJson.email);
+            setUserName(responseJson.userName);
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      }
+      else {
+        try {
+          fetch(ProjectBaseUrl + '/staff/' + userId)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            setUserData(responseJson);
+            setName(responseJson.name);
+            setPhone(responseJson.phoneNumber);
+            setImage(responseJson.image);
+            setOldPassword(responseJson.passWord);
+            setEmail(responseJson.email);
+            setUserName(responseJson.userName);
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
     getInfor();
@@ -246,12 +270,13 @@ const styles = StyleSheet.create({
   image_container: {
     width: 200,
     height: 200,
-    //backgroundColor: 'green',
+    borderRadius: 50,
     marginLeft: '25%',
   },
   image_picker: {
     width: 200,
     height: 200,
+    borderRadius: 100,
   },
 
 });
