@@ -33,16 +33,21 @@ import ProductListScreen from './Screens/ProductListScreen';
 import ProductDetail from './Screens/ProductDetailScreen';
 import HomeScreen from './Screens/Home';
 import SearchScreen from './Screens/Search'
-import OrderDetail from './Screens/OrderDetailScreen'
+import CartDetail from './Screens/CartDetailScreen.js'
 import AddCreditCardScreen from './Screens/AddCreditCardScreen';
-
+import SuccessfulOverlayMsg from './Components/SuccessfulOverlayMsg.js'
+import Menu from './Screens/Menu.js';
+import FavoriteList from './Screens/FavoriteList.js';
 
 const Stack = createNativeStackNavigator();
 export default function App(){
   return (
     <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
-      <Stack.Screen options={{headerShown: false}} name="OrderDetail" component={OrderDetail} />
+      {/* <Stack.Screen options={{headerShown: false}} name="Menu" component={Menu} /> */}
+      <Stack.Screen options={{headerShown: false}} name="FavoriteList" component={FavoriteList} />
+      <Stack.Screen options={{headerShown: false}} name="CartDetail" component={CartDetail} />
+      <Stack.Screen options={{headerShown: false}} name="OverlayMsg" component={SuccessfulOverlayMsg} />
       <Stack.Screen options={{headerShown: false}} name="AddCreditCard" component={AddCreditCardScreen} />
       <Stack.Screen options={{headerShown: false}} name="Search" component={SearchScreen} />
       <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />

@@ -14,6 +14,7 @@ import turnback from '../assets/icons/turnback.png';
 import visa from '../assets/icons/cib_visa.png';
 import mastercard from '../assets/icons/mastercard.png';
 import addcreditcard from '../assets/icons/AddCreditCard.png'
+import Overlay from '../Components/SuccessfulOverlayMsg';
 
 const AddCreditCardScreen = ({ }) => {
   const [text, setText] = useState('');
@@ -26,6 +27,17 @@ const AddCreditCardScreen = ({ }) => {
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
+  };
+
+  const [isOverlayVisible, setOverlayVisible] = useState(false);
+
+  const showOverlay = () => {
+    setOverlayVisible(true);
+    <Overlay visible={isOverlayVisible}/>
+  };
+
+  const hideOverlay = () => {
+    setOverlayVisible(false);
   };
 
   return (
@@ -127,7 +139,7 @@ const AddCreditCardScreen = ({ }) => {
 
       </View>
 
-      <TouchableOpacity style={{ marginTop: 20 }}>
+      <TouchableOpacity onPress={showOverlay} style={{ marginTop: 20 }}>
         <Image style={{ alignSelf: 'center' }} source={addcreditcard}></Image>
       </TouchableOpacity>
 

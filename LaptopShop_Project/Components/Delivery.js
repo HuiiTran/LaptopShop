@@ -11,7 +11,7 @@ import CenterDot from '../assets/icons/CenterDot.png'
 import circlewithoutdot from '../assets/icons/circlewithoutdot.png'
 
 
-const Delivery = ({onPress, methodOption, deliveryName, deliveryDescription, anotherOption}) => {
+const Delivery = ({methodOption, deliveryName, deliveryDescription, anotherOption}) => {
 
   return (
     <View style={styles.container}>
