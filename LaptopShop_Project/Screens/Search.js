@@ -13,9 +13,7 @@ import {
 import userProfile from '../assets/icons/UserProfile.png'
 import searchButton from '../assets/icons/SearchButton.png'
 import ProductItem from '../Components/ProductItem'
-import CustomInput from '../Components/CustomInputField'
 import searchIcon from '../assets/icons/ion_search.png'
-import sortIcon from '../assets/icons/Sort.png'
 
 import { ProjectBaseUrl } from './Home';
 

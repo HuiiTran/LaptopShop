@@ -38,13 +38,23 @@ import AddCreditCardScreen from './Screens/AddCreditCardScreen';
 import SuccessfulOverlayMsg from './Components/SuccessfulOverlayMsg.js'
 import Menu from './Screens/Menu.js';
 import FavoriteList from './Screens/FavoriteList.js';
+import OrderHistory from './Screens/OrderHistory.js';
+import OrderDetail from './Screens/OrderDetail.js';
+import Setting from './Screens/Setting.js';
+import EditProfile from './Screens/EditProfile.js';
+import ChangePassword from './Screens/ChangePassword.js';
 
 const Stack = createNativeStackNavigator();
 export default function App(){
   return (
     <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
-      {/* <Stack.Screen options={{headerShown: false}} name="Menu" component={Menu} /> */}
+      <Stack.Screen options={{headerShown: false}} name="ChangePassword" component={ChangePassword} />
+      <Stack.Screen options={{headerShown: false}} name="EditProfile" component={EditProfile} />
+      <Stack.Screen options={{headerShown: false}} name="SettingScreen" component={Setting} />
+      <Stack.Screen options={{headerShown: false}} name="OrderDetailScreen" component={OrderDetail} />
+      <Stack.Screen options={{headerShown: false}} name="OrderHistoryScreen" component={OrderHistory} />
+      <Stack.Screen options={{headerShown: false}} name="Menu" component={Menu} />
       <Stack.Screen options={{headerShown: false}} name="FavoriteList" component={FavoriteList} />
       <Stack.Screen options={{headerShown: false}} name="CartDetail" component={CartDetail} />
       <Stack.Screen options={{headerShown: false}} name="OverlayMsg" component={SuccessfulOverlayMsg} />

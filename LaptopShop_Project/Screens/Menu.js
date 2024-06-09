@@ -65,11 +65,11 @@ const Menu = (props) => {
       <MenuItem methodOption={Report} menuName="Report"></MenuItem>
       <MenuItem methodOption={Setting} menuName="Setting"></MenuItem>
     
-    <TouchableOpacity style={{alignSelf:'center', marginTop:150}}>
+    <TouchableOpacity style={{alignSelf:'center', marginTop:120}}>
       <Image source={Logout}></Image>
     </TouchableOpacity>
 
-    <View style={{height:50}}></View>
+    <View style={{height:100}}></View>
     </View>
   );
 };
