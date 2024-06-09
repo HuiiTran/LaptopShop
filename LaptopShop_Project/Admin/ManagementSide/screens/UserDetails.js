@@ -21,13 +21,13 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  Button,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UploadImage from '../assets/icons/Image';
+import { Button } from 'react-native-elements';
 
 const UserDetails = ({navigation, route}) => {
     const {userId} = route.params;
@@ -151,83 +151,85 @@ const UserDetails = ({navigation, route}) => {
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView >
-      <View style={styles.image_container}>
-          <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-          {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
-          </TouchableOpacity>
-        </View>
+        <View style={{marginLeft: 20, marginRight: 20}}>
+          <View style={styles.image_container}>
+              <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
+              {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
+              </TouchableOpacity>
+            </View>
 
-      <Text>E-mail</Text>
-          <TextInput
-                  placeholder="E-mail"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="Email"
-                  returnKeyType="next"
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
-                  autoCapitalize="none"
-              />
-      <Text>UserName</Text>
-          <TextInput
-                  placeholder="UserName"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="UserName"
-                  returnKeyType="next"
-                  value={userName}
-                  //onChangeText={(text) => setUserName(text)}
-                  editable={false}
-                  //selectTextOnFocus={false}
-                  autoCapitalize="none"
-              />
-      <Text>Password</Text>
-          <TextInput
-                  placeholder="Password"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="Password"
-                  returnKeyType="next"
-                  value={newPassword}
-                  onChangeText={(text) => setNewPassword(text)}
-                  //editable={false}
-                  //selectTextOnFocus={false}
-                  autoCapitalize="none"
-              />
-      <Text>User's address</Text>
-          <TextInput
-                  placeholder="Address"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  value={address}
-                  label="Address"
-                  returnKeyType="next"
-                  onChangeText={(text) => setAddress(text)}
-              />
-        <Text>User's name</Text>
-          <TextInput
-                  placeholder="Name"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="Name"
-                  returnKeyType="next"
-                  value={name}
-                  onChangeText={(text) => setName(text)}
-                  autoCapitalize="none"
-              />
-        <Text>User's phone number</Text>
-          <TextInput
-                  placeholder="Phone number"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  value={phoneNumber}
-                  label="PhoneNumber"
-                  returnKeyType="next"
-                  onChangeText={(text) => setPhoneNumber(text)}
-                  keyboardType="phone-pad"
-              />
-              <Button title="Update" onPress={() => {Update(); navigation.goBack();}}/>
-              {/* <Button title="Delete" onPress={() => navigation.goBack()}/> */}
+          <Text>E-mail</Text>
+              <TextInput
+                      placeholder="E-mail"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      label="Email"
+                      returnKeyType="next"
+                      value={email}
+                      onChangeText={(text) => setEmail(text)}
+                      autoCapitalize="none"
+                  />
+          <Text>UserName</Text>
+              <TextInput
+                      placeholder="UserName"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      label="UserName"
+                      returnKeyType="next"
+                      value={userName}
+                      //onChangeText={(text) => setUserName(text)}
+                      editable={false}
+                      //selectTextOnFocus={false}
+                      autoCapitalize="none"
+                  />
+          <Text>Password</Text>
+              <TextInput
+                      placeholder="Password"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      label="Password"
+                      returnKeyType="next"
+                      value={newPassword}
+                      onChangeText={(text) => setNewPassword(text)}
+                      //editable={false}
+                      //selectTextOnFocus={false}
+                      autoCapitalize="none"
+                  />
+          <Text>User's address</Text>
+              <TextInput
+                      placeholder="Address"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      value={address}
+                      label="Address"
+                      returnKeyType="next"
+                      onChangeText={(text) => setAddress(text)}
+                  />
+            <Text>User's name</Text>
+              <TextInput
+                      placeholder="Name"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      label="Name"
+                      returnKeyType="next"
+                      value={name}
+                      onChangeText={(text) => setName(text)}
+                      autoCapitalize="none"
+                  />
+            <Text>User's phone number</Text>
+              <TextInput
+                      placeholder="Phone number"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      value={phoneNumber}
+                      label="PhoneNumber"
+                      returnKeyType="next"
+                      onChangeText={(text) => setPhoneNumber(text)}
+                      keyboardType="phone-pad"
+                  />
+                  <Button buttonStyle={styles.loginButton} title="Update" onPress={() => {Update(); navigation.goBack();}}/>
+                  {/* <Button title="Delete" onPress={() => navigation.goBack()}/> */}
+                  </View>
               </ScrollView>
               </TouchableWithoutFeedback>
             )}
@@ -267,12 +269,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   loginButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#753f00',
     borderRadius: 5,
-    height: 45,
-    marginTop: 10,
-    width: 350,
+    height: 65,
+    marginTop: 40,
+    width: 370,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   warning: {
       color: 'red',

@@ -19,7 +19,6 @@ import {
   ActivityIndicator,
   TextInput,
   View,
-  Button,
   Keyboard,
   TouchableOpacity,
   Image,
@@ -27,7 +26,7 @@ import {
 import {launchImageLibrary} from 'react-native-image-picker';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { Button } from 'react-native-elements';
 
 const UserCreate = ({navigation}) => {
 
@@ -127,6 +126,7 @@ const UserCreate = ({navigation}) => {
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView >
+      <View style={{marginLeft: 20, marginRight: 20}}>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
             {
@@ -203,7 +203,8 @@ const UserCreate = ({navigation}) => {
                   autoCapitalize="none"
               />
 
-              <Button title="Create" onPress={() => {Create(); navigation.goBack();}}/>
+              <Button buttonStyle={styles.loginButton} title="Create" onPress={() => {Create(); navigation.goBack();}}/>
+              </View>
               </ScrollView>
               </TouchableWithoutFeedback>
             )}
@@ -243,12 +244,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   loginButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#753f00',
     borderRadius: 5,
-    height: 45,
-    marginTop: 10,
-    width: 350,
+    height: 65,
+    marginTop: 30,
+    width: 370,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   warning: {
       color: 'red',

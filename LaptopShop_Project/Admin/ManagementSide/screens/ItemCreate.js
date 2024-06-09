@@ -16,7 +16,6 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableWithoutFeedback,
   TouchableOpacity,
   Image,
@@ -26,7 +25,7 @@ import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 import RadioGroup from 'react-native-radio-buttons-group';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import { Button } from 'react-native-elements';
 
 
 
@@ -141,6 +140,7 @@ const OpenLibrary = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ScrollView>
+    <View style={{marginLeft: 20, marginRight: 20}}>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
             {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />)
@@ -224,10 +224,11 @@ const OpenLibrary = () => {
 
           />
       </View>
-              <Button title="Create" onPress={()=> {
+              <Button buttonStyle={styles.loginButton} title="Create" onPress={()=> {
                 Create();
                 navigation.goBack();
               }}/>
+              </View>
     </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -264,12 +265,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   loginButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#753f00',
     borderRadius: 5,
-    height: 45,
-    marginTop: 10,
-    width: 350,
+    height: 65,
+    marginTop: 40,
+    width: 370,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   warning: {
       color: 'red',

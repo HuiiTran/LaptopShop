@@ -19,13 +19,12 @@ import {
   ActivityIndicator,
   TextInput,
   View,
-  Button,
   Keyboard,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import { Button } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UploadImage from '../assets/icons/Image';
 
@@ -157,6 +156,7 @@ const StaffDetails = ({navigation, route}) => {
             ) : (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView >
+      <View style={{marginLeft: 20, marginRight: 20}}>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
           {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
@@ -243,8 +243,9 @@ const StaffDetails = ({navigation, route}) => {
                   onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
                   keyboardType="numeric"
               />
-              <Button title="Update" onPress={() =>  {Update(); navigation.goBack();}}/>
+              <Button buttonStyle={styles.loginButton} title="Update" onPress={() =>  {Update(); navigation.goBack();}}/>
               {/* <Button title="Delete" onPress={() => navigation.goBack()}/> */}
+      </View>
       </View>
               </ScrollView>
               </TouchableWithoutFeedback>
@@ -285,12 +286,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   loginButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#753f00',
     borderRadius: 5,
-    height: 45,
-    marginTop: 10,
-    width: 350,
+    height: 65,
+    marginTop: 40,
+    width: 370,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 30,
   },
   warning: {
       color: 'red',
