@@ -221,16 +221,16 @@ const OpenLibrary = () => {
                   autoCapitalize="none"
               />
       <Text>Classify</Text>
-      <View>
+      <ScrollView horizontal={true}>
         <RadioGroup
               radioButtons={radioButtons_Classify}
               onPress={setClassify}
               selectedId={classify}
-              //layout="row"
+              layout="row"
               //value={isAvailable}
 
           />
-      </View>
+      </ScrollView>
       <Text>Description</Text>
           <TextInput
                   placeholder="Description"
@@ -278,7 +278,6 @@ const OpenLibrary = () => {
                 Update();
                 navigation.goBack();
               }}/>
-              <Button title="Delete" onPress={() => navigation.goBack()}/>
     </ScrollView>
     </TouchableWithoutFeedback>
   );
