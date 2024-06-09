@@ -61,6 +61,7 @@ const OrderList = ({navigation}) => {
             onPress={() =>
               {
                 navigation.navigate('OrderDetails', {billId: item.result.id});
+                //console.log(typeof(item.result.createdDate));
               }
             }>
               <View

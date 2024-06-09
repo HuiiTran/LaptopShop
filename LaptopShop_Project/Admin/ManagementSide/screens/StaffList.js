@@ -16,6 +16,7 @@ import {
   Text,
   ActivityIndicator,
   TouchableWithoutFeedback,
+  TextInput,
   View,
   TouchableOpacity,
 } from 'react-native';
@@ -26,16 +27,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const StaffList = ({navigation}) => {
-  const[data, setData] = useState(null);
+  const [data, setData] = useState([{
+    id: String,
+    userName: String,
+    passWord: String,
+    email: String,
+    address: String,
+    name: String,
+    phoneNumber: String,
+    image: String,
+    salary: String,
+  }]);
   const [Refreshing, setRefreshing] = useState(false);
 
+  const [searchText,setSearchText] = useState('');
+  const [filterData, setFilterData] = useState();
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/staff')
       .then((response) => response.json())
       .then((responseJson) => {
         setData(responseJson);
-        //console.log(responseJson);
+        setFilterData(responseJson);
       });
     } catch (error) {
       console.error(error);
@@ -47,13 +60,32 @@ const StaffList = ({navigation}) => {
       {
         getList();
         setRefreshing(false);
+        setSearchText('');
       }
   },[Refreshing]);
+  useEffect(() => {
+
+    const filtered = data.filter(item =>
+      item.name.toString().toLowerCase().includes(searchText.toLowerCase()),
+    );
+    if (searchText === '') {
+      return setFilterData(data);
+    }
+
+    setFilterData(filtered);
+  },[searchText]);
 
   return (
     <View style={{flex: 1}}>
+      <TextInput
+            style={styles.textInputSearch}
+            value={searchText}
+            onChangeText={text => {setSearchText(text);}}
+            placeholder='Search...'
+            placeholderColor="#c4c3cb"
+          ></TextInput>
         <FlatList
-          data={data}
+          data={filterData}
           initialNumToRender={20}
           keyExtractor={({id}) => id}
           renderItem={({item}) => (
@@ -121,5 +153,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 40,
     color: 'white',
-  }
+  },
+  textInputSearch: {
+    height: 43,
+    fontSize: 14,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000000',
+    backgroundColor: '#fafafa',
+    paddingLeft: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 5,
+    width: 400,
+  },
 });
