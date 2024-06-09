@@ -99,6 +99,7 @@ export default UserList;
 
 const styles = StyleSheet.create({
   ItemContainer: {
+    borderRadius: 15,
     borderColor: 'black',
     borderWidth: 1,
                 margin: 5,
@@ -110,12 +111,13 @@ const styles = StyleSheet.create({
   imageSize: {
     width: 70,
     height: 70,
+    borderRadius: 50,
   },
   button_style : {
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#ee6e73',
+    backgroundColor: '#753f00',
     position: 'absolute',
     bottom: 10,
     right: 10,
@@ -123,5 +125,6 @@ const styles = StyleSheet.create({
   button_text: {
     alignSelf: 'center',
     fontSize: 40,
+    color: 'white',
   }
 });

@@ -16,9 +16,8 @@ import {
   Text,
   useColorScheme,
   View,
-  Button
 } from 'react-native';
-
+import { Button } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
@@ -34,18 +33,22 @@ const Management = ({navigation}) => {
         {isAdmin === 'Admin' ? (
           <View style={styles.container}>
           <Button
+                buttonStyle={styles.loginButton}
                 onPress={() => {navigation.navigate('StaffList');}}
                 title="Staff Management"
               />
           <Button
+                buttonStyle={styles.loginButton}
                 onPress={() =>{navigation.navigate('UserList');}}
                 title="User Management"
               />
           <Button
+                buttonStyle={styles.loginButton}
                 onPress={() =>{navigation.navigate('ItemList');}}
                 title="Product Management"
               />
           <Button
+                buttonStyle={styles.loginButton}
                 onPress={() =>{navigation.navigate('OrderList');}}
                 title="Order Management"
               />
@@ -54,10 +57,12 @@ const Management = ({navigation}) => {
         (
         <View>
           <Button
+                  buttonStyle={styles.loginButton}
                   onPress={() =>{navigation.navigate('ItemList');}}
                   title="Product Management"
                 />
           <Button
+                  buttonStyle={styles.loginButton}
                   onPress={() =>{navigation.navigate('OrderList');}}
                   title="Order Management"
                 />
@@ -74,7 +79,7 @@ export default Management;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
-    gap: 10,
+    gap: 30,
   },
   item_container: {
     flexDirection: 'row',
@@ -104,5 +109,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     position: 'absolute',
     right: 40,
-  }
+  },
+  loginButton: {
+    backgroundColor: '#753f00',
+    borderRadius: 5,
+    height: 65,
+    marginTop: 10,
+    width: 350,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
 });

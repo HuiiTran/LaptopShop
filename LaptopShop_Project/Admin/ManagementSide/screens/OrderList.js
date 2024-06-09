@@ -103,6 +103,7 @@ const OrderList = ({navigation}) => {
 export default OrderList;
 const styles = StyleSheet.create({
   ItemContainer: {
+    borderRadius: 15,
     borderColor: 'black',
     borderWidth: 1,
                 margin: 5,

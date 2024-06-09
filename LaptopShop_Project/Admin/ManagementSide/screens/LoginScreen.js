@@ -57,6 +57,9 @@ export default function LoginScreen({navigation}) {
         if(result.data.role === 'Admin' || result.data.role === 'Staff'){
           navigation.replace('Home');
         }
+        else{
+          return;
+        }
 
         AsyncStorage.getItem('AccessToken').then(token => console.log(token));
         AsyncStorage.getItem('role').then(role => console.log(role));

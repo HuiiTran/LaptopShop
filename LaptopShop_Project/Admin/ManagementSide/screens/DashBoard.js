@@ -188,7 +188,7 @@ const DashBoard = ({navigation}) => {
 
           <View style={styles.list_health}>
             <View style={{alignSelf: 'center'}}>
-              <Text style={styles.header_text}>API SERIVCES STATUS</Text>
+              <Text style={styles.header_text}>API SERVICES STATUS</Text>
             </View>
             <View >
               {RenderCheckHealth(authen, 'Authentication Service: ', authenTime)}

@@ -94,6 +94,7 @@ export default ItemList;
 const styles = StyleSheet.create({
   ItemContainer: {
     borderColor: 'black',
+    borderRadius: 15,
     borderWidth: 1,
                 margin: 5,
                 padding: 5,
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#ee6e73',
+    backgroundColor: '#753f00',
     position: 'absolute',
     bottom: 10,
     right: 10,
@@ -117,5 +118,6 @@ const styles = StyleSheet.create({
   button_text: {
     alignSelf: 'center',
     fontSize: 40,
+    color: 'white',
   }
 });

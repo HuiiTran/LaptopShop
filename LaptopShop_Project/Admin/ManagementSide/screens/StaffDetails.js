@@ -162,6 +162,7 @@ const StaffDetails = ({navigation, route}) => {
           {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
         </View>
+      <View>
       <Text>E-mail</Text>
           <TextInput
                   placeholder="E-mail"
@@ -244,6 +245,7 @@ const StaffDetails = ({navigation, route}) => {
               />
               <Button title="Update" onPress={() =>  {Update(); navigation.goBack();}}/>
               <Button title="Delete" onPress={() => navigation.goBack()}/>
+      </View>
               </ScrollView>
               </TouchableWithoutFeedback>
             )}
@@ -294,12 +296,14 @@ const styles = StyleSheet.create({
       color: 'red',
   },
   image_container: {
+    borderRadius: 50,
     width: 200,
     height: 200,
     //backgroundColor: 'green',
     marginLeft: '25%',
   },
   image_picker: {
+    borderRadius: 70,
     width: 200,
     height: 200,
   },
