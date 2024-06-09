@@ -14,8 +14,10 @@ import circlewithoutdot from '../assets/icons/circlewithoutdot.png'
 import Delivery from '../Components/Delivery.js'
 import ApplyCouponCode from '../assets/icons/ApplyCouponCode.png'
 import CheckoutButton from '../assets/icons/CheckoutButton.png'
+import addPaymentMethodIcon from '../assets/icons/AddPaymentMethod.png'
+import AddCreditCardScreen from './AddCreditCardScreen.js'
 
-const OrderDetail = (props) => {
+const OrderDetail = (props, navigation) => {
 
   const [searchText,setSearchText] = useState('');
 
@@ -59,7 +61,15 @@ const OrderDetail = (props) => {
         anotherOption={turnRight}>
       </Delivery>
 
-      <Text style={styles.cart}>Payment Method</Text>
+      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+        <Text style={styles.cart}>Payment Method</Text>
+    
+        <TouchableOpacity onPress={() => props.navigation.navigate('AddCreditCard')} style={{marginRight:30, marginTop:10}}>
+          <Image source={addPaymentMethodIcon}></Image>
+        </TouchableOpacity>
+      </View>
+      
+      
 
       <PaymentMethod
         methodOption={momo}

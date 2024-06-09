@@ -18,7 +18,7 @@ const CustomInputField = ({ placeholderText, placeholderImage}) => {
         placeholder={placeholderText}
         placeholderTextColor="#999"
       />
-    </View>  
+    </View>
     
   );
 };
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     marginLeft:10,
-    height:'90%'
   },
   input: {
     fontSize: 20,
