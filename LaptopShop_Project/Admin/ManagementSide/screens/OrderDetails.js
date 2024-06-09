@@ -16,13 +16,13 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableWithoutFeedback,
   TouchableOpacity,
   Image,
   FlatList,
   Keyboard,
 } from 'react-native';
+import { Button } from 'react-native-elements';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 import RadioGroup from 'react-native-radio-buttons-group';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -43,7 +43,7 @@ const OrderDetails = ({navigation, route}) => {
     const[userId, setUserId] = useState();
     const[userAddress, setUserAddress] = useState();
     const[userPhoneNumber, setUserPhoneNumber] = useState();
-
+    const[name, setName] = useState();
   const putData = {
     state: state,
   };
@@ -53,9 +53,21 @@ const OrderDetails = ({navigation, route}) => {
     body: JSON.stringify(putData) // Send the data in JSON format
   };
   const Update = async () => {
-    fetch(ProjectBaseUrl + '/bill/' + billId, requestOptions)
+    fetch(ProjectBaseUrl + '/bill/' + billId, requestOptions);
+    navigation.goBack();
   };
-
+  const getUser = async (id) => {
+    try {
+      fetch(ProjectBaseUrl + '/users/' + id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setName(responseJson.name);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+    }
+  };
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/bill/' + billId)
@@ -69,44 +81,48 @@ const OrderDetails = ({navigation, route}) => {
         setQuantity(responseJson[0].result.quantity);
         setUserId(responseJson[0].result.userId);
         setUserAddress(responseJson[0].result.address);
+        setUserPhoneNumber(responseJson[0].result.phone);
+        getUser(responseJson[0].result.userId);
       });
     } catch (error) {
       console.error(error);
     } finally{
     }
   };
+
   useEffect(() => {
     getList();
-  // if(Refreshing === true)
-  //     {
-  //       getList();
-  //       setRefreshing(false);
-  //     }
   },[]);
   const radioButtons_isAvailable = useMemo(() => ([
     {
         id: 'Pending', // acts as primary key, should be unique and non-empty string
         label: 'Pending',
         value: 'Pending',
-        size: 15,
+        size: 25,
     },
     {
         id: 'Confirmed',
         label: 'Confirmed',
         value:'Confirmed',
-        size: 15,
+        size: 25,
     },
     {
         id: 'Cancel',
         label: 'Cancel',
         value: 'Cancel',
-        size: 15,
+        size: 25,
+    },
+    {
+      id: 'Delivering',
+      label: 'Delivering',
+      value: 'Delivering',
+      size: 25,
     },
     {
         id: 'Delivered',
         label: 'Delivered',
         value: 'Delivered',
-        size: 15,
+        size: 25,
     },
 ]), []);
 
@@ -116,9 +132,9 @@ const OrderDetails = ({navigation, route}) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, marginLeft: 15, marginRight: 15,}}>
         <View>
-          <Text>Product list</Text>
+          <Text style={styles.text_title}>Product list</Text>
             <FlatList
             data={itemList}
             extraData={quantity}
@@ -148,13 +164,22 @@ const OrderDetails = ({navigation, route}) => {
         <View>
         <Text>
           <Text style={styles.text_title}>Total price: </Text>
-          <Text>{parseInt(totalPrice).toLocaleString()} vnđ</Text>
+          <Text style={styles.font_size}>{parseInt(totalPrice).toLocaleString()} vnđ</Text>
+        </Text>
+        <Text>
+          <Text style={styles.text_title}>User's name: </Text>
+          <Text style={styles.font_size}>{name}</Text>
         </Text>
         <Text>
           <Text style={styles.text_title}>Address: </Text>
-          <Text>{userAddress}</Text>
+          <Text style={styles.font_size}>{userAddress}</Text>
+        </Text>
+        <Text>
+          <Text style={styles.text_title}>Phone number: </Text>
+          <Text style={styles.font_size}>{userPhoneNumber}</Text>
         </Text>
         <Text style={styles.text_title}>Status:</Text>
+        <ScrollView horizontal={true}>
         <RadioGroup
                 radioButtons={radioButtons_isAvailable}
                 onPress={setState}
@@ -163,8 +188,9 @@ const OrderDetails = ({navigation, route}) => {
                 //value={isAvailable}
 
             />
+        </ScrollView>
         </View>
-        <Button title="Update" onPress={() => Update()}/>
+        <Button buttonStyle={styles.loginButton} title="UPDATE" onPress={() => Update()}/>
     </View>
     </TouchableWithoutFeedback>
   );
@@ -201,12 +227,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   loginButton: {
-    backgroundColor: '#000000',
+    backgroundColor: '#753f00',
     borderRadius: 5,
-    height: 45,
-    marginTop: 10,
+    height: 65,
+    marginTop: 40,
     width: 350,
     alignItems: 'center',
+    alignSelf: 'center',
   },
   warning: {
       color: 'red',
@@ -237,5 +264,9 @@ const styles = StyleSheet.create({
   text_title: {
     fontWeight: 'bold',
     color: 'black',
-  }
+    fontSize: 20,
+  },
+  font_size:{
+    fontSize: 15,
+  },
 });

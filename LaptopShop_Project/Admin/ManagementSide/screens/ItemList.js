@@ -20,6 +20,7 @@ import {
   TouchableWithoutFeedback,
   View,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 
@@ -27,15 +28,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const ItemList = ({navigation}) => {
-  const[data, setData] = useState(null);
+  const [data, setData] = useState([{
+    id: String,
+    storeID: String,
+    classify: String,
+    name: String,
+    description: String,
+    price: Number,
+    quantity: Number,
+    isAvailable: Boolean,
+    image: [String],
+  }]);
   const [Refreshing, setRefreshing] = useState(false);
-
+  const [searchText,setSearchText] = useState('');
+  const [filterData, setFilterData] = useState();
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/catalog-gateway/items')
       .then((response) => response.json())
       .then((responseJson) => {
         setData(responseJson);
+        setFilterData(responseJson);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -48,12 +61,32 @@ const ItemList = ({navigation}) => {
       {
         getList();
         setRefreshing(false);
+        setSearchText('');
       }
   },[Refreshing]);
+
+  useEffect(() => {
+
+    const filtered = data.filter(item =>
+      item.name.toString().toLowerCase().includes(searchText.toLowerCase()),
+    );
+    if (searchText === '') {
+      return setFilterData(data);
+    }
+
+    setFilterData(filtered);
+  },[searchText]);
   return (
     <View style={{flex: 1}}>
+      <TextInput
+            style={styles.textInputSearch}
+            value={searchText}
+            onChangeText={text => {setSearchText(text);}}
+            placeholder='Search...'
+            placeholderColor="#c4c3cb"
+          ></TextInput>
         <FlatList
-          data={data}
+          data={filterData}
           initialNumToRender={20}
           keyExtractor={({id}) => id}
           renderItem={({item}) => (
@@ -67,7 +100,7 @@ const ItemList = ({navigation}) => {
                 style={styles.ItemContainer}
                 >
                   <View>
-                    <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image}`}} />
+                    <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image[0]}`}} />
                   </View>
                 <View>
                   <Text>{item.name}</Text>
@@ -119,5 +152,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 40,
     color: 'white',
-  }
+  },
+  textInputSearch: {
+    height: 43,
+    fontSize: 14,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#000000',
+    backgroundColor: '#fafafa',
+    paddingLeft: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 5,
+    width: 400,
+  },
 });

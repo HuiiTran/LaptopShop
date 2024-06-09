@@ -35,22 +35,22 @@ const Management = ({navigation}) => {
           <Button
                 buttonStyle={styles.loginButton}
                 onPress={() => {navigation.navigate('StaffList');}}
-                title="Staff Management"
+                title="STAFF MANAGEMENT"
               />
           <Button
                 buttonStyle={styles.loginButton}
                 onPress={() =>{navigation.navigate('UserList');}}
-                title="User Management"
+                title="USER MANAGEMENT"
               />
           <Button
                 buttonStyle={styles.loginButton}
                 onPress={() =>{navigation.navigate('ItemList');}}
-                title="Product Management"
+                title="PRODUCT MANAGEMENT"
               />
           <Button
                 buttonStyle={styles.loginButton}
                 onPress={() =>{navigation.navigate('OrderList');}}
-                title="Order Management"
+                title="ORDER MANAGEMENT"
               />
         </View>
         ) :
@@ -59,12 +59,12 @@ const Management = ({navigation}) => {
           <Button
                   buttonStyle={styles.loginButton}
                   onPress={() =>{navigation.navigate('ItemList');}}
-                  title="Product Management"
+                  title="PRODUCT MANAGEMENT"
                 />
           <Button
                   buttonStyle={styles.loginButton}
                   onPress={() =>{navigation.navigate('OrderList');}}
-                  title="Order Management"
+                  title="ORDER MANAGEMENT"
                 />
         </View>
         )}

@@ -36,33 +36,61 @@ const Profile = ({navigation}) => {
   const[userData, setUserData] = useState(null);
   const[name, setName] = useState();
   const[phone, setPhone] = useState();
-
+  const[email, setEmail] = useState();
+  const[userName, setUserName] = useState();
 
   const[oldPassword,setOldPassword] = useState();
 
   const[loading, setLoading] = useState();
 
-  const[image, setImage] = useState();
 
+  const[image, setImage] = useState();
   const[selectedImage, setSelectedImage] = useState();
   const[isImageSelected, setIsImageSelected] = useState(false);
 
+
+  const [isAdmin, setIsAdmin] = useState(String);
   useEffect(() => {
     const getInfor = async () => {
       AsyncStorage.getItem('ID').then(ID => setUserId(ID));
-      try {
-        fetch(ProjectBaseUrl + '/admin/' + userId)
-        .then((response) => response.json())
-        .then((responseJson) => {
-          setUserData(responseJson);
-          setName(responseJson.name);
-          setPhone(responseJson.phoneNumber);
-          setImage(responseJson.image);
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+      AsyncStorage.getItem('role').then(role => setIsAdmin(role));
+      if(isAdmin === 'Admin'){
+        try {
+          fetch(ProjectBaseUrl + '/admin/' + userId)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            setUserData(responseJson);
+            setName(responseJson.name);
+            setPhone(responseJson.phoneNumber);
+            setImage(responseJson.image);
+            setOldPassword(responseJson.passWord);
+            setEmail(responseJson.email);
+            setUserName(responseJson.userName);
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      }
+      else {
+        try {
+          fetch(ProjectBaseUrl + '/staff/' + userId)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            setUserData(responseJson);
+            setName(responseJson.name);
+            setPhone(responseJson.phoneNumber);
+            setImage(responseJson.image);
+            setOldPassword(responseJson.passWord);
+            setEmail(responseJson.email);
+            setUserName(responseJson.userName);
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
     getInfor();
@@ -130,15 +158,38 @@ const Profile = ({navigation}) => {
                   keyboardType="numeric"
               />
           <TextInput
-                  placeholder="Old Password"
+                  placeholder="Email"
                   placeholderColor="#c4c3cb"
                   style={styles.loginFormTextInput}
-                  secureTextEntry={true}
+                  label="Email"
+                  returnKeyType="next"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  autoCapitalize="none"
+                  keyboardType="numeric"
+              />
+          <TextInput
+                  placeholder="UserName"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  editable={false}
+                  value={userName}
                   label="OldPassword"
+                  returnKeyType="done"
+                 // onChangeText={(text) => s(text)}
+              />
+          <TextInput
+                  placeholder="Password"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                 // secureTextEntry={true}
+                  label="OldPassword"
+                  value={oldPassword}
                   returnKeyType="done"
                   onChangeText={(text) => setOldPassword(text)}
               />
-          <TextInput
+          
+          {/* <TextInput
                   placeholder="New Password"
                   placeholderColor="#c4c3cb"
                   style={styles.loginFormTextInput}
@@ -155,7 +206,7 @@ const Profile = ({navigation}) => {
                   label="ConfirmNewPassword"
                   returnKeyType="done"
                   onChangeText={(text) => setOldPassword(text)}
-              />
+              /> */}
           <Button
                     onPress={() =>{
                       //navigation.replace('Login');
@@ -219,12 +270,13 @@ const styles = StyleSheet.create({
   image_container: {
     width: 200,
     height: 200,
-    //backgroundColor: 'green',
+    borderRadius: 50,
     marginLeft: '25%',
   },
   image_picker: {
     width: 200,
     height: 200,
+    borderRadius: 100,
   },
 
 });

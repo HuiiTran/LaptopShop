@@ -227,7 +227,7 @@ const UserDetails = ({navigation, route}) => {
                   keyboardType="phone-pad"
               />
               <Button title="Update" onPress={() => {Update(); navigation.goBack();}}/>
-              <Button title="Delete" onPress={() => navigation.goBack()}/>
+              {/* <Button title="Delete" onPress={() => navigation.goBack()}/> */}
               </ScrollView>
               </TouchableWithoutFeedback>
             )}
@@ -280,12 +280,13 @@ const styles = StyleSheet.create({
   image_container: {
     width: 200,
     height: 200,
-    //backgroundColor: 'green',
+    borderRadius: 50,
     marginLeft: '25%',
   },
   image_picker: {
     width: 200,
     height: 200,
+    borderRadius: 100,
   },
 
 });
