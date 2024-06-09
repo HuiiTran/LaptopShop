@@ -6,7 +6,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useId } from 'react';
 import { useEffect, useState } from 'react';
 import {
   SafeAreaView,
@@ -18,7 +18,6 @@ import {
   ActivityIndicator,
   TextInput,
   View,
-  Button,
   Keyboard,
   TouchableOpacity,
   Image,
@@ -29,6 +28,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ProjectBaseUrl } from '../Api_Management/ApiManager';
 
 import UploadImage from '../assets/icons/Image';
+import { Button } from 'react-native-elements';
 
 const Profile = ({navigation}) => {
 
@@ -49,11 +49,12 @@ const Profile = ({navigation}) => {
   const[isImageSelected, setIsImageSelected] = useState(false);
 
 
-  const [isAdmin, setIsAdmin] = useState(String);
+  const [isAdmin, setIsAdmin] = useState('Admin');
   useEffect(() => {
+    AsyncStorage.getItem('ID').then(ID => setUserId(ID));
+    AsyncStorage.getItem('role').then(role => setIsAdmin(role));
     const getInfor = async () => {
-      AsyncStorage.getItem('ID').then(ID => setUserId(ID));
-      AsyncStorage.getItem('role').then(role => setIsAdmin(role));
+      console.log(isAdmin, useId);
       if(isAdmin === 'Admin'){
         try {
           fetch(ProjectBaseUrl + '/admin/' + userId)
@@ -73,7 +74,7 @@ const Profile = ({navigation}) => {
           setLoading(false);
         }
       }
-      else {
+      else if(isAdmin === 'Staff') {
         try {
           fetch(ProjectBaseUrl + '/staff/' + userId)
           .then((response) => response.json())
@@ -94,7 +95,7 @@ const Profile = ({navigation}) => {
       }
     };
     getInfor();
-  },[userId]);
+  },[isAdmin, userId]);
   const logout = () =>{
     AsyncStorage.removeItem('AccessToken');
     AsyncStorage.removeItem('ID');
@@ -174,9 +175,9 @@ const Profile = ({navigation}) => {
                   style={styles.loginFormTextInput}
                   editable={false}
                   value={userName}
-                  label="OldPassword"
+                  label="UserName"
                   returnKeyType="done"
-                 // onChangeText={(text) => s(text)}
+                 //onChangeText={(text) => set(text)}
               />
           <TextInput
                   placeholder="Password"
@@ -208,19 +209,22 @@ const Profile = ({navigation}) => {
                   onChangeText={(text) => setOldPassword(text)}
               /> */}
           <Button
+                    buttonStyle={styles.loginButton_1}
                     onPress={() =>{
                       //navigation.replace('Login');
                     }}
-                    title="Change"
+                    title="UPDATE"
                   />
-          <Button
+          <TouchableOpacity
+                    style={styles.loginButton_2}
                     onPress={() =>{
                       navigation.replace('Login');
                       // console.log(userData);
                       // console.log(userData.id);
                     }}
-                    title="Logout"
-                  />
+                  >
+                    <Text style={styles.log_out} >LOGOUT</Text>
+                  </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -256,13 +260,32 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
-  loginButton: {
-    backgroundColor: '#000000',
+  loginButton_1: {
+    backgroundColor: '#753f00',
     borderRadius: 5,
-    height: 45,
-    marginTop: 10,
+    height: 65,
+    marginTop: 20,
     width: 350,
     alignItems: 'center',
+    alignSelf: 'center',
+  },
+  loginButton_2: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    height: 65,
+    marginTop: 50,
+    width: 350,
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  log_out:{
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 20,
+    alignSelf: 'center',
+    marginTop: 15,
   },
   warning: {
       color: 'red',
