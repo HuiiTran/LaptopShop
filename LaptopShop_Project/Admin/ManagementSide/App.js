@@ -32,6 +32,10 @@ import UserList from './screens/UserList.js';
 import UserDetails from './screens/UserDetails.js';
 import UserCreate from './screens/UserCreate.js';
 
+import AdminList from './screens/AdminList.js';
+import AdminDetails from './screens/AdminDetails.js';
+import AdminCreate from './screens/AdminCreate.js';
+
 import StaffList from './screens/StaffList.js';
 import StaffDetails from './screens/StaffDetails.js';
 import StaffCreate from './screens/StaffCreate.js';
@@ -91,6 +95,10 @@ const App = () => {
           <Stack.Screen options={{headerTitle: 'STAFF', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffCreate" component={StaffCreate}/>
           <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserCreate" component={UserCreate}/>
           <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemCreate" component={ItemCreate}/>
+          <Stack.Screen options={{headerTitle: 'ADMIN', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="AdminList" component={AdminList}/>
+          <Stack.Screen options={{headerTitle: 'ADMIN', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="AdminDetails" component={AdminDetails}/>
+          <Stack.Screen options={{headerTitle: 'ADMIN', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="AdminCreate" component={AdminCreate}/>
+
         </Stack.Navigator>
       ) :
       (
@@ -109,6 +117,10 @@ const App = () => {
           <Stack.Screen options={{headerTitle: 'STAFF',headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="StaffCreate" component={StaffCreate}/>
           <Stack.Screen options={{headerTitle: 'USER', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="UserCreate" component={UserCreate}/>
           <Stack.Screen options={{headerTitle: 'PRODUCT', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="ItemCreate" component={ItemCreate}/>
+          <Stack.Screen options={{headerTitle: 'ADMIN', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="AdminList" component={AdminList}/>
+          <Stack.Screen options={{headerTitle: 'ADMIN', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="AdminDetails" component={AdminDetails}/>
+          <Stack.Screen options={{headerTitle: 'ADMIN', headerTitleAlign: 'center', headerStyle:{backgroundColor: '#bc8648',}, headerTintColor: '#fff',}} name="AdminCreate" component={AdminCreate}/>
+
         </Stack.Navigator>
       )}
   </NavigationContainer>

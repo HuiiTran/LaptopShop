@@ -22,25 +22,24 @@ import {
   Keyboard,
   TouchableOpacity,
   Image,
-  Alert,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const UserCreate = ({navigation}) => {
 
+const AdminCreate = ({navigation}) => {
     const[isLoading, setIsLoading] = useState(false);
     const[data, setData] = useState(null);
 
+    const[password, setPassword] = useState();
     const[userName, setUserName] = useState();
     const[email, setEmail] = useState();
     const[address, setAddress] = useState();
     const[name, setName] = useState();
     const[phoneNumber, setPhoneNumber] = useState();
-    const[image, setImage] = useState();
-    const[password, setPassword] = useState();
+    const[salary, setSalary] = useState();
+
 
     const[selectedImage, setSelectedImage] = useState();
     const[isImageSelected, setIsImageSelected] = useState(false);
@@ -51,46 +50,27 @@ const UserCreate = ({navigation}) => {
     form.append('UserName', userName );
     form.append('PassWord', password);
     form.append('Email', email);
-    form.append('Address', address);
+    //form.append('Address', address);
     form.append('Name', name);
     form.append('PhoneNumber', phoneNumber);
-    if(isImageSelected === true)
-    {
-      form.append('Image', {
+    //form.append('Salary', salary);
+    form.append('Image', {
       uri: selectedImage,
       name: 'test.jpg',
       type: 'image/jpeg',
     });
-  }
     console.log(form._parts);
     const requestOptions = {
       method: 'POST', // Specify the request method
       headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
       body: form, // Send the data in JSON format
     };
-    fetch(ProjectBaseUrl + '/users',requestOptions)
+    fetch(ProjectBaseUrl + '/admin',requestOptions)
     // .then(response => response.json()) // Parse the response as JSON
-    .then(responseData => {
-      if(responseData.status === 400)
-      {
-        Alert.alert('Input Error', 'Your username had been used, please choose another username', [
-          {text: 'OK'},
-        ]);
-      }
-      else{
-        navigation.goBack();
-      }
-    }) // Do something with the data
+    .then(responseData => console.log(responseData)) // Do something with the data
     .catch(error => console.error(error)); // Handle errors
   };
   useEffect(() => {
-    //setIsLoading(true);
-
-  // if(Refreshing === true)
-  //     {
-  //       getList();
-  //       setRefreshing(false);
-  //     }
   },[]);
 
 
@@ -103,9 +83,7 @@ const UserCreate = ({navigation}) => {
   // form.append('Name', name);
   // form.append('PhoneNumber', phoneNumber);
   // form.append('Image', selectedImage);
-
-
-
+  // form.append('Salary', salary);
 
 
   const OpenLibrary = () => {
@@ -140,56 +118,10 @@ const UserCreate = ({navigation}) => {
       <View style={{marginLeft: 20, marginRight: 20}}>
       <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
-            {
-            isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) :
-            (<Image style={styles.image_picker} source={require('../assets/icons/Upload.png')} />)
-            }
+            {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={require('../assets/icons/Upload.png')} />)}
           </TouchableOpacity>
         </View>
-      <Text>E-mail</Text>
-          <TextInput
-                  placeholder="E-mail"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="Email"
-                  returnKeyType="next"
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
-                  autoCapitalize="none"
-              />
-      <Text>Address</Text>
-          <TextInput
-                  placeholder="Address"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  value={address}
-                  label="Address"
-                  returnKeyType="next"
-                  onChangeText={(text) => setAddress(text)}
-              />
-        <Text>User's name</Text>
-          <TextInput
-                  placeholder="Name"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  label="Name"
-                  returnKeyType="next"
-                  value={name}
-                  onChangeText={(text) => setName(text)}
-                  autoCapitalize="none"
-              />
-        <Text>User's phone number</Text>
-          <TextInput
-                  placeholder="Phone number"
-                  placeholderColor="#c4c3cb"
-                  style={styles.loginFormTextInput}
-                  value={phoneNumber}
-                  label="PhoneNumber"
-                  returnKeyType="next"
-                  onChangeText={(text) => setPhoneNumber(text)}
-                  keyboardType="phone-pad"
-              />
-        <Text>UserName</Text>
+      <Text>UserName</Text>
           <TextInput
                   placeholder="UserName"
                   placeholderColor="#c4c3cb"
@@ -201,7 +133,7 @@ const UserCreate = ({navigation}) => {
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
-        <Text>Password</Text>
+      <Text>Password</Text>
           <TextInput
                   placeholder="Password"
                   placeholderColor="#c4c3cb"
@@ -213,8 +145,61 @@ const UserCreate = ({navigation}) => {
                   //selectTextOnFocus={false}
                   autoCapitalize="none"
               />
-
-              <Button buttonStyle={styles.loginButton} title="Create" onPress={() => {Create();}}/>
+      <Text>E-mail</Text>
+          <TextInput
+                  placeholder="E-mail"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="Email"
+                  returnKeyType="next"
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
+                  autoCapitalize="none"
+              />
+      {/* <Text>Address</Text>
+          <TextInput
+                  placeholder="Address"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  value={address}
+                  label="Address"
+                  returnKeyType="next"
+                  onChangeText={(text) => setAddress(text)}
+              /> */}
+        <Text>Admin's name</Text>
+          <TextInput
+                  placeholder="Name"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  label="Name"
+                  returnKeyType="next"
+                  value={name}
+                  onChangeText={(text) => setName(text)}
+                  autoCapitalize="none"
+              />
+        <Text>Admin's phone number</Text>
+          <TextInput
+                  placeholder="Phone number"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  value={phoneNumber}
+                  label="PhoneNumber"
+                  returnKeyType="next"
+                  onChangeText={(text) => setPhoneNumber(text)}
+                  keyboardType="phone-pad"
+              />
+        {/* <Text>Staff's salary</Text>
+          <TextInput
+                  placeholder="Salary"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  value={(isNaN(salary) ? ('') : salary.toLocaleString('en-US'))}
+                  label="Salary"
+                  returnKeyType="done"
+                  onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
+                  keyboardType="numeric"
+              /> */}
+              <Button buttonStyle={styles.loginButton} title="Create" onPress={() => {Create(); navigation.goBack();}}/>
               </View>
               </ScrollView>
               </TouchableWithoutFeedback>
@@ -224,7 +209,7 @@ const UserCreate = ({navigation}) => {
   );
 };
 
-export default UserCreate;
+export default AdminCreate;
 const styles = StyleSheet.create({
   containerView: {
     flex: 1,
@@ -258,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#753f00',
     borderRadius: 5,
     height: 65,
-    marginTop: 30,
+    marginTop: 40,
     width: 370,
     alignItems: 'center',
     alignSelf: 'center',

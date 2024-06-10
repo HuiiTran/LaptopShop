@@ -34,12 +34,14 @@ const Profile = ({navigation}) => {
 
   const[userId, setUserId] = useState();
   const[userData, setUserData] = useState(null);
+
   const[name, setName] = useState();
   const[phone, setPhone] = useState();
   const[email, setEmail] = useState();
   const[userName, setUserName] = useState();
-
   const[oldPassword,setOldPassword] = useState();
+  const[salary, setSalary] = useState();
+  const[address, setAddress] = useState();
 
   const[loading, setLoading] = useState();
 
@@ -86,6 +88,8 @@ const Profile = ({navigation}) => {
             setOldPassword(responseJson.passWord);
             setEmail(responseJson.email);
             setUserName(responseJson.userName);
+            setAddress(responseJson.address);
+            setSalary(responseJson.salary);
           });
         } catch (error) {
           console.error(error);
@@ -96,6 +100,59 @@ const Profile = ({navigation}) => {
     };
     getInfor();
   },[isAdmin, userId]);
+  const Update = async () => {
+    if(isAdmin === 'Admin'){
+      var form = new FormData();
+    form.append('UserName', userName );
+    form.append('PassWord', oldPassword);
+    form.append('Email', email);
+    form.append('Name', name);
+    form.append('PhoneNumber', phone);
+    form.append('Image', {
+      uri: selectedImage,
+      name: 'test.jpg',
+      type: 'image/jpeg',
+    });
+    console.log(form._parts);
+    const requestOptions = {
+      method: 'PUT', // Specify the request method
+      headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
+      body: form, // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/admin/' + userId,requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+    }
+    else if(isAdmin === 'Staff') {
+      var form = new FormData();
+    form.append('UserName', userName );
+    form.append('PassWord', oldPassword);
+    form.append('Email', email);
+    form.append('Address', address);
+    form.append('Name', name);
+    form.append('PhoneNumber', phone);
+    form.append('Salary', salary);
+    form.append('Image', {
+      uri: selectedImage,
+      name: 'test.jpg',
+      type: 'image/jpeg',
+    });
+    console.log(form._parts);
+    const requestOptions = {
+      method: 'PUT', // Specify the request method
+      headers: {'Content-Type': 'multipart/form-data'}, // Specify the content type
+      body: form, // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/staff/' + userId,requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+    }
+  };
+
+
+
   const logout = () =>{
     AsyncStorage.removeItem('AccessToken');
     AsyncStorage.removeItem('ID');
@@ -130,13 +187,13 @@ const Profile = ({navigation}) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View>
+      <ScrollView>
         <View style={styles.image_container}>
           <TouchableOpacity style={styles.image_picker}  onPress={() => OpenLibrary()}>
           {isImageSelected ? (<Image style={styles.image_picker} source={{uri: selectedImage}} />) : (<Image style={styles.image_picker} source={{uri: `data:image/jpeg;base64,${image}`}} />)}
           </TouchableOpacity>
         </View>
-          {/* <Text>Profile</Text> */}
+          <Text>Name</Text>
           <TextInput
                   placeholder="Name"
                   placeholderColor="#c4c3cb"
@@ -147,6 +204,7 @@ const Profile = ({navigation}) => {
                   onChangeText={(text) => setName(text)}
                   autoCapitalize="none"
               />
+          <Text>Phone number</Text>
           <TextInput
                   placeholder="Phone number"
                   placeholderColor="#c4c3cb"
@@ -158,6 +216,7 @@ const Profile = ({navigation}) => {
                   autoCapitalize="none"
                   keyboardType="numeric"
               />
+          <Text>Email</Text>
           <TextInput
                   placeholder="Email"
                   placeholderColor="#c4c3cb"
@@ -169,6 +228,7 @@ const Profile = ({navigation}) => {
                   autoCapitalize="none"
                   keyboardType="numeric"
               />
+          <Text>Username</Text>
           <TextInput
                   placeholder="UserName"
                   placeholderColor="#c4c3cb"
@@ -179,6 +239,7 @@ const Profile = ({navigation}) => {
                   returnKeyType="done"
                  //onChangeText={(text) => set(text)}
               />
+          <Text>Password</Text>
           <TextInput
                   placeholder="Password"
                   placeholderColor="#c4c3cb"
@@ -189,7 +250,38 @@ const Profile = ({navigation}) => {
                   returnKeyType="done"
                   onChangeText={(text) => setOldPassword(text)}
               />
-          
+          {isAdmin === 'Staff' ? (
+            <View>
+              <Text>Address</Text>
+              <TextInput
+                      placeholder="Address"
+                      placeholderColor="#c4c3cb"
+                      style={styles.loginFormTextInput}
+                      value={address}
+                      label="Address"
+                      returnKeyType="next"
+                      onChangeText={(text) => setAddress(text)}
+                  />
+                  <Text>Staff's salary</Text>
+          <TextInput
+                  placeholder="Salary"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  value={(isNaN(salary) ? ('') : salary.toLocaleString('en-US'))}
+                  label="Salary"
+                  returnKeyType="done"
+                  //onChangeText={(text) => setSalary(parseInt(parseFloat(text.replace(/,/g, ''))))}
+                  keyboardType="numeric"
+                  editable={false}
+              />
+                </View>
+            
+          )
+          :
+          (
+            <View></View>
+          )
+        }
           {/* <TextInput
                   placeholder="New Password"
                   placeholderColor="#c4c3cb"
@@ -210,9 +302,7 @@ const Profile = ({navigation}) => {
               /> */}
           <Button
                     buttonStyle={styles.loginButton_1}
-                    onPress={() =>{
-                      //navigation.replace('Login');
-                    }}
+                    onPress={() => Update()}
                     title="UPDATE"
                   />
           <TouchableOpacity
@@ -225,7 +315,7 @@ const Profile = ({navigation}) => {
                   >
                     <Text style={styles.log_out} >LOGOUT</Text>
                   </TouchableOpacity>
-      </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
@@ -279,6 +369,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: 'red',
     borderWidth: 1,
+    marginBottom: 20,
   },
   log_out:{
     color: 'red',

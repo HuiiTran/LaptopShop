@@ -34,6 +34,11 @@ const Management = ({navigation}) => {
           <View style={styles.container}>
           <Button
                 buttonStyle={styles.loginButton}
+                onPress={() => {navigation.navigate('AdminList');}}
+                title="ADMIN MANAGEMENT"
+              />
+          <Button
+                buttonStyle={styles.loginButton}
                 onPress={() => {navigation.navigate('StaffList');}}
                 title="STAFF MANAGEMENT"
               />
