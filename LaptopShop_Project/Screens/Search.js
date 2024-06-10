@@ -14,7 +14,7 @@ import userProfile from '../assets/icons/UserProfile.png'
 import searchButton from '../assets/icons/SearchButton.png'
 import ProductItem from '../Components/ProductItem'
 import searchIcon from '../assets/icons/ion_search.png'
-
+import turnBack from '../assets/icons/turnback.png'
 import { ProjectBaseUrl } from './Home';
 
 const Search = (props) => {
@@ -86,17 +86,19 @@ const Search = (props) => {
     };
 
   return (
-    <View showsVerticalScrollIndicator={false} style={styles.scrollview}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
       
       <View style={styles.container}>
             <Image  source={{uri: `data:image/jpeg;base64,${userImage}`}} style={styles.image} />
             <Text style={styles.logo}>L & C</Text>
-            <View style={{marginLeft: 10,
+            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <Image source={turnBack} style={{marginLeft: 10,
         marginTop:10,
         marginRight:15,
         resizeMode: 'contain',
           height: 40,
-          width: 35,}} />
+          width: 35,}}/>
+            </TouchableOpacity>
         </View>
         
         <View style={styles.container}>
@@ -119,7 +121,7 @@ const Search = (props) => {
         {
           filterData?.length !== 0 ? 
           <FlatList
-            style={{marginLeft:10, marginTop:10}}
+            style={{marginLeft:10, marginTop:10, marginBottom: 20,}}
             data={filterData}
             horizontal={false}
             numColumns={2}
@@ -143,7 +145,7 @@ const Search = (props) => {
           )
         }
         
-    </View>
+    </ScrollView>
     
   )
 }

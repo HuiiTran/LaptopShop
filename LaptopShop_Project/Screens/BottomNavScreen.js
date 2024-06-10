@@ -54,16 +54,16 @@ const BottomNavScreen = () => {
         tabBarIcon: ({focused}) => (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image
-          source={require('../assets/icons/Cart.png')}
+          source={require('../assets/icons/HomeIcon.png')}
           resizeMode="contain"
           style={{
             width: 25,
             height: 25,
-            tintColor: focused ? '#753f00' : '#748c94',
+            tintColor: focused ? '#000000' : '#748c94',
           }}/>
             <Text
              style={{
-              color: focused ? '#753f00' : '#748c94',
+              color: focused ? '#000000' : '#748c94',
               fontSize: 12,
              }}>
               Home
@@ -75,16 +75,16 @@ const BottomNavScreen = () => {
         tabBarIcon: ({focused}) => (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image
-          source={require('../assets/icons/Cart.png')}
+          source={require('../assets/icons/CartIcon.png')}
           resizeMode="contain"
           style={{
             width: 25,
             height: 25,
-            tintColor: focused ? '#753f00' : '#748c94',
+            tintColor: focused ? '#000000' : '#748c94',
           }}/>
             <Text
              style={{
-              color: focused ? '#753f00' : '#748c94',
+              color: focused ? '#000000' : '#748c94',
               fontSize: 12,
              }}>
               Cart
@@ -96,16 +96,16 @@ const BottomNavScreen = () => {
         tabBarIcon: ({focused}) => (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image
-          source={require('../assets/icons/Cart.png')}
+          source={require('../assets/icons/MenuIcon.png')}
           resizeMode="contain"
           style={{
             width: 25,
             height: 25,
-            tintColor: focused ? '#753f00' : '#748c94',
+            tintColor: focused ? '#000000' : '#748c94',
           }}/>
             <Text
              style={{
-              color: focused ? '#753f00' : '#748c94',
+              color: focused ? '#000000' : '#748c94',
               fontSize: 12,
              }}>
               Menu

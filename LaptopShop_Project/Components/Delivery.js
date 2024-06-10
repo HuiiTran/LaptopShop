@@ -11,7 +11,7 @@ import CenterDot from '../assets/icons/CenterDot.png'
 import circlewithoutdot from '../assets/icons/circlewithoutdot.png'
 
 
-const Delivery = ({methodOption, deliveryName, deliveryDescription, anotherOption}) => {
+const Delivery = ({methodOption, deliveryName, deliveryDescription, anotherOption, navigation}) => {
 
   return (
     <View style={styles.container}>
@@ -25,9 +25,9 @@ const Delivery = ({methodOption, deliveryName, deliveryDescription, anotherOptio
 
       </View>
 
-      <TouchableOpacity style={styles.imageOptionHolder}>
+      {/* <TouchableOpacity style={styles.imageOptionHolder} onPress={() => navigation.navigate()}>
         <Image source={anotherOption}></Image>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       
 
     </View>

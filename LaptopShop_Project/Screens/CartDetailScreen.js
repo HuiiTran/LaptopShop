@@ -17,6 +17,7 @@ import ApplyCouponCode from '../assets/icons/ApplyCouponCode.png'
 import CheckoutButton from '../assets/icons/CheckoutButton.png'
 import addPaymentMethodIcon from '../assets/icons/AddPaymentMethod.png'
 import AddCreditCardScreen from './AddCreditCardScreen.js'
+import EmptyCart from '../assets/icons/emptyCart.png'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ProjectBaseUrl } from '../ApiManagement/ApiManager.js'
 const OrderDetail = (props, navigation) => {
@@ -72,12 +73,12 @@ const OrderDetail = (props, navigation) => {
       50,
     );
   };
-  const Delete = async (itemid, userId) => {
+  const Delete = async (itemid, thisuserId) => {
     const requestOptions = {
       method: 'DELETE', // Specify the request method
       headers: {'Content-Type': 'application/json'}, // Specify the content type
       body: JSON.stringify({
-        'userId': userId,
+        'userId': thisuserId,
         'catalogLaptopId': itemid,
         'quantity': 1,
       }), // Send the data in JSON format
@@ -148,7 +149,7 @@ const OrderDetail = (props, navigation) => {
       }
   },[Refreshing]);
   return (
-    <View style={{backgroundColor:'#fff'}}>
+    <ScrollView style={{backgroundColor:'#fff'}}>
       <View showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <TouchableOpacity onPress={() => props.navigation.goBack()}>
@@ -174,8 +175,16 @@ const OrderDetail = (props, navigation) => {
       <View>
         <Text style={styles.cart}>My Cart</Text>
       </View>
-      
-      <FlatList
+      {
+        objectListLength === 0 ?
+        (
+          <View>
+            <Image style={{width: 400, height: 350}} source={EmptyCart} />
+          </View>
+        )
+        :
+        (
+          <FlatList
             data={itemList}
             keyExtractor={(item, index) => item.catalogLaptopId}
             renderItem={({item, index}) => (
@@ -188,8 +197,10 @@ const OrderDetail = (props, navigation) => {
             onRefresh={()=> {
               setRefreshing(true);
           }}
-          height={280}
         />
+      
+        )
+      }
       
       <Text style={styles.cart}>Delivery</Text>
       
@@ -228,6 +239,21 @@ const OrderDetail = (props, navigation) => {
 
       <Text style={styles.cart}>Order Summary</Text>
       {/* <Button title='hello'  onPress={() => CaculationTotal()}/> */}
+      <FlatList
+            data={itemList}
+            keyExtractor={(item, index) => item.catalogLaptopId}
+            renderItem={({item, index}) => (
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>{item.name}</Text>
+              <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}>{parseFloat(item.price * item.quantity).toLocaleString()} vnđ</Text>
+            </View>
+          )}
+            refreshing ={ Refreshing}
+            onRefresh={()=> {
+              setRefreshing(true);
+          }}
+        />
+      
 
       {/* <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Name of product</Text>
@@ -237,14 +263,9 @@ const OrderDetail = (props, navigation) => {
       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Name of product</Text>
         <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
-      </View>
+      </View> */}
 
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-        <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Name of product</Text>
-        <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
-      </View>
-
-      <View style = {styles.line}></View> */}
+      <View style = {styles.line}></View>
 
       {/* <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Subtotal</Text>
@@ -278,7 +299,7 @@ const OrderDetail = (props, navigation) => {
         </TouchableOpacity>
       </View> */}
       
-      <View style = {styles.line}></View>
+      {/* <View style = {styles.line}></View> */}
     
       <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Bold', fontSize:26, color:'#000'}}>Total</Text>
@@ -292,7 +313,7 @@ const OrderDetail = (props, navigation) => {
 
       
     </View>
-    </View>
+    </ScrollView>
     
   )
 }
