@@ -34,6 +34,9 @@ const Menu = ({navigation}) => {
   const ToOrderHistory = () => {
     navigation.navigate('OrderHistoryScreen', {userId: userId});
   }
+  const ToChangePassword = () => {
+    navigation.navigate('ChangePassword', {userId: userId});
+  }
   return (
     <View style={{backgroundColor: '#fff'}}>
       <View showsVerticalScrollIndicator={false}>
@@ -92,6 +95,15 @@ const Menu = ({navigation}) => {
 
       <View style={styles.descriptionContainer}>
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.locationName}>Order history</Text>
+      </View>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => ToChangePassword()} style={styles.container_2}>
+      <View style={styles.locationContainer}>
+        <Image style={styles.image} source={Setting}></Image>
+      </View>
+
+      <View style={styles.descriptionContainer}>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.locationName}>Change password</Text>
       </View>
     </TouchableOpacity>
     <TouchableOpacity style={{alignSelf:'center', marginTop:60}} onPress={() => navigation.replace('LoginScreen')}>
