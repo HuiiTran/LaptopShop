@@ -20,13 +20,16 @@ import controller from '../assets/icons/Controller.png'
 import laptop from '../assets/icons/laptop.png'
 import ProductItem from '../Components/ProductItem'
 import ProductType from '../Components/ProductType';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const ProjectBaseUrl = 'http://10.0.2.2:5156';
 
 
 const Home = (props) => {
   const [searchText,setSearchText] = useState('');
+  const images = props.image;
+  const [userId, setUserId] = useState();
+  const [userImage, setUserImage] = useState();
     const [data, setData] = useState([{
       id: String,
       storeID: String,
@@ -52,9 +55,27 @@ const Home = (props) => {
       console.error(error);
     }
   };
+  const getUser = async (id) => {
+    try {
+      fetch(ProjectBaseUrl + '/users/' + id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setUserImage(responseJson.image);
+        //console.log(responseJson);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+
+    }
+  };
   useEffect(() => {
+    AsyncStorage.getItem('ID').then(ID => setUserId(ID));
     getList();
   },[]);
+  useEffect(() => {
+    getUser(userId);
+  },[userId]);
 
   useEffect(() => {
     const filtered = data.filter(item =>
@@ -68,9 +89,9 @@ const Home = (props) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
       <View style={styles.container}>
-        <Image source={userProfile} style={styles.image} />
+        <Image  source={{uri: `data:image/jpeg;base64,${userImage}`}} style={styles.image} />
         <Text style={styles.logo}>L & C</Text>
-        <TouchableOpacity onPress={() => props.navigation.navigate('SearchScreen')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('SearchScreen', {userId: userId})}>
         <Image source={searchButton} style={{marginLeft: 10,
           marginTop:10,
           marginRight:15,
@@ -141,7 +162,7 @@ const Home = (props) => {
             data={filterData}
             horizontal={false}
             numColumns={2}
-            keyExtractor={({id}) => id}
+            keyExtractor={(item, index) => item.id}
             renderItem={({item}) => (
             <ProductItem
                 image={item.image}

@@ -21,7 +21,7 @@ const Search = (props) => {
     const handleInputChange = (text) => {
         console.log(text);
       };
-
+      const {userId} = props.route.params;
     const [searchText,setSearchText] = useState('');
     const [data, setData] = useState([{
       id: String,
@@ -35,6 +35,8 @@ const Search = (props) => {
       image: [String],
     }]);
     const [filterData, setFilterData] = useState();
+
+  const [userImage, setUserImage] = useState();
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/catalog-gateway/items')
@@ -48,9 +50,24 @@ const Search = (props) => {
       console.error(error);
     }
   };
+  const getUser = async (id) => {
+    try {
+      fetch(ProjectBaseUrl + '/users/' + id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setUserImage(responseJson.image);
+        //console.log(responseJson);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+
+    }
+  };
   useEffect(() => {
     getList();
-  },[]);
+    getUser(userId);
+  },[userId]);
   useEffect(() => {
 
     const filtered = data.filter(item =>
@@ -69,12 +86,12 @@ const Search = (props) => {
     };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollview}>
+    <View showsVerticalScrollIndicator={false} style={styles.scrollview}>
       
       <View style={styles.container}>
-            <Image source={userProfile} style={styles.image} />
+            <Image  source={{uri: `data:image/jpeg;base64,${userImage}`}} style={styles.image} />
             <Text style={styles.logo}>L & C</Text>
-            <Image source={searchButton} style={{marginLeft: 10,
+            <View style={{marginLeft: 10,
         marginTop:10,
         marginRight:15,
         resizeMode: 'contain',
@@ -126,7 +143,7 @@ const Search = (props) => {
           )
         }
         
-    </ScrollView>
+    </View>
     
   )
 }

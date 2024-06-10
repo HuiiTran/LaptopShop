@@ -23,21 +23,21 @@ import MenuItem from '../Components/MenuItem.js';
 
 const Menu = ({navigation}) => {
   return (
-    <ScrollView style={{backgroundColor: '#fff'}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <View style={{backgroundColor: '#fff'}}>
+      <View showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <TouchableOpacity /*</View>onPress={() => {navigation.goBack();}}*/>
-            <Image
-              source={turnback}
-              style={{
-                marginLeft: 5,
-                marginTop: 10,
-                marginRight: 15,
-                resizeMode: 'contain',
-                height: 30,
-                width: 30,
-              }}
-            />
+          <Image
+            source={blank}
+            style={{
+              marginLeft: 10,
+              marginTop: 10,
+              marginRight: 15,
+              resizeMode: 'contain',
+              height: 35,
+              width: 35,
+              opacity: 0,
+            }}/>
           </TouchableOpacity>
 
           <Text style={styles.logo}>Menu</Text>
@@ -55,7 +55,7 @@ const Menu = ({navigation}) => {
             }}
           />
         </View>
-      </ScrollView>
+      </View>
       <View style={{height:20}}></View>
 
       <MenuItem methodOption={LaptopInMenu} menuName="Products"></MenuItem>
@@ -65,12 +65,12 @@ const Menu = ({navigation}) => {
       <MenuItem methodOption={Report} menuName="Report"></MenuItem>
       <MenuItem methodOption={Setting} menuName="Setting"></MenuItem>
     
-    <TouchableOpacity style={{alignSelf:'center', marginTop:120}} onPress={() => navigation.replace('LoginScreen')}>
+    <TouchableOpacity style={{alignSelf:'center', marginTop:60}} onPress={() => navigation.replace('LoginScreen')}>
       <Image source={Logout}></Image>
     </TouchableOpacity>
 
     <View style={{height:100}}></View>
-    </ScrollView>
+    </View>
   );
 };
 

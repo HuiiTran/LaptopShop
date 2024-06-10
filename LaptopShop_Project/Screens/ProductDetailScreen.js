@@ -102,7 +102,7 @@ const ProductDetailScreen = ({navigation, route, props}) => {
           />
         </TouchableOpacity>
         <Text style={styles.logo}>L & C</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('CartDetail')}>
           <Image source={cart} style={{marginLeft: 10,
             marginTop:10,
             marginRight:15,
@@ -116,6 +116,7 @@ const ProductDetailScreen = ({navigation, route, props}) => {
         price={price}
         description={description}
         image={image}
+        ItemId={itemId}
       />
 
     </ScrollView>

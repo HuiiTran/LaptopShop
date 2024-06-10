@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import checkBox from '../assets/icons/checkbox.png'
 import legion from '../assets/icons/Legion9i.png'
 import minus from '../assets/icons/Minus.png'
@@ -10,7 +10,10 @@ import { ProjectBaseUrl } from '../ApiManagement/ApiManager'
 
 
 const ProductsInCart = (props) => {
-  const [quantity, setQuantity] = useState(props.initialQuantity);
+  const [quantity, setQuantity] = useState();
+  useEffect(() => {
+    setQuantity(props.initialQuantity);
+  },[props.initialQuantity]);
   const UpdateIncreate = async () => {
     const requestOptions = {
       method: 'POST', // Specify the request method

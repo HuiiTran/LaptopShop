@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   StyleSheet,
@@ -10,6 +10,7 @@ import {
   TouchableNativeFeedback,
   Platform,
   ScrollView,
+  ToastAndroid,
   FlatList,
 } from 'react-native';
 
@@ -19,6 +20,8 @@ import legion from '../assets/icons/Legion9i.png'
 import ChangeStyleButton from '../assets/icons/ChangeProductLook.png'
 import favorite from '../assets/icons/Favorite.png'
 import addToCartButton from '../assets/icons/AddtoCartButton.png'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ProjectBaseUrl } from '../ApiManagement/ApiManager';
 
 const ProductItem = props => {
   let TouchableCmp = TouchableOpacity;
@@ -27,7 +30,36 @@ const ProductItem = props => {
     TouchableCmp = TouchableNativeFeedback;
   }
   const images = props.image;
+  const [userId, setUserId] = useState();
 
+  useEffect(() => {
+    AsyncStorage.getItem('ID').then(ID => setUserId(ID));
+
+  },[]);
+  const AddToCart = async () => {
+    const requestOptions = {
+      method: 'POST', // Specify the request method
+      headers: {'Content-Type': 'application/json'}, // Specify the content type
+      body: JSON.stringify({
+        'userId': userId,
+        'catalogLaptopId': props.ItemId,
+        'quantity': 1,
+      }), // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/inventory-gateway/cart',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error))
+    .finally(() => {
+      ToastAndroid.showWithGravityAndOffset(
+        'Success add to cart',
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+    }) // Handle errors
+  };
 
   return (
     <View>
@@ -54,7 +86,7 @@ const ProductItem = props => {
             <Image style={{marginLeft:1, borderRadius:7}}source={favorite}></Image>
           </TouchableOpacity>
           <View style={{width:'9%'}}></View>
-          <TouchableOpacity style={{flexDirection:'row'}} onPress={() => console.log(images)}>
+          <TouchableOpacity style={{flexDirection:'row'}} onPress={() => AddToCart()}>
             <Image style={{width:'80%', borderRadius:10}} source={addToCartButton}></Image>
           </TouchableOpacity>
         </View>

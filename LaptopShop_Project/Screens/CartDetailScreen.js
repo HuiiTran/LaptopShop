@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Button } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, ToastAndroid, TextInput, FlatList, Button } from 'react-native'
 import React, {useEffect, useId, useState} from 'react'
 import turnback from '../assets/icons/turnback.png'
 import blank from '../assets/icons/blank.png'
@@ -25,13 +25,30 @@ const OrderDetail = (props, navigation) => {
   const [itemList, setItemList] = useState();
   const [Refreshing, setRefreshing] = useState(false);
   const [total, setTotal] = useState(0);
+  const [catalogItemIdArray, setCatalogItemIdArray] = useState();
+  const [quantityArray, setQuantityArray] = useState();
+  const [objectListLength, setObjectListLength] = useState();
+  const [userAddress, setUserAddress] = useState();
+  const [userPhone, setUserPhone] = useState();
   const getList = async () => {
     try {
       fetch(ProjectBaseUrl + '/inventory-gateway/cart?userId=' + userId)
       .then((response) => response.json())
       .then((responseJson) => {
         setItemList(responseJson);
-        CaculationTotal();
+        var sum = 0;
+        var ArrayCatalog = [];
+        var ArrayQuantity = [];
+        for(var i = 0; i < responseJson.length; i++)
+          {
+            ArrayCatalog.push(responseJson[i].catalogLaptopId);
+            ArrayQuantity.push(responseJson[i].quantity);
+            sum += responseJson[i].price * responseJson[i].quantity;
+          }
+          setTotal(sum);
+          setCatalogItemIdArray(ArrayCatalog);
+          setQuantityArray(ArrayQuantity);
+          setObjectListLength(responseJson.length);
       });
     } catch (error) {
       console.error(error);
@@ -46,28 +63,95 @@ const OrderDetail = (props, navigation) => {
       }
       setTotal(sum);
   };
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      'Order success',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50,
+    );
+  };
+  const Delete = async (itemid, userId) => {
+    const requestOptions = {
+      method: 'DELETE', // Specify the request method
+      headers: {'Content-Type': 'application/json'}, // Specify the content type
+      body: JSON.stringify({
+        'userId': userId,
+        'catalogLaptopId': itemid,
+        'quantity': 1,
+      }), // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/inventory-gateway/cart',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
+  const AddToBill = async () => {
+    const requestOptions = {
+      method: 'POST', // Specify the request method
+      headers: {'Content-Type': 'application/json'}, // Specify the content type
+      body: JSON.stringify({
+          // "userId": userId,
+          // "catalogItemId": catalogItemIdArray,
+          // "quantity": quantityArray,
+          // "state": "Pending",
+          // "address": "string",
+          // "phone": "string"
+      }), // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/bill',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error))
+    .finally(() => {
+    }) // Handle errors
+  };
+  const DeleteAfterOrder = () =>{
+    for(var i = 0; i < objectListLength; i++)
+      {
+        //Delete(itemList[i].catalogLaptopId, userId);
+        showToastWithGravityAndOffset();
+        console.log(catalogItemIdArray);
+        console.log(quantityArray);
+      }
+
+  };
   const MINUTE_MS = 3000;
   useEffect(() =>{
     AsyncStorage.getItem('ID').then(ID => setUserId(ID));
     const interval = setInterval(() => {
       getList();
-      //console.log(total);
+      getUser();
     }, MINUTE_MS);
     return () => clearInterval(interval);
-  },[getList])
+  },[getList, getUser]);
+  const getUser = async () => {
+    try {
+      fetch(ProjectBaseUrl + '/users/' + userId)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setUserAddress(responseJson.address);
+        setUserPhone(responseJson.phoneNumber);
+        //console.log(responseJson.address);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+    }
+  };
   useEffect(() => {
   if(Refreshing === true)
       {
         getList();
         setRefreshing(false);
-        setSearchText('');
       }
   },[Refreshing]);
   return (
     <View style={{backgroundColor:'#fff'}}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <View showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
-        <TouchableOpacity /*</View>onPress={() => {navigation.goBack();}}*/>
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Image source={turnback} style={{marginLeft: 5,
             marginTop:10,
             marginRight:15,
@@ -93,9 +177,9 @@ const OrderDetail = (props, navigation) => {
       
       <FlatList
             data={itemList}
-            keyExtractor={({id}) => id}
+            keyExtractor={(item, index) => item.catalogLaptopId}
             renderItem={({item, index}) => (
-                <View>
+                <View id={item.catalogLaptopId}>
                   {/* <Text>{item.name}</Text> */}
                   <ProductsInCart idItem={item.catalogLaptopId} userId={userId} price={parseFloat(item.price).toLocaleString()} name={item.name} initialQuantity={item.quantity} image={item.image}/>
                 </View>
@@ -104,14 +188,15 @@ const OrderDetail = (props, navigation) => {
             onRefresh={()=> {
               setRefreshing(true);
           }}
+          height={280}
         />
       
       <Text style={styles.cart}>Delivery</Text>
       
       <Delivery
         methodOption={location}
-        deliveryName='Jan Pawel II St. 19/2'
-        deliveryDescription='32-581 Cracow'
+        deliveryName={userAddress}
+        deliveryDescription={userPhone}
         anotherOption={turnRight}>
       </Delivery>
 
@@ -200,14 +285,13 @@ const OrderDetail = (props, navigation) => {
         <Text style ={{fontFamily:'Cuprum-Bold', fontSize:26, color:'#F18825',marginRight:30}}>{parseFloat(total).toLocaleString()} vnđ</Text>
       </View>
 
-      <TouchableOpacity style={{marginTop:20, alignSelf:'center'}}>
+      <TouchableOpacity style={{marginTop:20, alignSelf:'center'}} onPress={() =>{props.navigation.replace('BottomNavScreen'); DeleteAfterOrder(); } }>
         <Image source={CheckoutButton}></Image>
       </TouchableOpacity>
-        
       <View style={{height:20}}></View>
 
       
-    </ScrollView>
+    </View>
     </View>
     
   )
