@@ -46,6 +46,7 @@ const ItemDetails = ({navigation, route}) => {
 
   const[selectedImage, setSelectedImage] = useState();
   const[isImageSelected, setIsImageSelected] = useState(false);
+  const[soldQuantity, setSoldQuantity] = useState();
   //const [Refreshing, setRefreshing] = useState(false);
 
   const Update = async () => {
@@ -90,6 +91,7 @@ const ItemDetails = ({navigation, route}) => {
         setIsAvailable(responseJson.isAvailable);
         setClassify(responseJson.classify);
         setImage(responseJson.image[0]);
+        setSoldQuantity(responseJson.soldQuantity);
         //console.log(responseJson);
       });
     } catch (error) {
@@ -261,6 +263,18 @@ const OpenLibrary = () => {
                   label="Quantity"
                   returnKeyType="done"
                   onChangeText={(text) => setQuantity(parseInt(text))}
+                  keyboardType="numeric"
+              />
+      <Text>Sold</Text>
+          <TextInput
+                  placeholder="Sold"
+                  placeholderColor="#c4c3cb"
+                  style={styles.loginFormTextInput}
+                  value={(isNaN(soldQuantity) ? ('') : soldQuantity.toString())}
+                  label="Quantity"
+                  returnKeyType="done"
+                  //onChangeText={(text) => setQuantity(parseInt(text))}
+                  editable={false}
                   keyboardType="numeric"
               />
       <Text>Available</Text>

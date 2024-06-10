@@ -17,6 +17,9 @@ import {
   useColorScheme,
   View,
   Button,
+  FlatList,
+  TouchableWithoutFeedback,
+  Image,
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,6 +41,19 @@ const DashBoard = ({navigation}) => {
   const[billTime, setBillTime] = useState();
   const[itemTime, setItemTime] = useState();
 
+  const[dataItemList, setDataItemList] = useState();
+  const getList = async () => {
+    try {
+      fetch(ProjectBaseUrl + '/catalog-gateway/items')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        responseJson.sort((a,b) => a.soldQuantity - b.soldQuantity);
+        setDataItemList((responseJson.reverse()).slice(0,10));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const getAuthenHealthDetails = async () => {
     let controller = new AbortController();
       setTimeout( () => {
@@ -143,7 +159,7 @@ const DashBoard = ({navigation}) => {
         }
       });
   };
-  const MINUTE_MS = 10000;
+  const MINUTE_MS = 5000;
   useEffect(() => {
     AsyncStorage.getItem('role').then(role => setIsAdmin(role));
       const interval = setInterval(() => {
@@ -153,6 +169,7 @@ const DashBoard = ({navigation}) => {
         getUserHealthDetails();
         getBillHealthDetails();
         getItemHealthDetails();
+        getList();
       }, MINUTE_MS);
     
       return () => clearInterval(interval);
@@ -208,7 +225,38 @@ const DashBoard = ({navigation}) => {
             <View>
               {RenderCheckHealth(item, 'Product Service: ', itemTime)}
             </View>
-            {/* <Button title="Refresh" onPress={() => Refresh()}/> */}
+            {/* <Button title="Refresh" onPress={() => console.log(dataItemList)}/> */}
+          </View>
+          <View style = {styles.line}></View>
+          <View style={{marginLeft: 15,}}>
+          <Text  style={styles.header_text}>TOP 10 BEST SALE</Text>
+          <FlatList
+          horizontal={true}
+          data={dataItemList}
+          initialNumToRender={20}
+          keyExtractor={({id}) => id}
+          renderItem={({item}) => (
+            <TouchableWithoutFeedback 
+            onPress={() =>
+              {
+                navigation.navigate('ItemDetails', {itemId: item.id});
+              }
+            }>
+              <View
+                style={styles.ItemContainer}
+                >
+                  <View>
+                    <Image style={styles.imageSize} source={{uri: `data:image/jpeg;base64,${item.image[0]}`}} />
+                  </View>
+                <View>
+                  <Text>{item.name}</Text>
+                  <Text>{parseFloat(item.price).toLocaleString()}vnđ</Text>
+                  <Text>{item.soldQuantity}</Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          )}
+        />
           </View>
         </View>
     </ScrollView>
@@ -218,9 +266,24 @@ const DashBoard = ({navigation}) => {
 
 export default DashBoard;
 const styles = StyleSheet.create({
+  ItemContainer: {
+    borderColor: 'black',
+    borderRadius: 15,
+    borderWidth: 1,
+                margin: 5,
+                padding: 5,
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: 15,
+  },
+  imageSize: {
+    width: 70,
+    height: 70,
+  },
   container: {
     paddingTop: 20,
     gap: 10,
+    backgroundColor: 'white'
   },
   item_container: {
     flexDirection: 'row',
@@ -257,5 +320,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 35,
     color: 'black',
-  }
+  },
+  line:{
+    width:'86%',
+    height:2,
+    backgroundColor:'#382F29',
+    opacity: 0.2,
+    marginLeft:30,
+    marginRight:30,
+    marginTop:15
+},
 });

@@ -92,12 +92,12 @@ const OrderDetail = (props, navigation) => {
       method: 'POST', // Specify the request method
       headers: {'Content-Type': 'application/json'}, // Specify the content type
       body: JSON.stringify({
-          // "userId": userId,
-          // "catalogItemId": catalogItemIdArray,
-          // "quantity": quantityArray,
-          // "state": "Pending",
-          // "address": "string",
-          // "phone": "string"
+          'userId': userId,
+          'catalogItemId': catalogItemIdArray,
+          'quantity': quantityArray,
+          'state': 'Pending',
+          "address": userAddress,
+          "phone": userPhone,
       }), // Send the data in JSON format
     };
     fetch(ProjectBaseUrl + '/bill',requestOptions)
@@ -105,12 +105,12 @@ const OrderDetail = (props, navigation) => {
     .then(responseData => console.log(responseData)) // Do something with the data
     .catch(error => console.error(error))
     .finally(() => {
-    }) // Handle errors
+    }); // Handle errors
   };
   const DeleteAfterOrder = () =>{
     for(var i = 0; i < objectListLength; i++)
       {
-        //Delete(itemList[i].catalogLaptopId, userId);
+        Delete(itemList[i].catalogLaptopId, userId);
         showToastWithGravityAndOffset();
         console.log(catalogItemIdArray);
         console.log(quantityArray);
@@ -285,7 +285,7 @@ const OrderDetail = (props, navigation) => {
         <Text style ={{fontFamily:'Cuprum-Bold', fontSize:26, color:'#F18825',marginRight:30}}>{parseFloat(total).toLocaleString()} vnđ</Text>
       </View>
 
-      <TouchableOpacity style={{marginTop:20, alignSelf:'center'}} onPress={() =>{props.navigation.replace('BottomNavScreen'); DeleteAfterOrder(); } }>
+      <TouchableOpacity style={{marginTop:20, alignSelf:'center'}} onPress={() =>{AddToBill(); DeleteAfterOrder(); props.navigation.replace('BottomNavScreen');  } }>
         <Image source={CheckoutButton}></Image>
       </TouchableOpacity>
       <View style={{height:20}}></View>
