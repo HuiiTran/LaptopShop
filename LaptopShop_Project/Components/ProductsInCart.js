@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, {useState} from 'react'
 import checkBox from '../assets/icons/checkbox.png'
@@ -5,34 +6,84 @@ import legion from '../assets/icons/Legion9i.png'
 import minus from '../assets/icons/Minus.png'
 import plus from '../assets/icons/Plus.png'
 import TrashBin from '../assets/icons/TrashBin.png'
+import { ProjectBaseUrl } from '../ApiManagement/ApiManager'
 
 
-
-const ProductsInCart = ({ initialQuantity}) => {
-  const [quantity, setQuantity] = useState(initialQuantity);
-
+const ProductsInCart = (props) => {
+  const [quantity, setQuantity] = useState(props.initialQuantity);
+  const UpdateIncreate = async () => {
+    const requestOptions = {
+      method: 'POST', // Specify the request method
+      headers: {'Content-Type': 'application/json'}, // Specify the content type
+      body: JSON.stringify({
+        'userId': props.userId,
+        'catalogLaptopId': props.idItem,
+        'quantity': 1,
+      }), // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/inventory-gateway/cart',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
+  const UpdateDecreate = async () => {
+    const requestOptions = {
+      method: 'PUT', // Specify the request method
+      headers: {'Content-Type': 'application/json'}, // Specify the content type
+      body: JSON.stringify({
+        'userId': props.userId,
+        'catalogLaptopId': props.idItem,
+        'quantity': 1,
+      }), // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/inventory-gateway/cart',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
+  const Delete = async () => {
+    const requestOptions = {
+      method: 'DELETE', // Specify the request method
+      headers: {'Content-Type': 'application/json'}, // Specify the content type
+      body: JSON.stringify({
+        'userId': props.userId,
+        'catalogLaptopId': props.idItem,
+        'quantity': 1,
+      }), // Send the data in JSON format
+    };
+    fetch(ProjectBaseUrl + '/inventory-gateway/cart',requestOptions)
+    // .then(response => response.json()) // Parse the response as JSON
+    .then(responseData => console.log(responseData)) // Do something with the data
+    .catch(error => console.error(error)); // Handle errors
+  };
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
+    UpdateIncreate();
   };
 
   const decreaseQuantity = () => {
-    if (quantity > 0) {
+    if(quantity > 0)
+    {
       setQuantity(quantity - 1);
+      UpdateDecreate();
+    }
+    else {
+      Delete();
     }
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.checkbox}>
+      {/* <TouchableOpacity style={styles.checkbox}>
         <Image source={checkBox}></Image>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={legion}></Image>
+        <Image style={styles.image} source={{uri: `data:image/jpeg;base64,${props.image}`}} />
       </View>
 
       <View style={styles.descriptionContainer}>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.productName}>SDFSDFSDSDFSDFFFFFFFFFFFFFFFFFFF</Text>
-        <Text style={styles.productPrice}>$4.444</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.productName}>{props.name}</Text>
+        <Text style={styles.productPrice}>{props.price} vnđ</Text>
 
         <View style={styles.quantityContainer}>
         <TouchableOpacity onPress={decreaseQuantity}>
@@ -45,7 +96,7 @@ const ProductsInCart = ({ initialQuantity}) => {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.TrashBin}>
+      <TouchableOpacity style={styles.TrashBin} onPress={() => Delete()}>
         <Image source={TrashBin}></Image>
       </TouchableOpacity>
       

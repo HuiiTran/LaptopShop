@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native'
-import React, {useState} from 'react'
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Button } from 'react-native'
+import React, {useEffect, useId, useState} from 'react'
 import turnback from '../assets/icons/turnback.png'
 import blank from '../assets/icons/blank.png'
 import ProductsInCart from '../Components/ProductsInCart.js'
@@ -17,11 +17,52 @@ import ApplyCouponCode from '../assets/icons/ApplyCouponCode.png'
 import CheckoutButton from '../assets/icons/CheckoutButton.png'
 import addPaymentMethodIcon from '../assets/icons/AddPaymentMethod.png'
 import AddCreditCardScreen from './AddCreditCardScreen.js'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ProjectBaseUrl } from '../ApiManagement/ApiManager.js'
 const OrderDetail = (props, navigation) => {
-
+  const [userId, setUserId] = useState();
   const [searchText,setSearchText] = useState('');
-
+  const [itemList, setItemList] = useState();
+  const [Refreshing, setRefreshing] = useState(false);
+  const [total, setTotal] = useState(0);
+  const getList = async () => {
+    try {
+      fetch(ProjectBaseUrl + '/inventory-gateway/cart?userId=' + userId)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setItemList(responseJson);
+        CaculationTotal();
+      });
+    } catch (error) {
+      console.error(error);
+    } finally{
+    }
+  };
+  const CaculationTotal = () =>{
+    var sum = 0;
+    for(var i = 0; i < itemList.length; i++)
+      {
+        sum += itemList[i].price * itemList[i].quantity;
+      }
+      setTotal(sum);
+  };
+  const MINUTE_MS = 3000;
+  useEffect(() =>{
+    AsyncStorage.getItem('ID').then(ID => setUserId(ID));
+    const interval = setInterval(() => {
+      getList();
+      //console.log(total);
+    }, MINUTE_MS);
+    return () => clearInterval(interval);
+  },[getList])
+  useEffect(() => {
+  if(Refreshing === true)
+      {
+        getList();
+        setRefreshing(false);
+        setSearchText('');
+      }
+  },[Refreshing]);
   return (
     <View style={{backgroundColor:'#fff'}}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -46,12 +87,24 @@ const OrderDetail = (props, navigation) => {
           width: 35,
           opacity:0}} />
       </View>
-
-      <Text style={styles.cart}>My Cart</Text>
+      <View>
+        <Text style={styles.cart}>My Cart</Text>
+      </View>
       
-      <ProductsInCart></ProductsInCart>
-      <ProductsInCart></ProductsInCart>
-      <ProductsInCart></ProductsInCart>
+      <FlatList
+            data={itemList}
+            keyExtractor={({id}) => id}
+            renderItem={({item, index}) => (
+                <View>
+                  {/* <Text>{item.name}</Text> */}
+                  <ProductsInCart idItem={item.catalogLaptopId} userId={userId} price={parseFloat(item.price).toLocaleString()} name={item.name} initialQuantity={item.quantity} image={item.image}/>
+                </View>
+          )}
+            refreshing ={ Refreshing}
+            onRefresh={()=> {
+              setRefreshing(true);
+          }}
+        />
       
       <Text style={styles.cart}>Delivery</Text>
       
@@ -62,7 +115,7 @@ const OrderDetail = (props, navigation) => {
         anotherOption={turnRight}>
       </Delivery>
 
-      <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+      {/* <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
         <Text style={styles.cart}>Payment Method</Text>
     
         <TouchableOpacity onPress={() => props.navigation.navigate('AddCreditCard')} style={{marginRight:30, marginTop:10}}>
@@ -86,11 +139,12 @@ const OrderDetail = (props, navigation) => {
         methodOption={cash}
         PaymentName='Cash+'
         PaymentDescription='John Smith'
-        ></PaymentMethod>
+        ></PaymentMethod> */}
 
       <Text style={styles.cart}>Order Summary</Text>
+      {/* <Button title='hello'  onPress={() => CaculationTotal()}/> */}
 
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+      {/* <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Name of product</Text>
         <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
       </View>
@@ -105,23 +159,23 @@ const OrderDetail = (props, navigation) => {
         <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
       </View>
 
-      <View style = {styles.line}></View>
+      <View style = {styles.line}></View> */}
 
-      <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
+      {/* <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Subtotal</Text>
-        <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
+        <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> {parseFloat(total).toLocaleString()} vnđ</Text>
       </View>
 
       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Shipping Cost</Text>
         <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
-      </View>
+      </View> */}
 
-      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+      {/* <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Regular', fontSize:20, color:'#000'}}>Discount</Text>
         <Text style ={{fontFamily:'Cuprum-Regular', fontSize:20, color:'#F18825',marginRight:30}}> Price</Text>
-      </View>
-      
+      </View> */}
+{/*       
       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <View style={styles.couponContainer}>
           <TextInput
@@ -132,24 +186,18 @@ const OrderDetail = (props, navigation) => {
             placeholderColor="#c4c3cb"
           ></TextInput>
 
-          {/* <TouchableOpacity onPress={handleSortPress}>
-            <Image
-            source={sortIcon}
-            style={styles.sortImage}
-            />
-          </TouchableOpacity> */}
         </View>
 
         <TouchableOpacity style={{  marginTop:15,}}>
           <Image style={{marginRight:30}}source={ApplyCouponCode}></Image>
         </TouchableOpacity>
-      </View>
+      </View> */}
       
       <View style = {styles.line}></View>
     
       <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:15}}>
         <Text style={{marginLeft:30, fontFamily:'Cuprum-Bold', fontSize:26, color:'#000'}}>Total</Text>
-        <Text style ={{fontFamily:'Cuprum-Bold', fontSize:26, color:'#F18825',marginRight:30}}>Price</Text>
+        <Text style ={{fontFamily:'Cuprum-Bold', fontSize:26, color:'#F18825',marginRight:30}}>{parseFloat(total).toLocaleString()} vnđ</Text>
       </View>
 
       <TouchableOpacity style={{marginTop:20, alignSelf:'center'}}>
