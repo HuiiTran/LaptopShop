@@ -126,6 +126,12 @@ export default function LoginScreen({navigation}) {
             >
                 <Text style={styles.text_login}>Login</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.registerButton}
+              onPress={() => navigation.navigate('RegisterScreen')}
+            >
+                <Text style={styles.text_register}>Register</Text>
+            </TouchableOpacity>
           </View> )}
         </View>
       </TouchableWithoutFeedback>
@@ -171,6 +177,14 @@ const styles = StyleSheet.create({
       width: 350,
       alignItems: 'center',
     },
+    registerButton: {
+      backgroundColor: '#ffffff',
+      borderRadius: 5,
+      height: 45,
+      marginTop: 10,
+      width: 350,
+      alignItems: 'center',
+    },
     warning: {
         color: 'red',
     },
@@ -179,6 +193,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginTop: 7,
-    }
+    },
+    text_register: {
+      color: '#000000',
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginTop: 7,
+  }
 
   });

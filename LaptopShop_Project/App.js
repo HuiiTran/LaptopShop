@@ -45,6 +45,7 @@ import EditProfile from './Screens/EditProfile.js';
 import ChangePassword from './Screens/ChangePassword.js';
 import BottomNavScreen from './Screens/BottomNavScreen.js';
 import LoginScreen from './Screens/Login.js';
+import RegisterScreen from './Screens/RegisterScreen.js';
 
 const Stack = createNativeStackNavigator();
 export default function App(){
@@ -68,6 +69,7 @@ export default function App(){
       <Stack.Screen options={{headerShown: false}} name="ProductListScreen" component={ProductListScreen} />
       <Stack.Screen options={{headerShown:false}}name="ProductDetailScreen" component={ProductDetail}/>
       <Stack.Screen options={{headerShown:false}}name="SearchScreen" component={SearchScreen}/>
+      <Stack.Screen options={{headerShown:false}}name="RegisterScreen" component={RegisterScreen}/>
     </Stack.Navigator>
   </NavigationContainer>
   );

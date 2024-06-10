@@ -139,7 +139,7 @@ const ChangePassword = ({navigation, route}) => {
     <View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <TouchableOpacity /*</View>onPress={() => {navigation.goBack();}}*/>
+          <TouchableOpacity onPress={() => {navigation.goBack();}}>
             <Image
               source={turnback}
               style={{
