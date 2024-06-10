@@ -21,9 +21,9 @@ import Setting from '../assets/icons/Setting.png';
 
 import MenuItem from '../Components/MenuItem.js';
 
-const Menu = (props) => {
+const Menu = ({navigation}) => {
   return (
-    <View style={{backgroundColor: '#fff'}}>
+    <ScrollView style={{backgroundColor: '#fff'}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <TouchableOpacity /*</View>onPress={() => {navigation.goBack();}}*/>
@@ -65,12 +65,12 @@ const Menu = (props) => {
       <MenuItem methodOption={Report} menuName="Report"></MenuItem>
       <MenuItem methodOption={Setting} menuName="Setting"></MenuItem>
     
-    <TouchableOpacity style={{alignSelf:'center', marginTop:120}}>
+    <TouchableOpacity style={{alignSelf:'center', marginTop:120}} onPress={() => navigation.replace('LoginScreen')}>
       <Image source={Logout}></Image>
     </TouchableOpacity>
 
     <View style={{height:100}}></View>
-    </View>
+    </ScrollView>
   );
 };
 

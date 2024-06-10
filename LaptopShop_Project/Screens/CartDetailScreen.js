@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native'
 import React, {useState} from 'react'
 import turnback from '../assets/icons/turnback.png'

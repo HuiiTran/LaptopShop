@@ -43,12 +43,17 @@ import OrderDetail from './Screens/OrderDetail.js';
 import Setting from './Screens/Setting.js';
 import EditProfile from './Screens/EditProfile.js';
 import ChangePassword from './Screens/ChangePassword.js';
+import BottomNavScreen from './Screens/BottomNavScreen.js';
+import LoginScreen from './Screens/Login.js';
 
 const Stack = createNativeStackNavigator();
 export default function App(){
   return (
     <NavigationContainer>
     <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
+      <Stack.Screen options={{headerShown:false}}name="BottomNavScreen" component={BottomNavScreen}/>
+      <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
+      <Stack.Screen options={{headerShown: false}} name="LoginScreen" component={LoginScreen} />
       <Stack.Screen options={{headerShown: false}} name="ChangePassword" component={ChangePassword} />
       <Stack.Screen options={{headerShown: false}} name="EditProfile" component={EditProfile} />
       <Stack.Screen options={{headerShown: false}} name="SettingScreen" component={Setting} />
@@ -60,7 +65,6 @@ export default function App(){
       <Stack.Screen options={{headerShown: false}} name="OverlayMsg" component={SuccessfulOverlayMsg} />
       <Stack.Screen options={{headerShown: false}} name="AddCreditCard" component={AddCreditCardScreen} />
       <Stack.Screen options={{headerShown: false}} name="Search" component={SearchScreen} />
-      <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
       <Stack.Screen options={{headerShown: false}} name="ProductListScreen" component={ProductListScreen} />
       <Stack.Screen options={{headerShown:false}}name="ProductDetailScreen" component={ProductDetail}/>
       <Stack.Screen options={{headerShown:false}}name="SearchScreen" component={SearchScreen}/>

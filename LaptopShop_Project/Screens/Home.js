@@ -24,8 +24,7 @@ import ProductType from '../Components/ProductType';
 
 export const ProjectBaseUrl = 'http://10.0.2.2:5156';
 
-  
-  
+
 const Home = (props) => {
   const [searchText,setSearchText] = useState('');
     const [data, setData] = useState([{
